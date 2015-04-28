@@ -1,10 +1,7 @@
-# COEL
+![Alt text](/source/Web/web-app/images/coel_gradient-01.png "COEL rocks!")
 Cloud Chemistry Simulation Framework
 
-![Alt text](/source/Web/web-app/images/coel_gradient-01.png "COEL rocks!")
-
-The framework is accessible at [coel-sim.org](http://coel-sim.org)
-
+The framework is accessible at [coel-sim.org](http://coel-sim.org).
 ---
 
 # Intro
@@ -15,3 +12,7 @@ COEL's most prominent features include ODE-based simulations of chemical reactio
 Besides chemical reaction networks, COEL provides a unified and extendible environment for the definition and manipulation of complex Boolean and real-valued networks.
 
 COEL framework is built on Grails, Spring, Hibernate, and GridGain technology stack. 
+
+A paper summarizing COEL's functionality and architecture can be found [here](http://arxiv.org/abs/1407.4027).
+
+If you wish to collaborate in the develepment of this project contact me at `banda@pdx.edu`.
