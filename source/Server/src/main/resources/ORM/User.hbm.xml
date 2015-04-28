@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.core.domain.um.User" table="UM_USER" schema="public">
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">UM_USER_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" />
+        </version>
+
+        <property name="username" type="string">
+            <column name="username" length="20" not-null="true" unique="true" />
+        </property>
+
+        <property name="password" type="string">
+            <column name="password" length="100" not-null="true" />
+        </property>
+
+        <property name="passwordHint" type="string">
+            <column name="password_hint" length="50" />
+        </property>
+
+        <property name="firstName" type="string">
+            <column name="firstname" length="20" not-null="true" />
+        </property>
+
+        <property name="lastName" type="string">
+            <column name="lastname" length="30" not-null="true" />
+        </property>
+
+        <property name="email" type="string">
+            <column name="email" length="40" not-null="true" unique="true" />
+        </property>
+
+        <property name="affiliation" type="string">
+            <column name="affiliation" length="80" not-null="true"/>
+        </property>
+
+        <property name="intendedUse" type="string">
+            <column name="intended_use" length="1000" not-null="true"/>
+        </property>
+
+        <property name="phoneNumber" type="string">
+            <column name="phone_number" length="25" />
+        </property>
+
+        <property name="website" type="string">
+            <column name="website" length="50" />
+        </property>
+
+        <property name="address" type="string">
+            <column name="address" length="150" />
+        </property>
+
+        <property name="accountEnabled" type="boolean">
+            <column name="enabled" not-null="true" />
+        </property>
+
+        <property name="accountExpired" type="boolean">
+            <column name="account_expired" not-null="true" />
+        </property>
+
+        <property name="accountLocked" type="boolean">
+            <column name="account_locked" not-null="true" />
+        </property>
+
+        <property name="credentialsExpired" type="boolean">
+            <column name="credentials_expired" not-null="true" />
+        </property>
+
+        <property name="aboutMe" type="string">
+            <column name="about_me" length="500" />
+        </property>
+
+        <property name="createTime" type="timestamp">
+            <column name="create_time" not-null="true" />
+        </property>
+
+        <property name="changeTime" type="timestamp">
+            <column name="change_time" />
+        </property>
+
+        <set name="roles" table="um_user_role_mapping">
+        	<key column="user_id" />
+      		<many-to-many column="role_id" class="com.banda.core.domain.um.Role" />
+    	</set>
+    </class>
+</hibernate-mapping>

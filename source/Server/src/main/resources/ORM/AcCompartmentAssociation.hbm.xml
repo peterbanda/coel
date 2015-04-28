@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcCompartmentAssociation" table="AC_SUB_COMPARTMENT_ASSOCIATION" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_SUB_COMPARTMENT_ASSOCIATION_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="order" type="java.lang.Integer">
+            <column name="pos" not-null="true"/>
+        </property>
+
+        <many-to-one name="parentCompartment" class="com.banda.chemistry.domain.AcCompartment" fetch="join">
+        	<column name="parent_id" not-null="true"/>
+    	</many-to-one>
+
+        <many-to-one name="subCompartment" class="com.banda.chemistry.domain.AcCompartment" fetch="join">
+            <column name="sub_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

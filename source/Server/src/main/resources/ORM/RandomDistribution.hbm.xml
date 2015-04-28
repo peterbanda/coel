@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.math.domain.rand.RandomDistribution" table="FUN_RANDOM_DISTRIBUTION" abstract="true" discriminator-value="X">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">FUN_RANDOM_DISTRIBUTION_ID_SEQ</param>
+   			</generator>
+        </id>
+
+    	<discriminator type="character">
+    		<formula>
+    			case
+    				when type = 7 then 'B'
+    				when probabilities is not null then 'D'
+    				when location is not null then 'S' 
+                	else 'U' 
+            	end
+    		</formula>
+		</discriminator>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+		<subclass name="com.banda.math.domain.rand.UniformDistribution" discriminator-value="U">
+			<property name="from" type="java.lang.Double">
+				<column name="[from]" not-null="true"/>
+			</property>
+
+			<property name="to" type="java.lang.Double">
+				<column name="[to]" not-null="true"/>
+			</property>
+		</subclass>
+
+		<subclass name="com.banda.math.domain.rand.ShapeLocationDistribution" discriminator-value="S">
+			<property name="location" type="java.lang.Double">
+				<column name="location" not-null="true"/>
+			</property>
+
+			<property name="shape" type="java.lang.Double">
+				<column name="shape" not-null="true"/>
+			</property>
+
+			<property name="type">
+            	<column name="type" not-null="true" />
+            	<type name="org.hibernate.type.EnumType">
+              		<param name="enumClass">com.banda.math.domain.rand.RandomDistributionType</param>
+              		<param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            	</type>
+        	</property>
+
+			<property name="valueTypeName" type="java.lang.String">
+				<column name="value_type_name" not-null="true"/>
+			</property>
+		</subclass>
+
+		<subclass name="com.banda.math.domain.rand.DiscreteDistribution" discriminator-value="D">
+
+	        <property name="probabilities" type="edu.banda.coel.server.common.SQLArrayUserType$DOUBLE">
+    	    	<column name="probabilities" sql-type="float8[]" not-null="true"/>
+       		</property>
+
+	        <property name="values" type="edu.banda.coel.server.common.SQLArrayUserType$GENERIC">
+            	<column name="values_as_string" sql-type="text[]" not-null="true"/>
+    	    	<column name="value_type_name" sql-type="text" not-null="true"/>
+       		</property>
+ 
+		</subclass>
+
+		<subclass name="com.banda.math.domain.rand.BooleanDensityUniformDistribution" discriminator-value="B">
+ 			<property name="type">
+            	<column name="type" not-null="true" />
+            	<type name="org.hibernate.type.EnumType">
+              		<param name="enumClass">com.banda.math.domain.rand.RandomDistributionType</param>
+              		<param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            	</type>
+        	</property>
+		</subclass>
+
+    </class>
+</hibernate-mapping>

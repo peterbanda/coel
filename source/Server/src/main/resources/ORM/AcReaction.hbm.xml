@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcReaction" table="AC_REACTION" schema="public">
+        <cache usage="nonstrict-read-write" />
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_REACTION_ID_SEQ</param>
+   			</generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="label" type="java.lang.String">
+            <column name="label" length="30" not-null="true" />
+        </property>
+
+        <property name="enabled" type="boolean">
+            <column name="enabled" not-null="true" />
+        </property>
+
+        <many-to-one name="forwardRateFunction" class="com.banda.function.domain.AbstractFunction" lazy="false" fetch="join" cascade="all">
+            <column name="forward_rate_function_id" />
+        </many-to-one>
+
+        <property name="forwardRateConstants" type="edu.banda.coel.server.common.SQLArrayUserType$DOUBLE">
+        	<column name="forward_rate_constants" sql-type="float8[]" />
+       	</property>
+
+        <many-to-one name="reverseRateFunction" class="com.banda.function.domain.AbstractFunction" lazy="false" fetch="join" cascade="all">
+            <column name="reverse_rate_function_id" />
+        </many-to-one>
+
+        <property name="reverseRateConstants" type="edu.banda.coel.server.common.SQLArrayUserType$DOUBLE">
+        	<column name="reverse_rate_constants" sql-type="float8[]" />
+       	</property>
+
+        <property name="sortOrder" type="java.lang.Integer">
+            <column name="sort_order" not-null="true" />
+        </property>
+
+        <property name="priority" type="int">        
+            <column name="priority" />
+        </property>
+
+        <property name="collectiveCatalysisType">
+            <column name="col_catalysis_type" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.chemistry.domain.AcCollectiveSpeciesReactionAssociationType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <property name="collectiveInhibitionType">
+            <column name="col_inhibition_type" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.chemistry.domain.AcCollectiveSpeciesReactionAssociationType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <many-to-one name="reactionSet" class="com.banda.chemistry.domain.AcReactionSet" lazy="false" fetch="select">
+        	<column name="reaction_set_id" not-null="true"/>
+    	</many-to-one>
+
+        <many-to-one name="group" class="com.banda.chemistry.domain.AcReactionGroup" lazy="false" fetch="select">
+        	<column name="reaction_group_id"/>
+    	</many-to-one>
+
+	    <set name="speciesAssociations" lazy="false" inverse="true" fetch="select" cascade="all-delete-orphan">
+            <key column="reaction_id" not-null="true"/>
+            <one-to-many class="com.banda.chemistry.domain.AcSpeciesReactionAssociation" />
+        </set>
+
+    </class>
+</hibernate-mapping>

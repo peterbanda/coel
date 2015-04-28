@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_FALLBACK"/>
+        <property name="searchSystemEnvironment" value="true"/>
+   		<property name="locations">
+        	<list>
+				<value>classpath*:client.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://${server.url}:${server.port}"/>
+    </bean>
+
+    <bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="mmm"/>
+    </bean>
+
+    <bean id="queue2" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="mmm2"/>
+    </bean>
+
+    <bean id="artificialChemistryService" class="org.springframework.jms.remoting.JmsInvokerProxyFactoryBean">
+        <property name="serviceInterface" value="edu.banda.coel.domain.service.ArtificialChemistryService"/>
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="queue" ref="queue"/>
+    </bean>
+
+    <bean id="evolutionService" class="org.springframework.jms.remoting.JmsInvokerProxyFactoryBean">
+        <property name="serviceInterface" value="edu.banda.coel.domain.service.EvolutionService"/>
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="queue" ref="queue2"/>
+    </bean>
+<!--
+	<bean id="artificialChemistryService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  	  	<property name="serviceUrl" value="rmi://${server.url}:${server.port}/ArtificialChemistryService"/>
+   	 	<property name="serviceInterface" value="edu.banda.coel.domain.service.ArtificialChemistryService"/>
+	</bean>
+-->
+</beans>

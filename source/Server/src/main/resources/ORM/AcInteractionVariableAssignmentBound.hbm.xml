@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="edu.banda.coel.domain.evo.AcInteractionVariableAssignmentBound" table="EVO_AC_INTERACTION_VARIABLE_ASSIGNMENT_BOUND" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">EVO_AC_INTERACTION_VARIABLE_ASSIGNMENT_BOUND_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <set name="assignments" lazy="false" table="evo_ac_interaction_variable_assignment_mapping" fetch="join">
+        	<key column="evo_ac_variable_bound_id" not-null="true"/>
+      		<many-to-many column="variable_assignment_id" class="com.banda.chemistry.domain.AcInteractionVariableAssignment" />
+    	</set>
+
+        <property name="from" type="java.lang.Double">
+            <column name="lower_bound" not-null="true"/>
+        </property>
+
+        <property name="to" type="java.lang.Double">
+            <column name="upper_bound" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

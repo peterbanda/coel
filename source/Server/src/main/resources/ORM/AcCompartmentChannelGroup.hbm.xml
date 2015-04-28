@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.banda.chemistry.domain.AcCompartmentChannelGroup" table="AC_COMPARTMENT_CHANNEL_GROUP" schema="public">
+
+		<id name="id" type="long">
+			<column name="id" />
+			<generator
+				class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+				<param name="delegate">sequence</param>
+				<param name="sequence">AC_COMPARTMENT_CHANNEL_GROUP_ID_SEQ</param>
+			</generator>
+		</id>
+
+		<version name="version" type="java.lang.Long">
+			<column name="ol_version" not-null="true" />
+		</version>
+
+        <many-to-one name="compartment" class="com.banda.chemistry.domain.AcCompartment" fetch="select">
+        	<column name="compartment_id" not-null="true"/>
+    	</many-to-one>
+
+        <bag name="channels" table="ac_compartment_channel_group_mapping" order-by="channel_id">
+ 			<key column="group_id" not-null="true"/>
+      		<many-to-many column="channel_id" class="com.banda.chemistry.domain.AcCompartmentChannel"/>
+    	</bag>
+
+    </class>
+</hibernate-mapping>

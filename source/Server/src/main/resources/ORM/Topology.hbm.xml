@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.network.domain.Topology" table="NET_TOPOLOGY" schema="public" abstract="true" discriminator-value="null">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">NET_TOPOLOGY_ID_SEQ</param>
+   			</generator>
+        </id>
+
+		<discriminator column="type" type="int" not-null="true" />
+
+		<version name="version" type="java.lang.Long">
+			<column name="ol_version" not-null="true" />
+		</version>
+
+		<property name="name" type="string">
+			<column name="name" length="30" not-null="true" />
+		</property>
+
+		<property name="timeCreated" type="timestamp">
+			<column name="time_created" not-null="true" />
+		</property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by"/>
+        </many-to-one>
+
+		<bag name="parents" inverse="true" table="net_layer_topology_mapping">
+			<key column="layer_id"/>
+      		<many-to-many column="parent_id" class="com.banda.network.domain.Topology" />
+		</bag>
+
+		<bag name="networks" lazy="true" inverse="true" cascade="delete">
+			<key column="topology_id" not-null="true" />
+			<one-to-many class="com.banda.network.domain.Network" />
+		</bag>
+
+		<subclass name="com.banda.network.domain.FlatTopology" discriminator-value="0">
+			<!-- TODO -->
+		</subclass>
+
+		<subclass name="com.banda.network.domain.LayeredTopology" discriminator-value="1">
+			<list name="layers" lazy="false" cascade="all" table="net_layer_topology_mapping">
+				<key column="parent_id" />
+				<list-index column="pos" base="1" />
+      			<many-to-many column="layer_id" class="com.banda.network.domain.Topology" />
+			</list>
+		</subclass>
+
+		<subclass name="com.banda.network.domain.TemplateTopology" discriminator-value="2">
+
+			<list name="layers" lazy="false" cascade="all" table="net_layer_topology_mapping">
+				<key column="parent_id" />
+				<list-index column="pos" base="1" />
+      			<many-to-many column="layer_id" class="com.banda.network.domain.Topology" />
+			</list>
+
+			<join table="net_template_topology">
+				<key column="topology_id" />
+				<property name="nodesNum" type="java.lang.Integer">
+					<column name="nodes_num" />
+				</property>
+
+				<property name="layersNum" type="java.lang.Integer">
+					<column name="layers_num" />
+				</property>
+
+				<property name="nodesPerLayer" type="java.lang.Integer">
+					<column name="nodes_per_layer" />
+				</property>
+
+				<property name="generateBias" type="boolean">
+					<column name="generate_bias" />
+				</property>
+
+				<property name="allEdges" type="boolean">
+					<column name="all_edges" />
+				</property>
+
+				<property name="intraLayerAllEdges" type="boolean">
+					<column name="inner_layer_all_edges" />
+				</property>
+
+				<property name="inEdgesNum" type="java.lang.Integer">
+					<column name="in_edges_num" />
+				</property>
+
+				<property name="intraLayerInEdgesNum" type="java.lang.Integer">
+					<column name="inner_layer_in_edges_num" />
+				</property>
+
+				<property name="allowSelfEdges" type="boolean">
+					<column name="allow_self_edges" />
+				</property>
+
+				<property name="allowMultiEdges" type="boolean">
+					<column name="allow_multi_edges" />
+				</property>
+
+			</join>
+		</subclass>
+
+		<subclass name="com.banda.network.domain.SpatialTopology" discriminator-value="3">
+
+			<join table="net_spatial_topology">
+				<key column="topology_id" />
+
+	        	<property name="sizes" type="edu.banda.coel.server.common.ListAsSQLArrayUserType$INTEGER">
+    	    		<column name="sizes" not-null="true" sql-type="int[]" />
+       			</property>
+
+				<property name="torusFlag" type="boolean">
+					<column name="torus_flag" not-null="true" />
+				</property>
+
+	        	<property name="metricsType">
+    	        	<column name="metrics_type" />
+        	    	<type name="org.hibernate.type.EnumType">
+            	 		<param name="enumClass">com.banda.core.metrics.MetricsType</param>
+              			<param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            		</type>
+        		</property>
+
+				<property name="radius" type="java.lang.Integer">
+					<column name="radius" />
+				</property>
+
+				<property name="itsOwnNeighor" type="boolean">
+					<column name="its_own_neighor" not-null="true"/>
+				</property>
+
+				<many-to-one name="neighborhood" class="com.banda.network.domain.SpatialNeighborhood" fetch="select">
+					<column name="neighborhood_id" />
+				</many-to-one>
+
+			</join>
+		</subclass>
+    </class>
+</hibernate-mapping>

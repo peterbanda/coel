@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcTranslationVariable" table="AC_TRANSLATION_VAR" schema="public">
+        <cache usage="nonstrict-read-write" />
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_TRANSLATION_VAR_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="variableIndex" type="java.lang.Integer">
+            <column name="variable_index" not-null="true" />
+        </property>
+
+        <property name="label" type="java.lang.String">
+            <column name="label" length="30" not-null="true" />
+        </property>
+
+        <many-to-one name="parentSet" class="com.banda.chemistry.domain.AcTranslationSeries" fetch="select">
+            <column name="translation_series_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.banda.math.domain.dynamics.MultiRunAnalysisResult" table="DYN_MULTI_ANALYSIS_RESULT" schema="public" discriminator-value="null">
+
+		<id name="id" type="long">
+			<column name="id" />
+			<generator
+				class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+				<param name="delegate">sequence</param>
+				<param name="sequence">DYN_MULTI_ANALYSIS_RESULT_ID_SEQ</param>
+			</generator>
+		</id>
+
+		<discriminator column="ac_id" insert="false" type="long"/>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="spec" class="com.banda.math.domain.dynamics.MultiRunAnalysisSpec" lazy="proxy" fetch="select">
+            <column name="spec_id" not-null="true" />
+        </many-to-one>
+
+        <bag name="singleRunResults" lazy="true" inverse="false" fetch="select" order-by="time_created" batch-size="10" cascade="all">
+            <key column="multi_run_result_id"/>
+            <one-to-many class="com.banda.math.domain.dynamics.SingleRunAnalysisResult" />
+        </bag>
+
+        <subclass name="com.banda.chemistry.domain.AcMultiRunAnalysisResult" discriminator-value="not null">
+
+        	<many-to-one name="ac" class="com.banda.chemistry.domain.ArtificialChemistry" lazy="proxy" fetch="select">
+            	<column name="ac_id" not-null="true" />
+        	</many-to-one>
+ 		</subclass>
+	</class>
+
+ 	<query name="findSpatialCorrelationsStats">
+ 	<![CDATA[
+ 	 	select stat from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult inner join singleRunResult.spatialCorrelations statsSeq inner join statsSeq.stats stat 		
+ 		where multiRunResult.id in (:multiRunResultIds) order by stat.pos
+ 	]]>
+ 	</query>
+	
+ 	<query name="findTimeCorrelationsStats">
+ 	<![CDATA[
+ 	 	select stat from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult inner join singleRunResult.timeCorrelations statsSeq inner join statsSeq.stats stat 		
+ 		where multiRunResult.id in (:multiRunResultIds) order by stat.pos
+ 	]]>
+ 	</query>
+
+  	<query name="findSpatialStationaryPointsPerTimeStats">
+ 	<![CDATA[
+  	 	select stat from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult inner join singleRunResult.spatialStationaryPointsPerTime statsSeq inner join statsSeq.stats stat 		
+ 		where multiRunResult.id in (:multiRunResultIds) order by stat.pos
+ 	]]>
+ 	</query>
+
+ 	<query name="findTimeStationaryPointsPerTimeStats">
+ 	<![CDATA[
+ 	 	select stat from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult inner join singleRunResult.timeStationaryPointsPerTime statsSeq inner join statsSeq.stats stat 		
+ 		where multiRunResult.id in (:multiRunResultIds) order by stat.pos
+ 	]]>
+ 	</query>
+
+ 	<query name="findSpatialCumulativeDiffPerTimeStats">
+ 	<![CDATA[
+ 	 	select stat from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult inner join singleRunResult.spatialCumulativeDiffPerTime statsSeq inner join statsSeq.stats stat 		
+ 		where multiRunResult.id in (:multiRunResultIds) order by stat.pos
+ 	]]>
+ 	</query>
+
+ 	<query name="findTimeCumulativeDiffPerTimeStats">
+ 	<![CDATA[
+  	 	select stat from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult inner join singleRunResult.timeCumulativeDiffPerTime statsSeq inner join statsSeq.stats stat 		
+ 		where multiRunResult.id in (:multiRunResultIds) order by stat.pos
+ 	]]>
+ 	</query>
+
+ 	<query name="findSpatialNonlinearityErrorsStats">
+ 	<![CDATA[
+ 	 	select stat from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult inner join singleRunResult.spatialNonlinearityErrors statsSeq inner join statsSeq.stats stat 		
+ 		where multiRunResult.id in (:multiRunResultIds) order by stat.pos
+ 	]]>
+ 	</query>
+
+ 	<query name="findTimeNonlinearityErrorsStats">
+ 	<![CDATA[
+  	 	select stat from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult inner join singleRunResult.timeNonlinearityErrors statsSeq inner join statsSeq.stats stat 		
+ 		where multiRunResult.id in (:multiRunResultIds) order by stat.pos
+ 	]]>
+ 	</query>
+
+ 	<query name="findDerridaResultsStats">
+ 	<![CDATA[
+  	 	select stat from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult inner join singleRunResult.derridaResults statsSeq inner join statsSeq.stats stat 		
+ 		where multiRunResult.id in (:multiRunResultIds) order by stat.pos
+ 	]]>
+ 	</query> 
+
+  	<query name="findNeighborTimeCorrelations">
+ 	<![CDATA[
+ 	 	select singleRunResult.neighborTimeCorrelations from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult 		
+ 		where multiRunResult.id in (:multiRunResultIds)
+ 	]]>
+ 	</query>
+	
+ 	<query name="findFinalFixedPointsDetected">
+ 	<![CDATA[
+ 	 	select singleRunResult.finalFixedPointsDetected from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult 		
+ 		where multiRunResult.id in (:multiRunResultIds)
+ 	]]>
+ 	</query>
+
+  	<query name="findMeanFixedPointsDetected">
+ 	<![CDATA[
+ 	 	select singleRunResult.meanFixedPointsDetected from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult 		
+ 		where multiRunResult.id in (:multiRunResultIds)
+ 	]]>
+ 	</query>
+
+ 	<query name="findUnboundValuesDetected">
+ 	<![CDATA[
+ 	 	select singleRunResult.unboundValuesDetected from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult 		
+ 		where multiRunResult.id in (:multiRunResultIds)
+ 	]]>
+ 	</query>
+
+ 	<query name="findFinalLyapunovExponents">
+ 	<![CDATA[
+ 	 	select singleRunResult.finalLyapunovExponents from MultiRunAnalysisResult multiRunResult inner join multiRunResult.singleRunResults singleRunResult 		
+ 		where multiRunResult.id in (:multiRunResultIds)
+ 	]]>
+ 	</query>
+  
+</hibernate-mapping>

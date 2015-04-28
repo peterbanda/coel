@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>coel-domain</artifactId>
+	<packaging>jar</packaging>
+	<name>Domain</name>
+	<url>http://peterbanda.net</url>
+
+	<parent>
+		<artifactId>coel-parent</artifactId>
+		<groupId>edu.banda.coel</groupId>
+		<version>0.8.1</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.banda.chemistry</groupId>
+			<artifactId>banda-chemistry-domain</artifactId>
+			<version>${banda-lib.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.banda.math</groupId>
+			<artifactId>banda-math-domain</artifactId>
+			<version>${banda-lib.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.banda.network</groupId>
+			<artifactId>banda-network-domain</artifactId>
+			<version>${banda-lib.version}</version>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcTranslationItem" table="AC_TRANSLATION_ITEM" schema="public">
+        <cache usage="nonstrict-read-write" />
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_TRANSLATION_ITEM_ID_SEQ</param>
+   			</generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+ 
+        <many-to-one name="variable" class="com.banda.chemistry.domain.AcTranslationVariable" fetch="join">
+            <column name="translation_var_id" not-null="true"/>
+        </many-to-one>
+
+        <many-to-one name="translation" class="com.banda.chemistry.domain.AcTranslation" fetch="join">
+            <column name="translation_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="translationFunction" class="com.banda.function.domain.AbstractFunction" lazy="false" fetch="join" cascade="all">
+            <column name="translation_fun_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

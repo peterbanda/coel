@@ -1,0 +1,204 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>coel-business</artifactId>
+	<packaging>jar</packaging>
+	<name>Business</name>
+	<url>http://peterbanda.net</url>
+
+	<parent>
+		<groupId>edu.banda.coel</groupId>
+		<artifactId>coel-parent</artifactId>
+		<version>0.8.1</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>edu.banda.coel</groupId>
+			<artifactId>coel-domain</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.banda.function</groupId>
+			<artifactId>banda-function-business</artifactId>
+			<version>${banda-lib.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.banda.chemistry</groupId>
+			<artifactId>banda-chemistry-business</artifactId>
+			<version>${banda-lib.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.banda.network</groupId>
+			<artifactId>banda-network-business</artifactId>
+			<version>${banda-lib.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.banda.math</groupId>
+			<artifactId>banda-math-business</artifactId>
+			<version>${banda-lib.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.13</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jcommon</artifactId>
+			<version>1.0.15</version>
+		</dependency>
+
+		<dependency>
+			<groupId>libsbml</groupId>
+			<artifactId>libsbmlj</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.efficient-java-matrix-library</groupId>
+			<artifactId>ejml</artifactId>
+			<version>0.18</version>
+		</dependency>
+
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-svggen</artifactId>
+			<version>1.6-1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+  					<artifactId>xmlParserAPIs</artifactId>
+				</exclusion>
+
+				<exclusion>
+					<groupId>xerces</groupId>
+  					<artifactId>xercesImpl</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-swing</artifactId>
+			<version>1.6-1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<sourceDirectory>src/main/scala</sourceDirectory>
+    	<testSourceDirectory>src/test/scala</testSourceDirectory>
+        <plugins>
+			<plugin>
+				<groupId>org.scala-tools</groupId>
+				<artifactId>maven-scala-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<phase>compile</phase>
+					</execution>
+
+					<execution>
+						<id>test-compile</id>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<phase>test-compile</phase>
+					</execution>
+
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+          			<args>
+            			<arg>-optimise</arg>
+          			</args>
+        		</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<optimize>true</optimize>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+				</configuration>
+			</plugin>
+ 			<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-surefire-plugin</artifactId>
+        		<version>2.17</version>
+        		<configuration>
+          			<skipTests>true</skipTests>
+        		</configuration>
+      		</plugin>
+        </plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.scala-tools
+										</groupId>
+										<artifactId>
+											maven-scala-plugin
+										</artifactId>
+										<versionRange>
+											[2.15.2,)
+										</versionRange>
+										<goals>
+											<goal>compile</goal>
+											<goal>testCompile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+</project>

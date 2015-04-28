@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcCompartment" table="AC_COMPARTMENT" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_COMPARTMENT_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="label" type="java.lang.String">
+            <column name="label" length="100" not-null="true" />
+        </property>
+
+        <property name="createTime" type="timestamp">
+            <column name="create_time" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="reactionSet" class="com.banda.chemistry.domain.AcReactionSet" lazy="false" fetch="select">
+        	<column name="reaction_set_id" not-null="true"/>
+    	</many-to-one>   
+
+        <bag name="channels" inverse="true" lazy="false" fetch="select" order-by="id" cascade="all-delete-orphan">
+            <key column="compartment_id" not-null="true"/>
+            <one-to-many class="com.banda.chemistry.domain.AcCompartmentChannel" />
+        </bag>
+
+        <bag name="subChannelGroups" inverse="true" lazy="false" fetch="select" order-by="id" cascade="all-delete-orphan">
+            <key column="compartment_id" not-null="true"/>
+            <one-to-many class="com.banda.chemistry.domain.AcCompartmentChannelGroup" />
+        </bag>
+
+        <bag name="subCompartmentAssociations" inverse="true" lazy="false" fetch="select" order-by="pos" cascade="all">
+            <key column="parent_id" not-null="true"/>
+            <one-to-many class="com.banda.chemistry.domain.AcCompartmentAssociation" />
+        </bag>
+
+        <bag name="parentCompartmentAssociations" inverse="true" lazy="false" fetch="select" order-by="pos" cascade="all">
+            <key column="sub_id" not-null="true"/>
+            <one-to-many class="com.banda.chemistry.domain.AcCompartmentAssociation" />
+        </bag>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <bean id="artificialChemistryServiceJMS" class="org.springframework.jms.remoting.JmsInvokerServiceExporter">
+    	<property name="service" ref="artificialChemistryService"/>
+    	<property name="serviceInterface" value="edu.banda.coel.domain.service.ArtificialChemistryService"/>
+    </bean>
+
+    <bean id="evolutionServiceJMS" class="org.springframework.jms.remoting.JmsInvokerServiceExporter">
+    	<property name="service" ref="evolutionService"/>
+    	<property name="serviceInterface" value="edu.banda.coel.domain.service.EvolutionService"/>
+    </bean>
+
+    <bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="queue"/>
+        <property name="concurrentConsumers" value="3"/>
+        <property name="messageListener" ref="artificialChemistryServiceJMS"/>
+    </bean>
+
+    <bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="queue2"/>
+        <property name="concurrentConsumers" value="3"/>
+        <property name="messageListener" ref="evolutionServiceJMS"/>
+    </bean>
+
+<!-- 
+	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+   		<property name="serviceName" value="ArtificialChemistryService"/>
+    	<property name="service" ref="artificialChemistryService"/>
+    	<property name="serviceInterface" value="edu.banda.coel.domain.service.ArtificialChemistryService"/>
+    	<property name="registryPort" value="1199"/> // 1099
+	</bean>
+-->
+
+ 	<bean id="broker" class="org.apache.activemq.xbean.BrokerFactoryBean">
+   	    <property name="config" value="classpath:ActiveMQ/activemq.xml" />
+   	    <property name="start" value="true" />
+	</bean>
+
+    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory" depends-on="broker">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+    </bean>
+
+    <bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="mmm"/>
+    </bean>
+
+    <bean id="queue2" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="mmm2"/>
+    </bean>
+
+</beans>

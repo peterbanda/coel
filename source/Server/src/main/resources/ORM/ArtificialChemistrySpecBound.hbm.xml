@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.ArtificialChemistrySpecBound" table="AC_ARTIFICIAL_CHEMISTRY_SPEC_BOUND" schema="public" discriminator-value="X">
+        <cache usage="nonstrict-read-write" />
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_ARTIFICIAL_CHEMISTRY_SPEC_BOUND_ID_SEQ</param>
+   			</generator>
+        </id>
+
+    	<discriminator type="character">
+    		<formula>
+    			case 
+                	when species_num_lower_bound is not null then 'A'
+                	when single_strands_num_lower_bound is not null then 'S' 
+                	else 'X' 
+            	end
+    		</formula>
+		</discriminator>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="name" type="string">
+            <column name="name" length="100" not-null="true" />
+        </property>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <property name="influxRatioFrom" type="java.lang.Double">
+            <column name="influx_ratio_lower_bound" not-null="true" />
+        </property>
+
+        <property name="influxRatioTo" type="java.lang.Double">
+            <column name="influx_ratio_upper_bound" not-null="true" />
+        </property>
+
+        <property name="outfluxRatioFrom" type="java.lang.Double">
+            <column name="outflux_ratio_lower_bound" not-null="true" />
+        </property>
+
+        <property name="outfluxRatioTo" type="java.lang.Double">
+            <column name="outflux_ratio_upper_bound" not-null="true" />
+        </property>
+
+        <property name="constantSpeciesRatioFrom" type="java.lang.Double">
+            <column name="constant_species_ratio_lower_bound" not-null="true" />
+        </property>
+
+        <property name="constantSpeciesRatioTo" type="java.lang.Double">
+            <column name="constant_species_ratio_upper_bound" not-null="true" />
+        </property>
+
+        <property name="rateConstantDistributionShapeFrom" type="java.lang.Double">
+            <column name="rate_constant_distribution_shape_lower_bound" not-null="true" />
+        </property>
+
+        <property name="rateConstantDistributionShapeTo" type="java.lang.Double">
+            <column name="rate_constant_distribution_shape_upper_bound" not-null="true" />
+        </property>
+
+        <property name="rateConstantDistributionLocationFrom" type="java.lang.Double">
+            <column name="rate_constant_distribution_location_lower_bound" not-null="true" />
+        </property>
+
+        <property name="rateConstantDistributionLocationTo" type="java.lang.Double">
+            <column name="rate_constant_distribution_location_upper_bound" not-null="true" />
+        </property>
+
+        <property name="influxRateConstantDistributionShapeFrom" type="java.lang.Double">
+            <column name="influx_rate_constant_distribution_shape_lower_bound" not-null="true" />
+        </property>
+
+        <property name="influxRateConstantDistributionShapeTo" type="java.lang.Double">
+            <column name="influx_rate_constant_distribution_shape_upper_bound" not-null="true" />
+        </property>
+
+        <property name="influxRateConstantDistributionLocationFrom" type="java.lang.Double">
+            <column name="influx_rate_constant_distribution_location_lower_bound" not-null="true" />
+        </property>
+
+        <property name="influxRateConstantDistributionLocationTo" type="java.lang.Double">
+            <column name="influx_rate_constant_distribution_location_upper_bound" not-null="true" />
+        </property>
+
+        <property name="outfluxRateConstantDistributionShapeFrom" type="java.lang.Double">
+            <column name="outflux_rate_constant_distribution_shape_lower_bound" not-null="true" />
+        </property>
+
+        <property name="outfluxRateConstantDistributionShapeTo" type="java.lang.Double">
+            <column name="outflux_rate_constant_distribution_shape_upper_bound" not-null="true" />
+        </property>
+
+        <property name="outfluxRateConstantDistributionLocationFrom" type="java.lang.Double">
+            <column name="outflux_rate_constant_distribution_location_lower_bound" not-null="true" />
+        </property>
+
+        <property name="outfluxRateConstantDistributionLocationTo" type="java.lang.Double">
+            <column name="outflux_rate_constant_distribution_location_upper_bound" not-null="true" />
+        </property>
+
+        <property name="outfluxNonReactiveRateConstantDistributionShapeFrom" type="java.lang.Double">
+            <column name="outflux_non_reactive_rate_distribution_shape_lower_bound"/>
+        </property>
+
+        <property name="outfluxNonReactiveRateConstantDistributionShapeTo" type="java.lang.Double">
+            <column name="outflux_non_reactive_rate_distribution_shape_upper_bound" />
+        </property>
+
+        <property name="outfluxNonReactiveRateConstantDistributionLocationFrom" type="java.lang.Double">
+            <column name="outflux_non_reactive_rate_distribution_location_lower_bound"/>
+        </property>
+
+        <property name="outfluxNonReactiveRateConstantDistributionLocationTo" type="java.lang.Double">
+            <column name="outflux_non_reactive_rate_distribution_location_upper_bound"/>
+        </property>
+
+		<subclass name="com.banda.chemistry.domain.AcSymmetricSpecBound" discriminator-value="A">
+
+        	<property name="speciesNumFrom" type="java.lang.Integer">
+            	<column name="species_num_lower_bound" not-null="true" />
+        	</property>
+
+        	<property name="speciesNumTo" type="java.lang.Integer">
+            	<column name="species_num_upper_bound" not-null="true" />
+        	</property>
+
+			<property name="reactionNumFrom" type="java.lang.Integer">
+				<column name="reaction_num_lower_bound" not-null="true" />
+			</property>
+
+			<property name="reactionNumTo" type="java.lang.Integer">
+				<column name="reaction_num_upper_bound" not-null="true" />
+			</property>
+
+			<property name="reactantsPerReactionNumberFrom" type="java.lang.Integer">
+				<column name="reactants_per_reaction_number_lower_bound" not-null="true" />
+			</property>
+
+			<property name="reactantsPerReactionNumberTo" type="java.lang.Integer">
+				<column name="reactants_per_reaction_number_upper_bound" not-null="true" />
+			</property>
+
+			<property name="productsPerReactionNumberFrom" type="java.lang.Integer">
+				<column name="products_per_reaction_number_lower_bound" not-null="true" />
+			</property>
+
+			<property name="productsPerReactionNumberTo" type="java.lang.Integer">
+				<column name="products_per_reaction_number_upper_bound" not-null="true" />
+			</property>
+
+			<property name="catalystsPerReactionNumberFrom" type="java.lang.Integer">
+				<column name="catalysts_per_reaction_number_lower_bound" not-null="true" />
+			</property>
+
+			<property name="catalystsPerReactionNumberTo" type="java.lang.Integer">
+				<column name="catalysts_per_reaction_number_upper_bound" not-null="true" />
+			</property>
+
+			<property name="inhibitorsPerReactionNumberFrom" type="java.lang.Integer">
+				<column name="inhibitors_per_reaction_number_lower_bound" not-null="true" />
+			</property>
+
+			<property name="inhibitorsPerReactionNumberTo" type="java.lang.Integer">
+				<column name="inhibitors_per_reaction_number_upper_bound" not-null="true" />
+			</property>
+
+		</subclass>
+
+		<subclass name="com.banda.chemistry.domain.AcDNAStrandSpecBound" discriminator-value="S">
+
+        	<property name="singleStrandsNumFrom" type="java.lang.Integer">
+            	<column name="single_strands_num_lower_bound" not-null="true" />
+        	</property>
+
+        	<property name="singleStrandsNumTo" type="java.lang.Integer">
+            	<column name="single_strands_num_upper_bound" not-null="true" />
+        	</property>
+
+        	<property name="upperToLowerStrandRatioFrom" type="java.lang.Double">
+            	<column name="upper_to_lower_strand_ratio_lower_bound" not-null="true" />
+        	</property>
+
+        	<property name="upperToLowerStrandRatioTo" type="java.lang.Double">
+            	<column name="upper_to_lower_strand_ratio_upper_bound" not-null="true" />
+        	</property>
+
+        	<property name="complementaryStrandsRatioFrom" type="java.lang.Double">
+            	<column name="complementary_strands_ratio_lower_bound" not-null="true" />
+        	</property>
+
+        	<property name="complementaryStrandsRatioTo" type="java.lang.Double">
+            	<column name="complementary_strands_ratio_upper_bound" not-null="true" />
+        	</property>
+
+        	<property name="upperStrandPartialBindingDistributionShapeFrom" type="java.lang.Double">
+            	<column name="upper_strand_partial_binding_distribution_shape_lower_bound" not-null="true" />
+        	</property>
+
+        	<property name="upperStrandPartialBindingDistributionShapeTo" type="java.lang.Double">
+            	<column name="upper_strand_partial_binding_distribution_shape_upper_bound" not-null="true" />
+        	</property>
+
+        	<property name="upperStrandPartialBindingDistributionLocationFrom" type="java.lang.Double">
+            	<column name="upper_strand_partial_binding_distribution_location_lower_bound" not-null="true" />
+        	</property>
+
+        	<property name="upperStrandPartialBindingDistributionLocationTo" type="java.lang.Double">
+            	<column name="upper_strand_partial_binding_distribution_location_upper_bound" not-null="true" />
+        	</property>
+
+        	<property name="useGlobalOrder" type="java.lang.Boolean">
+            	<column name="use_global_order" not-null="true" />
+        	</property>
+		</subclass>
+    </class>
+</hibernate-mapping>

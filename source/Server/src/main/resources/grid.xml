@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_FALLBACK"/>
+        <property name="searchSystemEnvironment" value="true"/>
+   		<property name="locations">
+        	<list>
+				<value>classpath*:server.properties</value>
+			</list>
+		</property>
+	</bean>
+
+    <bean id="grid" class="org.gridgain.grid.GridSpringBean" scope="singleton">
+	    <property name="configuration" ref="grid.cfg"/>
+	</bean>
+
+    <bean id="computationalGrid" class="com.banda.serverbase.grid.GridGainComputationalGrid" scope="singleton">
+		<property name="grid" ref="grid" />
+	</bean>
+
+	<bean id="gridThreadPoolExecutorFactory" class="com.banda.serverbase.grid.GridThreadPoolExecutorFactory">
+		<property name="corePoolSize" value="28"/>
+		<property name="maximumPoolSize" value="28"/>
+	</bean>
+
+    <!--
+        Grid configuration.
+    -->
+    <bean id="grid.cfg" class="org.gridgain.grid.GridConfiguration" scope="singleton">
+
+        <property name="gridName" value="tlabGrid"/>
+
+        <property name="marshaller">
+            <bean class="${grid.marshaller.class}"/>
+        </property>
+
+		<property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.tcp.GridTcpDiscoverySpi">
+				<property name="heartbeatFrequency" value="4000"/>
+				<property name="networkTimeout" value="15000"/>
+				<property name="socketTimeout" value="15000"/>
+				<property name="maxMissedHeartbeats" value="2"/>
+				<property name="metricsStore" ref="#{'${grid.metrics.tempfolder}'.equals('') ? 'gridNoMetricsStore' : 'gridTcpDiscoverySharedFsMetricsStore'}" />
+<!--
+				<property name="localAddress" value="127.0.0.1"/>
+-->
+            	<property name="ipFinder" ref="#{'${grid.fsdiscovery.enabled}'.equals('true') ? 'gridTcpDiscoverySharedFsIpFinder' : 'gridTcpDiscoveryVmIpFinder'}" />
+            </bean>
+        </property>
+
+<!--
+		<property name="executorService" ref="gridThreadPoolExecutorFactory"/>
+
+    	<property name="executorService">
+        	<bean class="org.gridgain.grid.thread.GridThreadPoolExecutor">
+            	<constructor-arg type="int" value="64"/>
+            	<constructor-arg type="int" value="200"/>
+            	<constructor-arg type="long" value="10000"/>
+            	<constructor-arg type="java.util.concurrent.BlockingQueue">
+                	<bean class="java.util.concurrent.LinkedBlockingQueue"/>
+            	</constructor-arg>
+        	</bean>
+    	</property>
+-->
+ 
+      	<property name="restEnabled" value="false"/>
+ 
+		<property name="loadBalancingSpi">
+	    	<bean class="org.gridgain.grid.spi.loadbalancing.adaptive.GridAdaptiveLoadBalancingSpi">
+	        	<property name="loadProbe">
+	            	<bean class="org.gridgain.grid.spi.loadbalancing.adaptive.GridAdaptiveProcessingTimeLoadProbe"/> 
+	        	</property>
+	    	</bean>
+	    </property>
+
+		<property name="collisionSpi" ref="#{'${grid.stealing.enabled}'.equals('true') ? 'gridJobStealingCollisionSpi' : 'gridNoopCollisionSpi'}" />
+
+		<property name="failoverSpi" ref="#{'${grid.stealing.enabled}'.equals('true') ? 'gridJobStealingFailoverSpi' : 'gridAlwaysFailoverSpi'}" />
+
+        <property name="swapSpaceSpi">
+            <bean class="org.gridgain.grid.spi.swapspace.noop.GridNoopSwapSpaceSpi"/>
+        </property>
+    </bean>
+
+	<bean id="gridTcpDiscoveryVmIpFinder" class="org.gridgain.grid.spi.discovery.tcp.ipfinder.vm.GridTcpDiscoveryVmIpFinder">                    
+ 		<property name="shared" value="true"/>
+		<property name="addresses">
+			<list>
+				<value>${grid.master.address}</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="gridTcpDiscoverySharedFsIpFinder" class="org.gridgain.grid.spi.discovery.tcp.ipfinder.sharedfs.GridTcpDiscoverySharedFsIpFinder"/>
+
+	<bean id="gridNoMetricsStore" class="com.banda.serverbase.NullFactoryBean"/>
+
+	<bean id="gridTcpDiscoveryVmMetricsStore" class="org.gridgain.grid.spi.discovery.tcp.metricsstore.vm.GridTcpDiscoveryVmMetricsStore"/>
+
+	<bean id="gridTcpDiscoverySharedFsMetricsStore" class="org.gridgain.grid.spi.discovery.tcp.metricsstore.sharedfs.GridTcpDiscoverySharedFsMetricsStore">
+		<property name="path" value="${grid.metrics.tempfolder}"/>
+	</bean>
+
+    <bean id="gridJobStealingCollisionSpi" class="org.gridgain.grid.spi.collision.jobstealing.GridJobStealingCollisionSpi">
+		<property name="activeJobsThreshold" value="28"/>
+        <property name="waitJobsThreshold" value="0"/>
+        <property name="messageExpireTime" value="3000"/>
+        <property name="maximumStealingAttempts" value="5"/>
+        <property name="stealingEnabled" value="true"/>
+    </bean>
+
+    <bean id="gridNoopCollisionSpi" class="org.gridgain.grid.spi.collision.noop.GridNoopCollisionSpi"/>
+
+	<bean id="gridJobStealingFailoverSpi" class="org.gridgain.grid.spi.failover.jobstealing.GridJobStealingFailoverSpi">
+		<property name="maximumFailoverAttempts" value="5"/>
+	</bean>
+
+    <bean id="gridAlwaysFailoverSpi" class="org.gridgain.grid.spi.failover.always.GridAlwaysFailoverSpi">
+        <property name="maximumFailoverAttempts" value="5"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcSpeciesReactionAssociation" table="AC_SPECIES_REACTION_ASSOCIATION" schema="public">
+        <cache usage="nonstrict-read-write" />
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_SPECIES_REACTION_ASSOCIATION_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="stoichiometricFactor" type="java.lang.Double">
+            <column name="stoichiometric_factor"/>
+        </property>
+
+        <many-to-one name="species" class="com.banda.chemistry.domain.AcSpecies" fetch="join">
+            <column name="species_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="reaction" class="com.banda.chemistry.domain.AcReaction" lazy="false" fetch="select">
+            <column name="reaction_id" not-null="true" />
+        </many-to-one>
+
+        <property name="type">
+            <column name="assoc_type" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.chemistry.domain.AcSpeciesAssociationType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <property name="order" type="java.lang.Integer">
+            <column name="pos"/>
+        </property>
+    </class>
+</hibernate-mapping>

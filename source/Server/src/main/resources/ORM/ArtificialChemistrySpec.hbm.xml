@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.ArtificialChemistrySpec" table="AC_ARTIFICIAL_CHEMISTRY_SPEC" schema="public" discriminator-value="X">
+        <cache usage="nonstrict-read-write" />
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_ARTIFICIAL_CHEMISTRY_SPEC_ID_SEQ</param>
+   			</generator>
+        </id>
+
+    	<discriminator type="character">
+    		<formula>
+    			case 
+                	when reactants_per_reaction_number is not null then 'A'
+                	when single_strands_num is not null then 'D'  
+                	else 'X' 
+            	end
+    		</formula>
+		</discriminator>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="name" type="string">
+            <column name="name" length="100" not-null="true" />
+        </property>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="rateConstantDistribution" class="com.banda.math.domain.rand.RandomDistribution" lazy="false" fetch="join" cascade="all">
+			<column name="rate_constant_distribution_id" not-null="true" />
+		</many-to-one>
+
+        <property name="speciesForbiddenRedundancy">
+            <column name="species_forbidden_redundancy" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.chemistry.domain.AcReactionSpeciesForbiddenRedundancy</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <property name="influxRatio" type="java.lang.Double">
+            <column name="influx_ratio" not-null="true" />
+        </property>
+
+        <property name="outfluxRatio" type="java.lang.Double">
+            <column name="outflux_ratio" not-null="true" />
+        </property>
+
+		<many-to-one name="influxRateConstantDistribution" class="com.banda.math.domain.rand.RandomDistribution" lazy="false" fetch="select" cascade="all">
+			<column name="influx_rate_constant_distribution_id"/>
+		</many-to-one>
+
+		<many-to-one name="outfluxRateConstantDistribution" class="com.banda.math.domain.rand.RandomDistribution" lazy="false" fetch="select" cascade="all">
+			<column name="outflux_rate_constant_distribution_id"/>
+		</many-to-one>
+
+        <property name="constantSpeciesRatio" type="java.lang.Double">
+            <column name="constant_species_ratio" not-null="true" />
+        </property>
+
+        <property name="outfluxAll" type="boolean">
+            <column name="outflux_all" not-null="true" />
+        </property>
+
+		<many-to-one name="outfluxNonReactiveRateConstantDistribution" class="com.banda.math.domain.rand.RandomDistribution" lazy="false" fetch="select" cascade="all">
+			<column name="outflux_non_reactive_rate_distribution_id"/>
+		</many-to-one>
+ 
+        <bag name="acs" lazy="true" inverse="true" fetch="select" order-by="create_time"  batch-size="10" cascade="all">
+            <key column="generated_by_spec_id"/>
+            <one-to-many class="com.banda.chemistry.domain.ArtificialChemistry" />
+        </bag>
+
+		<subclass name="com.banda.chemistry.domain.AcSymmetricSpec" discriminator-value="A">
+
+        	<property name="speciesNum" type="java.lang.Integer">
+            	<column name="species_num" not-null="true" />
+        	</property>
+
+			<property name="reactionNum" type="java.lang.Integer">
+				<column name="reaction_num" not-null="true" />
+			</property>
+
+			<property name="reactantsPerReactionNumber" type="java.lang.Integer">
+				<column name="reactants_per_reaction_number" not-null="true" />
+			</property>
+
+			<property name="productsPerReactionNumber" type="java.lang.Integer">
+				<column name="products_per_reaction_number" not-null="true" />
+			</property>
+
+			<property name="catalystsPerReactionNumber" type="java.lang.Integer">
+				<column name="catalysts_per_reaction_number" not-null="true" />
+			</property>
+
+			<property name="inhibitorsPerReactionNumber" type="java.lang.Integer">
+				<column name="inhibitors_per_reaction_number" not-null="true" />
+			</property>
+
+		</subclass>
+
+		<subclass name="com.banda.chemistry.domain.AcDNAStrandSpec" discriminator-value="D">
+
+        	<property name="singleStrandsNum" type="java.lang.Integer">
+            	<column name="single_strands_num" not-null="true" />
+        	</property>
+
+        	<property name="upperToLowerStrandRatio" type="java.lang.Double">
+            	<column name="upper_to_lower_strand_ratio" not-null="true" />
+        	</property>
+
+        	<property name="complementaryStrandsRatio" type="java.lang.Double">
+            	<column name="complementary_strands_ratio" not-null="true" />
+        	</property>
+
+			<many-to-one name="upperStrandPartialBindingDistribution" class="com.banda.math.domain.rand.RandomDistribution" lazy="false" fetch="select" cascade="all">
+				<column name="upper_strand_partial_binding_distribution_id" not-null="true" />
+			</many-to-one>
+
+        	<property name="mirrorComplementarity" type="java.lang.Boolean">
+            	<column name="mirror_complementarity" not-null="true" />
+        	</property>
+
+        	<property name="useGlobalOrder" type="java.lang.Boolean">
+            	<column name="use_global_order" not-null="true" />
+        	</property>
+ 
+		</subclass>
+    </class>
+</hibernate-mapping>

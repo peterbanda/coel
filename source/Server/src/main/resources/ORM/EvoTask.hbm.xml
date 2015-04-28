@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <typedef name="reactionRateConstantType" class="org.hibernate.type.EnumType">
+    	<param name="enumClass">com.banda.chemistry.domain.AcRateConstantType</param>
+        <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+    </typedef>
+
+    <class name="com.banda.math.domain.evo.EvoTask" table="EVO_AC_TASK" schema="public" discriminator-value="X">
+        <cache usage="nonstrict-read-write" />
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">EVO_AC_TASK_ID_SEQ</param>
+   			</generator>
+        </id>
+
+    	<discriminator type="character">
+    		<formula>
+    			case 
+                	when task_type = 0 then 'A'
+                	when task_type = 5 then 'I'
+                	when spec_bound_id is not null then 'S'
+                	when network_id is not null then 'N'
+                	else 'X' 
+            	end
+    		</formula>
+		</discriminator>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="name" type="java.lang.String">
+            <column name="name" length="200" not-null="true"/>
+        </property>
+
+        <property name="createTime" type="timestamp">
+            <column name="create_time" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <property name="taskType">
+            <column name="task_type" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.math.domain.evo.EvoTaskType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+	    <many-to-one name="gaSetting" class="com.banda.math.domain.evo.EvoGaSetting" fetch="join">
+	    	<column name="ga_setting_id" not-null="true" />
+        </many-to-one>
+
+        <bag name="evolutionRuns" lazy="true" inverse="true" fetch="select" cascade="all" order-by="time_created">
+            <key column="evo_task_id" not-null="true" />
+            <one-to-many class="com.banda.math.domain.evo.EvoRun"/>
+        </bag>
+
+    	<subclass name="edu.banda.coel.domain.evo.EvoAcRateConstantTask" discriminator-value="A">
+
+        	<property name="asRepetitions" type="java.lang.Integer">
+            	<column name="as_repetitions" not-null="true" />
+        	</property>
+
+	    	<many-to-one name="ac" class="com.banda.chemistry.domain.ArtificialChemistry" fetch="select" lazy="proxy">
+            	<column name="ac_id" not-null="true" />
+        	</many-to-one>
+
+	    	<many-to-one name="acEvaluation" class="com.banda.chemistry.domain.AcEvaluation" fetch="select" lazy="proxy">
+            	<column name="ac_evaluation_id" not-null="true" />
+        	</many-to-one>
+
+	    	<property name="runSteps" type="java.lang.Integer">
+            	<column name="run_steps" not-null="true" />
+        	</property>
+
+	    	<property name="lastEvaluationStepsToCount" type="java.lang.Integer">
+            	<column name="last_eval_steps_to_count" />
+        	</property>        
+ 
+        	<set name="actionSeries" lazy="true" table="evo_ac_task_action_series_mapping">
+        		<key column="evo_ac_task_id" />
+      			<many-to-many column="action_series_id" class="com.banda.chemistry.domain.AcInteractionSeries" />
+    		</set>
+
+        	<bag name="rateConstantTypeBounds" lazy="true" table="evo_ac_task_rate_constant_type_bound_mapping">
+ 				<key column="evo_ac_task_id"/>
+      			<many-to-many column="rate_constant_type_bound_id" class="com.banda.chemistry.domain.AcRateConstantTypeBound"/>
+    		</bag>
+
+        	<bag name="fixedRateReactions" lazy="true" table="evo_ac_task_reaction_mapping">
+ 				<key column="evo_ac_task_id"/>
+      			<many-to-many column="reaction_id" class="com.banda.chemistry.domain.AcReaction"/>
+    		</bag>
+
+        	<bag name="fixedRateReactionGroups" lazy="true" table="evo_ac_task_reaction_group_mapping">
+ 				<key column="evo_ac_task_id"/>
+      			<many-to-many column="reaction_group_id" class="com.banda.chemistry.domain.AcReactionGroup"/>
+    		</bag>
+
+ 		</subclass>
+
+    	<subclass name="edu.banda.coel.domain.evo.EvoAcInteractionSeriesTask" discriminator-value="I">
+
+        	<property name="asRepetitions" type="java.lang.Integer">
+            	<column name="as_repetitions" not-null="true" />
+        	</property>
+
+	    	<many-to-one name="ac" class="com.banda.chemistry.domain.ArtificialChemistry" fetch="select" lazy="proxy">
+            	<column name="ac_id" not-null="true" />
+        	</many-to-one>
+
+	    	<many-to-one name="acEvaluation" class="com.banda.chemistry.domain.AcEvaluation" fetch="select" lazy="proxy">
+            	<column name="ac_evaluation_id" not-null="true" />
+        	</many-to-one>
+
+	    	<property name="runSteps" type="java.lang.Integer">
+            	<column name="run_steps" not-null="true" />
+        	</property>
+
+	    	<property name="lastEvaluationStepsToCount" type="java.lang.Integer">
+            	<column name="last_eval_steps_to_count" />
+        	</property>        
+ 
+        	<set name="actionSeries" lazy="false" table="evo_ac_task_action_series_mapping">
+        		<key column="evo_ac_task_id" />
+      			<many-to-many column="action_series_id" class="com.banda.chemistry.domain.AcInteractionSeries" />
+    		</set>
+
+        	<set name="speciesAssignmentBounds" fetch="join" cascade="all-delete-orphan" >
+ 				<key column="evo_task_id" not-null="true"/>
+      			<one-to-many class="edu.banda.coel.domain.evo.AcSpeciesAssignmentBound"/>
+    		</set>
+
+        	<set name="variableAssignmentBounds" fetch="join" cascade="all-delete-orphan" >
+ 				<key column="evo_task_id" not-null="true"/>
+      			<one-to-many class="edu.banda.coel.domain.evo.AcInteractionVariableAssignmentBound"/>
+    		</set>
+
+ 		</subclass>
+
+    	<subclass name="edu.banda.coel.domain.evo.EvoAcSpecTask" discriminator-value="S">
+
+	    	<many-to-one name="acSpecBound" class="com.banda.chemistry.domain.ArtificialChemistrySpecBound" fetch="select" lazy="proxy">
+            	<column name="spec_bound_id" not-null="true" />
+        	</many-to-one>
+
+	    	<many-to-one name="simConfig" class="com.banda.chemistry.domain.AcSimulationConfig" fetch="select" lazy="proxy">
+            	<column name="sim_config_id" not-null="true" />
+        	</many-to-one>
+
+	    	<many-to-one name="multiRunAnalysisSpec" class="com.banda.math.domain.dynamics.MultiRunAnalysisSpec" fetch="select" lazy="proxy">
+            	<column name="multi_run_analysis_spec_id" not-null="true" />
+        	</many-to-one>
+
+ 		</subclass>
+
+    	<subclass name="edu.banda.coel.domain.evo.EvoNetworkTask" discriminator-value="N">
+
+        	<property name="asRepetitions" type="java.lang.Integer">
+            	<column name="as_repetitions" not-null="true" />
+        	</property>
+
+	    	<many-to-one name="network" class="com.banda.network.domain.Network" fetch="select">
+            	<column name="network_id" not-null="true" />
+        	</many-to-one>
+
+	    	<many-to-one name="evaluation" class="com.banda.network.domain.NetworkEvaluation" fetch="select" lazy="proxy">
+            	<column name="network_evaluation_id" not-null="true" />
+        	</many-to-one>
+
+	    	<property name="runTime" type="java.lang.Integer">
+            	<column name="run_steps" not-null="true" />
+        	</property>
+ 
+			<property name="fixedPointDetectionPeriodicity" type="java.lang.Double">
+				<column name="fixed_point_detection_periodicity" />
+			</property>
+
+        	<set name="actionSeries" lazy="true" table="evo_net_task_action_series_mapping">
+        		<key column="evo_task_id" />
+      			<many-to-many column="action_series_id" class="com.banda.network.domain.NetworkActionSeries" />
+    		</set>
+
+ 		</subclass>
+    </class>
+</hibernate-mapping>

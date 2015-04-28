@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.network.domain.NetworkEvaluationItem" table="NET_EVALUATION_ITEM" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">NET_EVALUATION_ITEM_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+ 
+        <many-to-one name="variable" class="com.banda.network.domain.NetworkEvaluationVariable" fetch="join">
+            <column name="evaluation_var_id" not-null="true"/>
+        </many-to-one>
+
+        <many-to-one name="evaluation" class="com.banda.network.domain.NetworkEvaluation" fetch="join">
+            <column name="evaluation_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="evalFunction" class="com.banda.function.domain.AbstractFunction" lazy="false" fetch="join" cascade="all">
+            <column name="eval_fun_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

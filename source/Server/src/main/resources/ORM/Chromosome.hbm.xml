@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.math.domain.evo.Chromosome" table="EVO_CHROMOSOME" abstract="true" discriminator-value="X">
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">EVO_CHROMOSOME_ID_SEQ</param>
+   			</generator>
+        </id>
+
+    	<discriminator type="character">
+    		<formula>
+    			case 
+                	when array_code is not null then 'A'  
+                	else 'X' 
+            	end
+    		</formula>
+		</discriminator>
+
+        <property name="score" type="double">
+            <column name="score" />
+        </property>
+
+        <property name="fitness" type="double">
+            <column name="fitness" />
+        </property>
+
+        <many-to-one name="population" class="com.banda.math.domain.evo.Population">
+            <column name="population_id"/>
+        </many-to-one>
+
+		<subclass name="com.banda.math.domain.evo.ArrayChromosome" discriminator-value="A">
+
+<!-- 
+        	<property name="code" type="edu.banda.coel.server.common.SQLArrayUserType$NUMBER">
+            	<column name="array_code" not-null="true" sql-type="float8[]"/>
+        	</property>
+-->
+
+	        <property name="code" type="edu.banda.coel.server.common.SQLArrayUserType$GENERIC">
+            	<column name="array_code" sql-type="text[]" not-null="true"/>
+    	    	<column name="type_name" sql-type="text" not-null="true"/>
+       		</property>
+
+		</subclass>
+    </class>
+</hibernate-mapping>

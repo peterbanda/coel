@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.ArtificialChemistry" table="AC_ARTIFICIAL_CHEMISTRY" schema="public">
+        <cache usage="nonstrict-read-write" />
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_ARTIFICIAL_CHEMISTRY_ID_SEQ</param>
+   			</generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="name" type="string">
+            <column name="name" length="100" not-null="true" />
+        </property>
+
+        <property name="createTime" type="timestamp">
+            <column name="create_time" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by"/>
+        </many-to-one>
+
+        <many-to-one name="generatedBySpec" class="com.banda.chemistry.domain.ArtificialChemistrySpec" lazy="proxy" fetch="select">
+            <column name="generated_by_spec_id"/>
+        </many-to-one>
+
+        <many-to-one name="simulationConfig" class="com.banda.chemistry.domain.AcSimulationConfig" fetch="join">
+            <column name="simulation_config_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="skinCompartment" class="com.banda.chemistry.domain.AcCompartment" fetch="join">
+        	<column name="skin_compartment_id" not-null="true" />
+    	</many-to-one>
+
+	    <bag name="multiRunAnalysisResults" lazy="false" inverse="true" fetch="select" cascade="delete" batch-size="10" order-by="time_created">
+            <key column="ac_id" not-null="true"/>
+            <one-to-many class="com.banda.chemistry.domain.AcMultiRunAnalysisResult" />
+        </bag>
+    </class>
+
+ 	<query name="findMultiRunAnalysisResultIds">
+ 	<![CDATA[
+ 	 	select ac.id, multiRunAnalysisResult.id from ArtificialChemistry ac inner join ac.multiRunAnalysisResults multiRunAnalysisResult 		
+ 		where ac.id in (:acIds)
+ 	]]>
+ 	</query>
+
+</hibernate-mapping>

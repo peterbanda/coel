@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="sessionFactory">
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/coel</property>
+        <property name="hibernate.connection.username">xxxx</property>
+        <property name="hibernate.connection.password">xxxx</property>
+
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.jdbc.batch_size">30</property>
+		<property name="hibernate.order_inserts">true</property>
+        <property name="hibernate.order_updates">true</property>
+        <property name="hibernate.flush.mode">manual</property>
+        <!-- TODO: investigate why naming_strategy is ignored here -->
+        <property name="hibernate.ejb.naming_strategy">org.hibernate.cfg.DefaultNamingStrategy</property>
+
+<!-- 
+		<mapping resource="ORM/ArtificialChemistry.hbm.xml" />
+		<mapping resource="ORM/AcSpecies.hbm.xml" />
+		<mapping resource="ORM/AcSpeciesSet.hbm.xml" />
+		<mapping resource="ORM/AcParameter.hbm.xml" />
+		<mapping resource="ORM/AcParameterSet.hbm.xml" />
+		<mapping resource="ORM/AcReaction.hbm.xml" />
+		<mapping resource="ORM/AcSpeciesReactionAssociation.hbm.xml" />
+		<mapping resource="ORM/AcReactionSet.hbm.xml" />
+		<mapping resource="ORM/AcReactionGroup.hbm.xml" />
+		<mapping resource="ORM/AcCompartment.hbm.xml" />
+
+		<mapping resource="ORM/AcSpeciesInteraction.hbm.xml" />
+		<mapping resource="ORM/AcInteraction.hbm.xml" />
+		<mapping resource="ORM/AcInteractionSeries.hbm.xml" />						
+
+		<mapping resource="ORM/AcTranslationVariable.hbm.xml" />
+		<mapping resource="ORM/AcTranslationItem.hbm.xml" />
+		<mapping resource="ORM/AcTranslation.hbm.xml" />
+		<mapping resource="ORM/AcTranslationSeries.hbm.xml" />						
+		<mapping resource="ORM/AcTask.hbm.xml" />
+		<mapping resource="ORM/AcEvaluation.hbm.xml" />
+ -->
+ 
+		<mapping resource="ORM/AcEvaluatedPerformance.hbm.xml" />
+<!--
+		<mapping resource="ORM/Edge.hbm.xml" />
+		<mapping resource="ORM/Function.hbm.xml" />
+		<mapping resource="ORM/Layer.hbm.xml" />
+		<mapping resource="ORM/NetworkConfiguration.hbm.xml" />
+		<mapping resource="ORM/NetworkDefinition.hbm.xml" />
+		<mapping resource="ORM/NetworkFunction.hbm.xml" />
+		<mapping resource="ORM/NetworkRun.hbm.xml" />
+		<mapping resource="ORM/NetworkType.hbm.xml" />
+		<mapping resource="ORM/NodeFunction.hbm.xml" />
+		<mapping resource="ORM/Topology.hbm.xml" />
+		<mapping resource="ORM/Vertex.hbm.xml" />
+
+		<mapping resource="ORM/Role.hbm.xml" />
+		<mapping resource="ORM/User.hbm.xml" />
+		
+		<mapping resource="ORM/AcRateConstantTypeBound.hbm.xml" />
+		<mapping resource="ORM/EvoGaSetting.hbm.xml" />
+		<mapping resource="ORM/EvoTask.hbm.xml" />
+		<mapping resource="ORM/EvoRun.hbm.xml" />
+		<mapping resource="ORM/Population.hbm.xml" />
+		<mapping resource="ORM/Chromosome.hbm.xml" />
+ -->
+    </session-factory>
+</hibernate-configuration>

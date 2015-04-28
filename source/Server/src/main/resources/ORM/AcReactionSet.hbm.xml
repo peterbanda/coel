@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcReactionSet" table="AC_REACTION_SET" schema="public">
+    
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_REACTION_SET_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="label" type="string">
+            <column name="label" length="100" not-null="true" />
+        </property>
+
+        <property name="createTime" type="timestamp">
+            <column name="create_time" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="speciesSet" class="com.banda.chemistry.domain.AcSpeciesSet" lazy="false" fetch="select">
+            <column name="species_set_id" not-null="true" />
+        </many-to-one>
+
+        <bag name="reactions" lazy="false" inverse="true" fetch="join" order-by="label" cascade="all-delete-orphan">
+            <key column="reaction_set_id" not-null="true"/>
+            <one-to-many class="com.banda.chemistry.domain.AcReaction" />
+        </bag>
+
+        <bag name="groups" lazy="false" inverse="true" fetch="subselect" order-by="id" cascade="all">
+            <key>
+                <column name="reaction_set_id" />
+            </key>
+            <one-to-many class="com.banda.chemistry.domain.AcReactionGroup" />
+        </bag>
+    </class>
+</hibernate-mapping>

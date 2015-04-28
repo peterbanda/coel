@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+ 	<import resource="classpath:serverbase.xml"/>
+ 	<import resource="classpath:network-conf.xml"/>
+ 	<import resource="classpath:chemistry-conf.xml"/>
+ 
+    <bean id="applicationEventMulticaster" class="org.springframework.context.event.SimpleApplicationEventMulticaster">  
+    	<property name="taskExecutor">
+    		<bean class="org.springframework.core.task.SyncTaskExecutor"/>
+    		<!--
+        	<bean class="org.springframework.scheduling.timer.TimerTaskExecutor"/>
+        	 -->  
+        </property>  
+   	</bean>  
+
+	<bean id="chemistryRunCall" class="edu.banda.coel.server.grid.callable.GridChemistryRunCall">
+		<constructor-arg ref="chemistryRunnableFactory"/>
+	</bean>
+
+	<bean id="chemistryRunAndInterpretCall" class="edu.banda.coel.server.grid.callable.GridChemistryRunAndInterpretCall">
+		<constructor-arg ref="chemistryRunnableFactory"/>
+		<constructor-arg ref="chemistryInterpretationFactory"/>
+	</bean>
+
+	<bean id="acEvaluateCall" class="edu.banda.coel.server.grid.callable.GridAcEvaluateCall">
+		<constructor-arg ref="acEvaluationBOFactory"/>
+	</bean>
+ 
+ 	<bean id="networkRunCall" class="edu.banda.coel.server.grid.callable.GridNetworkRunCall">
+		<constructor-arg ref="metaNetworkRunnableFactory"/>
+	</bean>
+
+ 	<bean id="networkRunAndEvaluateCallFactory" class="edu.banda.coel.server.grid.callable.GridNetworkRunAndEvaluateCallFactoryImpl">
+		<constructor-arg ref="metaNetworkRunnableFactory"/>
+		<constructor-arg ref="functionEvaluatorFactory"/>
+	</bean>
+
+ 	<bean id="networkBooleanDerridaAnalysisCall" class="edu.banda.coel.server.grid.callable.GridNetworkBooleanDerridaAnalysisCall">
+		<constructor-arg ref="booleanNetworkRunnableFactory"/>
+	</bean>
+
+ 	<bean id="networkBooleanDamageSpreadingAnalysisCall" class="edu.banda.coel.server.grid.callable.GridNetworkBooleanDamageSpreadingAnalysisCall">
+		<constructor-arg ref="booleanNetworkRunnableFactory"/>
+	</bean>
+
+ 	<bean id="evoTaskBOFactory" class="edu.banda.coel.business.evo.EvoTaskBOFactorySwitch">
+ 		<constructor-arg ref="evoAcRateConstantTaskBOFactory"/>
+ 		<constructor-arg ref="evoAcInteractionSeriesTaskBOFactory"/>
+		<constructor-arg ref="evoAcSpecTaskBOFactory"/>
+		<constructor-arg ref="evoNetworkTaskBOFactory"/>
+	</bean>
+
+ 	<bean id="evoAcRateConstantTaskBOFactory" class="edu.banda.coel.business.evo.EvoAcRateConstantTaskBOFactory">
+ 		<constructor-arg ref="chemistryRunnableFactory"/>
+		<constructor-arg ref="chemistryInterpretationFactory"/>
+		<constructor-arg ref="acEvaluationBOFactory"/>
+	</bean>
+
+ 	<bean id="evoAcInteractionSeriesTaskBOFactory" class="edu.banda.coel.business.evo.EvoAcInteractionSeriesTaskBOFactory">
+ 		<constructor-arg ref="chemistryRunnableFactory"/>
+		<constructor-arg ref="chemistryInterpretationFactory"/>
+		<constructor-arg ref="acEvaluationBOFactory"/>
+	</bean>
+
+ 	<bean id="evoAcSpecTaskBOFactory" class="edu.banda.coel.business.evo.EvoAcSpecTaskBOFactory">
+ 		<constructor-arg ref="chemistryRunnableFactory"/>
+	</bean>
+
+ 	<bean id="evoNetworkTaskBOFactory" class="edu.banda.coel.business.evo.EvoNetworkTaskBOFactory">
+ 		<constructor-arg ref="metaNetworkRunnableFactory"/>
+ 		<constructor-arg ref="functionEvaluatorFactory"/>
+	</bean>
+
+	<task:annotation-driven executor="myExecutor" scheduler="myScheduler"/>
+
+	<task:executor id="myExecutor" pool-size="10-25" queue-capacity="100"/>
+
+	<task:scheduler id="myScheduler" pool-size="10"/>
+
+	<bean id="dtUtil" class="com.banda.core.util.DateTimeUtil"/>
+</beans>

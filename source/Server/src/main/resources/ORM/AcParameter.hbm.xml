@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcParameter" table="AC_PARAMETER" schema="public">
+        <cache usage="nonstrict-read-write" />
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_PARAMETER_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="variableIndex" type="java.lang.Integer">
+            <column name="variable_index" not-null="true" />
+        </property>
+
+        <property name="label" type="java.lang.String">
+            <column name="label" length="30" not-null="true" />
+        </property>
+
+        <property name="sortOrder" type="java.lang.Integer">
+            <column name="sort_order" not-null="true" />
+        </property>
+
+        <many-to-one name="evolFunction" class="com.banda.function.domain.AbstractFunction" lazy="false" fetch="join" cascade="all">
+            <column name="evol_function_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="parentSet" class="com.banda.chemistry.domain.AcParameterSet" fetch="select">
+        	<column name="parameter_set_id"/>
+    	</many-to-one>
+    </class>
+</hibernate-mapping>

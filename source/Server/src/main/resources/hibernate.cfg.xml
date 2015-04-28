@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">${database.driver.class}</property>
+        <property name="hibernate.connection.url">${database.connection.string}</property>
+        <property name="hibernate.connection.username">${database.user}</property>
+        <property name="hibernate.connection.password">${database.password}</property>
+        <property name="hibernate.dialect">${hibernate.sql.dialect}</property>
+		<property name="hibernate.show_sql">${hibernate.show_sql}</property>
+		<property name="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</property>
+		<property name="hibernate.order_inserts">${hibernate.order_inserts}</property>
+        <property name="hibernate.order_updates">${hibernate.order_updates}</property>
+        <property name="hibernate.flush.mode">${hibernate.flush.mode}</property>
+
+		<mapping resource="ORM/ArtificialChemistry.hbm.xml" />
+		<mapping resource="ORM/AcSpecies.hbm.xml" />
+		<mapping resource="ORM/AcSpeciesSet.hbm.xml" />
+		<mapping resource="ORM/AcParameter.hbm.xml" />
+		<mapping resource="ORM/AcParameterSet.hbm.xml" />
+		<mapping resource="ORM/AcReaction.hbm.xml" />
+		<mapping resource="ORM/AcSpeciesReactionAssociation.hbm.xml" />
+		<mapping resource="ORM/AcReactionSet.hbm.xml" />
+		<mapping resource="ORM/AcReactionGroup.hbm.xml" />
+		<mapping resource="ORM/AcCompartment.hbm.xml" />
+		<mapping resource="ORM/AcCompartmentAssociation.hbm.xml" />
+		<mapping resource="ORM/AcCompartmentChannel.hbm.xml" />
+		<mapping resource="ORM/AcCompartmentChannelGroup.hbm.xml" />
+
+		<mapping resource="ORM/AcInteractionSeries.hbm.xml" />
+		<mapping resource="ORM/AcInteraction.hbm.xml" />
+		<mapping resource="ORM/AcSpeciesInteraction.hbm.xml" />
+		<mapping resource="ORM/AcInteractionVariableAssignment.hbm.xml" />
+		<mapping resource="ORM/AcInteractionVariable.hbm.xml" />
+
+		<mapping resource="ORM/AcTranslationVariable.hbm.xml" />
+		<mapping resource="ORM/AcTranslationItem.hbm.xml" />
+		<mapping resource="ORM/AcTranslation.hbm.xml" />
+		<mapping resource="ORM/AcTranslationSeries.hbm.xml" />						
+		<mapping resource="ORM/AcEvaluation.hbm.xml" />
+		<mapping resource="ORM/AcEvaluatedPerformance.hbm.xml" />
+		<mapping resource="ORM/ArtificialChemistrySpec.hbm.xml" />
+		<mapping resource="ORM/AcSimulationConfig.hbm.xml" />
+		<mapping resource="ORM/ArtificialChemistrySpecBound.hbm.xml" />
+
+		<mapping resource="ORM/Function.hbm.xml" />
+
+		<mapping resource="ORM/Network.hbm.xml" />
+		<mapping resource="ORM/NetworkWeightSetting.hbm.xml" />
+		<mapping resource="ORM/SpatialNeighbor.hbm.xml" />
+		<mapping resource="ORM/SpatialNeighborhood.hbm.xml" />
+		<mapping resource="ORM/NetworkFunction.hbm.xml" />
+		<mapping resource="ORM/Topology.hbm.xml" />
+		<mapping resource="ORM/NetworkActionSeries.hbm.xml" />
+		<mapping resource="ORM/NetworkAction.hbm.xml" />
+		<mapping resource="ORM/NetworkEvaluation.hbm.xml" />
+		<mapping resource="ORM/NetworkEvaluationItem.hbm.xml" />
+		<mapping resource="ORM/NetworkEvaluationVariable.hbm.xml" />
+		<mapping resource="ORM/NetworkPerformance.hbm.xml" />
+		<mapping resource="ORM/NetworkDerridaAnalysis.hbm.xml" />
+		<mapping resource="ORM/NetworkDamageSpreading.hbm.xml" />
+
+		<mapping resource="ORM/Role.hbm.xml" />
+		<mapping resource="ORM/User.hbm.xml" />
+		
+		<mapping resource="ORM/EvoGaSetting.hbm.xml" />
+		<mapping resource="ORM/EvoTask.hbm.xml" />
+		<mapping resource="ORM/EvoRun.hbm.xml" />
+		<mapping resource="ORM/Population.hbm.xml" />
+		<mapping resource="ORM/Chromosome.hbm.xml" />
+		<mapping resource="ORM/AcRateConstantTypeBound.hbm.xml" />
+		<mapping resource="ORM/AcInteractionVariableAssignmentBound.hbm.xml" />
+		<mapping resource="ORM/AcSpeciesAssignmentBound.hbm.xml" />
+
+		<mapping resource="ORM/RandomDistribution.hbm.xml" />
+		<mapping resource="ORM/Stats.hbm.xml" />
+		<mapping resource="ORM/StatsSequence.hbm.xml"/>
+		<mapping resource="ORM/SingleRunAnalysisResult.hbm.xml" />
+		<mapping resource="ORM/SingleRunAnalysisSpec.hbm.xml" />
+		<mapping resource="ORM/MultiRunAnalysisResult.hbm.xml" />
+		<mapping resource="ORM/MultiRunAnalysisSpec.hbm.xml" />
+
+		<mapping resource="ORM/Task.hbm.xml" />
+
+    </session-factory>
+</hibernate-configuration>

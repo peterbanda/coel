@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcSpeciesInteraction" table="AC_SPECIES_ACTION" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_SPECIES_ACTION_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <many-to-one name="species" class="com.banda.chemistry.domain.AcSpecies" fetch="join">
+            <column name="species_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="action" class="com.banda.chemistry.domain.AcInteraction" fetch="join">
+            <column name="action_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="settingFunction" class="com.banda.function.domain.AbstractFunction" lazy="false" fetch="join" cascade="all">
+            <column name="setting_fun_id" not-null="true" />
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcEvaluation" table="AC_EVALUATION" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_EVALUATION_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="name" type="java.lang.String">
+            <column name="name" length="50" not-null="true"/>
+        </property>
+
+        <property name="createTime" type="timestamp">
+            <column name="create_time" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <property name="periodicTranslationsNumber" type="java.lang.Integer">
+            <column name="periodic_translations_number" not-null="true"/>
+        </property>
+
+        <many-to-one name="evalFunction" class="com.banda.function.domain.AbstractFunction" lazy="false" fetch="join" cascade="all">
+            <column name="evaluation_fun_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="translationSeries" class="com.banda.chemistry.domain.AcTranslationSeries" fetch="join">
+            <column name="translation_series_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

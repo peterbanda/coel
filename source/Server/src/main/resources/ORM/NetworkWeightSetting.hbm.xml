@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.network.domain.NetworkWeightSetting" table="net_weight_setting" abstract="true" discriminator-value="null">
+
+        <id name="id" type="java.lang.Long">
+        	<column name="id"/>
+        	<generator class="native"/>  <!-- increment -->
+        </id>
+
+		<discriminator column="type" type="int" not-null="true"/>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true" />
+        </property>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by"/>
+        </many-to-one>
+
+        <property name="index" type="integer">
+            <column name="index_" not-null="true" />
+        </property>
+
+        <many-to-one name="parent" class="com.banda.network.domain.NetworkWeightSetting" fetch="select">
+        	<column name="parent_id"/>
+    	</many-to-one>
+
+		<subclass name="com.banda.network.domain.FixedNetworkWeightSetting" discriminator-value="0">
+
+	        <property name="weights" type="edu.banda.coel.server.common.ListAsSQLArrayUserType$DOUBLE">
+    	    	<column name="weights" not-null="true" sql-type="float8[]" />
+       		</property>
+
+	        <property name="settingOrder">
+    	        <column name="setting_order" not-null="true"/>
+        	    <type name="org.hibernate.type.EnumType">
+        	        <param name="type">5</param>
+    	            <param name="enumClass">com.banda.network.domain.FixedNetworkWeightSettingOrder</param>
+	            </type>
+        	</property>
+		</subclass>
+
+		<subclass name="com.banda.network.domain.LayeredNetworkWeightSetting" discriminator-value="1">
+        	<bag name="layers" order-by="index_" lazy="false" inverse="true" cascade="delete">
+            	<key>
+                	<column name="parent_id" not-null="true" />
+            	</key>
+            	<one-to-many class="com.banda.network.domain.NetworkWeightSetting" />
+        	</bag>
+       	</subclass>
+
+		<subclass name="com.banda.network.domain.TemplateNetworkWeightSetting" discriminator-value="2">
+        	<many-to-one name="randomDistribution" class="com.banda.math.domain.rand.RandomDistribution" fetch="join" lazy="false">
+        		<column name="random_distribution_id" not-null="true"/>
+    		</many-to-one>
+		</subclass>
+    </class>
+</hibernate-mapping>

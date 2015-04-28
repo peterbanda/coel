@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.banda.math.domain.dynamics.SingleRunAnalysisResult" table="DYN_SINGLE_ANALYSIS_RESULT" schema="public">
+
+		<id name="id" type="long">
+			<column name="id" />
+			<generator
+				class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+				<param name="delegate">sequence</param>
+				<param name="sequence">DYN_SINGLE_ANALYSIS_RESULT_ID_SEQ</param>
+			</generator>
+		</id>
+
+        <property name="timeCreated" type="timestamp" lazy="true">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <property name="initialState" type="edu.banda.coel.server.common.ListAsSQLArrayUserType$DOUBLE" lazy="true">
+        	<column name="initial_state" not-null="true" sql-type="float8[]" />
+       	</property>
+
+		<many-to-one name="spatialCorrelations" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="spatial_correlations_id" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="timeCorrelations" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="time_correlations_id" not-null="true" />
+        </many-to-one>
+
+        <property name="neighborTimeCorrelations" type="edu.banda.coel.server.common.ListAsSQLArrayUserType$DOUBLE" lazy="true">
+        	<column name="neighbor_time_correlations" not-null="true" sql-type="float8[]" />
+       	</property>
+
+		<many-to-one name="spatialStationaryPointsPerTime" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="spatial_stationary_points_per_time_id" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="timeStationaryPointsPerTime" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="time_stationary_points_per_time_id" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="spatialCumulativeDiffPerTime" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="spatial_cumulative_diff_per_time_id" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="timeCumulativeDiffPerTime" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="time_cumulative_diff_per_time_id" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="spatialNonlinearityErrors" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="spatial_nonlinearity_errors_id" not-null="true" />
+        </many-to-one>
+	
+		<many-to-one name="timeNonlinearityErrors" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="time_nonlinearity_errors_id" not-null="true" />
+        </many-to-one>
+
+        <property name="finalFixedPointsDetected" type="edu.banda.coel.server.common.ListAsSQLArrayUserType$BOOLEAN" lazy="true">
+        	<column name="final_fixed_points_detected" not-null="true" sql-type="bool[]" />
+       	</property>
+
+        <property name="meanFixedPointsDetected" type="edu.banda.coel.server.common.ListAsSQLArrayUserType$DOUBLE" lazy="true">
+        	<column name="mean_fixed_points_detected" not-null="true" sql-type="float8[]" />
+       	</property>
+
+        <property name="unboundValuesDetected" type="edu.banda.coel.server.common.ListAsSQLArrayUserType$BOOLEAN" lazy="true">
+        	<column name="unbound_values_detected" not-null="true" sql-type="bool[]" />
+       	</property>
+
+        <property name="finalLyapunovExponents" type="edu.banda.coel.server.common.ListAsSQLArrayUserType$DOUBLE" lazy="true">
+        	<column name="final_lyapunov_exponents" not-null="true" sql-type="float8[]" />
+       	</property>
+
+		<many-to-one name="derridaResults" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="derrida_results_id" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="multiRunResult" class="com.banda.math.domain.dynamics.MultiRunAnalysisResult" lazy="proxy" fetch="select">
+            <column name="multi_run_result_id"/>
+        </many-to-one>
+	</class>
+
+  	<query name="findSpatialStationaryPointsPerTimeAndInitialStateByMultiRunResult">
+ 	<![CDATA[
+ 		select id, spatialStationaryPointsPerTime.id, initialState from SingleRunAnalysisResult where multiRunResult.id = :multiRunResultId
+ 	]]>
+ 	</query>
+
+ 	<query name="findTimeStationaryPointsPerTimeAndInitialStateByMultiRunResult">
+ 	<![CDATA[
+ 		select id, timeStationaryPointsPerTime.id, initialState from SingleRunAnalysisResult where multiRunResult.id = :multiRunResultId
+ 	]]>
+ 	</query>
+
+ 	<query name="findSpatialCumulativeDiffPerTimeAndInitialStateByMultiRunResult">
+ 	<![CDATA[
+ 		select id, spatialCumulativeDiffPerTime.id, initialState from SingleRunAnalysisResult where multiRunResult.id = :multiRunResultId
+ 	]]>
+ 	</query>
+
+ 	<query name="findTimeCumulativeDiffPerTimeAndInitialStateByMultiRunResult">
+ 	<![CDATA[
+ 		select id, timeCumulativeDiffPerTime.id, initialState from SingleRunAnalysisResult where multiRunResult.id = :multiRunResultId
+ 	]]>
+ 	</query>
+
+ 	<query name="findSpatialNonlinearityErrorsAndInitialStateByMultiRunResult">
+ 	<![CDATA[
+ 		select id, spatialNonlinearityErrors.id, initialState from SingleRunAnalysisResult where multiRunResult.id = :multiRunResultId
+ 	]]>
+ 	</query>
+
+ 	<query name="findTimeNonlinearityErrorsAndInitialStateByMultiRunResult">
+ 	<![CDATA[
+ 		select id, timeNonlinearityErrors.id, initialState from SingleRunAnalysisResult where multiRunResult.id = :multiRunResultId
+ 	]]>
+ 	</query>
+
+ 	<query name="findDerridaResultsAndInitialStateByMultiRunResult">
+ 	<![CDATA[
+ 		select id, derridaResults.id, initialState from SingleRunAnalysisResult where multiRunResult.id = :multiRunResultId
+ 	]]>
+ 	</query> 
+ 
+</hibernate-mapping>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class abstract="true" name="com.banda.function.domain.AbstractFunction" table="FUN_FUNCTION" schema="public" discriminator-value="-1">
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">FUN_FUNCTION_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <discriminator column="fun_type" type="java.lang.Integer"/>
+
+        <property name="arity" type="java.lang.Integer">
+            <column name="arity" />
+        </property>
+
+        <property name="inputClazzName" type="string">
+            <column name="input_clazz_name" />
+        </property>
+
+        <property name="outputClazzName" type="string">
+            <column name="output_clazz_name" />
+        </property>
+
+		<subclass name="com.banda.function.domain.TransitionTable" extends="com.banda.function.domain.AbstractFunction" discriminator-value="1">
+			<join table="FUN_TRANSITION_TABLE">
+	       	<key column="id"/>
+		       	<property name="stringOutputs" type="edu.banda.coel.server.common.ListAsSQLArrayUserType$STRING">
+		   	        <column name="outputs" sql-type="text[]" />
+        		</property>
+        	</join>
+        </subclass>
+
+		<subclass name="com.banda.function.domain.Expression" extends="com.banda.function.domain.AbstractFunction" discriminator-value="2">
+			<join table="FUN_EXPRESSION">
+				<key column="id"/>
+				<property name="formula" type="java.lang.String">
+            		<column name="content" length="256" not-null="true"/>
+        		</property>
+			</join>
+		</subclass>
+    </class>
+</hibernate-mapping>

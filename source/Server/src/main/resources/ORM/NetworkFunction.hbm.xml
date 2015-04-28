@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.network.domain.NetworkFunction" table="NET_FUNCTION" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">NET_FUNCTION_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true" />
+        </property>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by"/>
+        </many-to-one>
+
+        <property name="index" type="java.lang.Integer">
+            <column name="index_" />
+        </property>
+
+        <many-to-one name="function" class="com.banda.function.domain.AbstractFunction" fetch="join" cascade="all">
+            <column name="function_id" not-null="true" />
+        </many-to-one>
+
+	    <property name="statesWeightsIntegratorType">
+    		<column name="states_weights_integrator_type"/>
+        	<type name="org.hibernate.type.EnumType">
+        		<param name="type">5</param>
+    	        <param name="enumClass">com.banda.network.domain.StatesWeightsIntegratorType</param>
+	        </type>
+       	</property>
+
+	    <property name="multiComponentUpdaterType">
+    		<column name="multi_component_updater_type" not-null="true" />
+        	<type name="org.hibernate.type.EnumType">
+        		<param name="type">5</param>
+    	        <param name="enumClass">com.banda.core.domain.MultiStateUpdateType</param>
+	        </type>
+       	</property>
+
+        <many-to-one name="parentFunction" class="com.banda.network.domain.NetworkFunction" fetch="select">
+        	<column name="parent_id"/>
+    	</many-to-one>
+
+        <bag name="layerFunctions" lazy="false" inverse="true" fetch="join" cascade="all-delete-orphan" order-by="index_">
+            <key column="parent_id" not-null="true" />
+            <one-to-many class="com.banda.network.domain.NetworkFunction" />
+        </bag>
+
+    </class>
+</hibernate-mapping>

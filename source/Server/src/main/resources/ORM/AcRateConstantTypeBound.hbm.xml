@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcRateConstantTypeBound" table="AC_RATE_CONSTANT_TYPE_BOUND" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_RATE_CONSTANT_TYPE_BOUND_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <property name="rateConstantType">
+            <column name="rate_constant_type" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.chemistry.domain.AcRateConstantType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <property name="from" type="java.lang.Double">
+            <column name="lower_bound" not-null="true"/>
+        </property>
+
+        <property name="to" type="java.lang.Double">
+            <column name="upper_bound" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

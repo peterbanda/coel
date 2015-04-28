@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.math.domain.evo.EvoGaSetting" table="EVO_GA_SETTING" schema="public">
+        <cache usage="nonstrict-read-write" />
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">EVO_GA_SETTING_ID_SEQ</param>
+   			</generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="createTime" type="timestamp">
+            <column name="create_time" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <property name="name" type="string">
+            <column name="name" length="200" not-null="true" />
+        </property>
+
+        <property name="eliteNumber" type="java.lang.Integer">
+            <column name="elite_number" not-null="true" />
+        </property>
+
+        <property name="populationSize" type="java.lang.Integer">
+            <column name="population_size" not-null="true" />
+        </property>
+
+        <property name="conditionalMutationFlag" type="boolean">
+            <column name="cond_mutation" not-null="true" />
+        </property>
+
+        <property name="conditionalCrossOverFlag" type="boolean">
+            <column name="cond_crossover" not-null="true" />
+        </property>
+
+        <property name="crossOverProbability" type="java.lang.Double">
+            <column name="crossover_prob" not-null="true" />
+        </property>
+
+        <property name="crossOverType">
+            <column name="crossover_type" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.math.domain.evo.CrossOverType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <property name="mutationProbability" type="java.lang.Double">
+            <column name="mutation_prob" not-null="true" />
+        </property>
+
+        <property name="perBitMutationProbability" type="java.lang.Double">
+            <column name="mutation_per_bit_prob"/>
+        </property>
+
+        <property name="pertrubMutationStrength" type="java.lang.Double">
+            <column name="pertrub_mutation_strength"/>
+        </property>
+
+        <property name="mutationType">
+            <column name="mutation_type" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.math.domain.evo.MutationType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <property name="bitMutationType">
+            <column name="bit_mutation_type" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.math.domain.evo.BitMutationType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <property name="selectionType">
+            <column name="selection_type" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.math.domain.evo.SelectionType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <property name="fitnessRenormalizationType">
+            <column name="fitness_renorm_type"/>
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.math.domain.evo.FitnessRenormalizationType</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+
+        <property name="generationLimit" type="java.lang.Integer">
+            <column name="generation_limit" not-null="true" />
+        </property>
+
+        <property name="maxValueFlag" type="boolean">
+            <column name="max_value_flag" not-null="true" />
+        </property>
+
+    </class>
+</hibernate-mapping>

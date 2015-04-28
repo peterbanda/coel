@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcEvaluatedPerformance" table="AC_EVALUATED_PERFORMANCE" schema="public" discriminator-value="X">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_EVALUATED_PERFORMANCE_ID_SEQ</param>
+   			</generator>
+        </id>
+
+    	<discriminator type="character">
+    		<formula>
+    			case 
+                	when random_rate_generation_num is not null then 'R'
+                	when perturbation_num is not null then 'P'  
+                	else 'X' 
+            	end
+    		</formula>
+		</discriminator>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <property name="repetitions" type="java.lang.Integer">
+            <column name="repetitions" not-null="true" />
+        </property>
+
+        <property name="length" type="java.lang.Integer">
+            <column name="length" not-null="true" />
+        </property>
+
+        <many-to-one name="actionSeries" class="com.banda.chemistry.domain.AcInteractionSeries" fetch="select">
+            <column name="action_series_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="compartment" class="com.banda.chemistry.domain.AcCompartment" fetch="select">
+            <column name="compartment_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="simulationConfig" class="com.banda.chemistry.domain.AcSimulationConfig" fetch="select">
+            <column name="simulation_config_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="evaluation" class="com.banda.chemistry.domain.AcEvaluation" fetch="select">
+            <column name="evaluation_id" not-null="true" />
+        </many-to-one>
+
+        <property name="averagedCorrectRates" type="edu.banda.coel.server.common.SQLArrayUserType$DOUBLE">
+        	<column name="averaged_correct_rates" sql-type="float8[]" not-null="true"/>
+       	</property>
+
+    	<subclass name="com.banda.chemistry.domain.AcRandomRatePerformance" discriminator-value="R">
+            <property name="randomRateGenerationNum" type="java.lang.Integer">
+                <column name="random_rate_generation_num" not-null="true" />
+            </property>
+
+        	<bag name="rateConstantTypeBounds" lazy="false" table="ac_performance_rate_constant_type_bound_mapping">
+ 				<key column="random_rate_performance_id"/>
+      			<many-to-many column="rate_constant_type_bound_id" class="com.banda.chemistry.domain.AcRateConstantTypeBound"/>
+    		</bag>
+ 		</subclass>
+
+    	<subclass name="com.banda.chemistry.domain.AcPerturbationPerformance" discriminator-value="P">
+            <property name="perturbationNum" type="java.lang.Integer">
+                <column name="perturbation_num" not-null="true" />
+            </property>
+
+            <property name="perturbationStrength" type="java.lang.Double">
+                <column name="perturbation_strength" not-null="true" />
+            </property>
+
+ 		</subclass>
+    </class>
+</hibernate-mapping>

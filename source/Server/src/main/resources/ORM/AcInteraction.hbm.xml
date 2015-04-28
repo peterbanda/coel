@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcInteraction" table="AC_ACTION" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_ACTION_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="startTime" type="java.lang.Integer">
+            <column name="start_time" not-null="true" />
+        </property>
+
+        <property name="timeLength" type="java.lang.Double">
+            <column name="time_length" not-null="true" />
+        </property>
+
+        <property name="alternationType">
+            <column name="alternation_type" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.core.dynamics.StateAlternationType</param>
+              <param name="type">5</param>
+            </type>
+        </property>
+
+        <many-to-one name="actionSeries" class="com.banda.chemistry.domain.AcInteractionSeries" fetch="select">
+            <column name="action_series_id" not-null="true" />
+        </many-to-one>
+
+        <set name="speciesActions" lazy="false" inverse="true" fetch="join" cascade="all">
+            <key column="action_id"/>
+            <one-to-many class="com.banda.chemistry.domain.AcSpeciesInteraction" />
+        </set>
+
+        <set name="variableAssignments" lazy="false" inverse="true" fetch="join" cascade="all-delete-orphan">
+            <key column="action_id" not-null="true" />
+            <one-to-many class="com.banda.chemistry.domain.AcInteractionVariableAssignment" />
+        </set>
+    </class>
+</hibernate-mapping>

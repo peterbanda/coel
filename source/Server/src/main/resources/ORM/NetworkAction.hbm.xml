@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.network.domain.NetworkAction" table="NET_ACTION" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">NET_ACTION_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="startTime" type="java.lang.Integer">
+            <column name="start_time" not-null="true" />
+        </property>
+
+        <property name="timeLength" type="java.lang.Double">
+            <column name="time_length" not-null="true" />
+        </property>
+
+        <property name="alternationType">
+            <column name="alternation_type" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.core.dynamics.StateAlternationType</param>
+              <param name="type">5</param>
+            </type>
+        </property>
+
+        <many-to-one name="actionSeries" class="com.banda.network.domain.NetworkActionSeries" fetch="select">
+            <column name="action_series_id" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="stateDistribution" class="com.banda.math.domain.rand.RandomDistribution" lazy="false" fetch="select" cascade="all">
+			<column name="state_distribution_id"/>
+		</many-to-one>
+
+    </class>
+</hibernate-mapping>

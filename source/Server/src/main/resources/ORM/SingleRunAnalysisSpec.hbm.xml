@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+          "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.banda.math.domain.dynamics.SingleRunAnalysisSpec" table="DYN_SINGLE_ANALYSIS_SPEC" schema="public">
+
+		<id name="id" type="long">
+			<column name="id" />
+			<generator
+				class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+				<param name="delegate">sequence</param>
+				<param name="sequence">DYN_SINGLE_ANALYSIS_SPEC_ID_SEQ</param>
+			</generator>
+		</id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+		<property name="timeCreated" type="timestamp">
+			<column name="time_created" not-null="true" />
+		</property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+		<property name="name" type="string">
+			<column name="name" length="200" not-null="true" />
+		</property>
+
+		<property name="timeStepLength" type="java.lang.Double">
+			<column name="time_step_length" not-null="true" />
+		</property>
+
+		<property name="iterations" type="java.lang.Integer">
+			<column name="iterations" not-null="true" />
+		</property>
+
+		<property name="lyapunovPerturbationStrength" type="java.lang.Double">
+			<column name="lyapunov_perturbation_strength" not-null="true" />
+		</property>
+
+		<property name="derridaPerturbationStrength" type="java.lang.Double">
+			<column name="derrida_perturbation_strength" not-null="true" />
+		</property>
+
+		<property name="derridaTimeLength" type="java.lang.Double">
+			<column name="derrida_time_length" not-null="true" />
+		</property>
+
+		<property name="timeStepToFilter" type="java.lang.Integer">
+			<column name="time_step_to_filter" not-null="true" />
+		</property>
+
+		<property name="fixedPointDetectionPrecision" type="java.lang.Double">
+			<column name="fixed_point_detection_precision" not-null="true" />
+		</property>
+
+		<property name="derridaResolution" type="java.lang.Double">
+			<column name="derrida_resolution" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>edu.banda.coel</groupId>
+	<artifactId>coel-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Parent</name>
+	<version>0.8.1</version>
+	<url>http://peterbanda.net</url>
+
+	<modules>
+		<module>../Domain</module>
+		<module>../Business</module>
+		<module>../Server</module>
+		<module>../ConsoleClient</module>
+		<module>../Web</module>
+	</modules>
+ 
+	<properties>
+		<spring.version>3.1.2.RELEASE</spring.version>
+		<banda-lib.version>0.5.0</banda-lib.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.resources.sourceEncoding>UTF-8</project.resources.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<optimize>true</optimize>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+
+		<repository>
+			<id>sun_maven2</id>
+			<url>http://download.java.net/maven/2</url>
+		</repository>
+
+		<repository>
+			<id>sun_maven1</id>
+			<url>http://download.java.net/maven/1</url>
+			<layout>legacy</layout>
+		</repository>
+
+		<repository>
+			<id>repository.springsource.snapshot</id>
+			<name>SpringSource Snapshot Repository</name>
+			<url>http://repo.springsource.org/snapshot</url>
+		</repository>
+
+		<repository>
+			<id>banda.libs</id>
+			<name>Banda lib</name>
+			<url>http://peterbanda.net/maven2</url>
+		</repository>
+	</repositories>
+</project>

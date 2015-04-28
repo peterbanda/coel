@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.network.domain.NetworkDerridaAnalysis" table="NET_DERRIDA" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">NET_DERRIDA_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <property name="repetitions" type="java.lang.Integer">
+            <column name="repetitions" not-null="true" />
+        </property>
+
+        <property name="runTime" type="java.lang.Integer">
+            <column name="run_time" not-null="true" />
+        </property>
+
+        <many-to-one name="network" class="com.banda.network.domain.Network" lazy="proxy" fetch="select">
+            <column name="network_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="result" class="com.banda.math.domain.StatsSequence" lazy="proxy" fetch="select" cascade="all">
+            <column name="result_stats_seq_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

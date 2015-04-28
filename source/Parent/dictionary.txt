@@ -1,0 +1,11 @@
+banda
+chromosome
+hibernate
+chromosomes
+fitnesses
+stoichiometric
+inhibitor
+flipping
+gaussian
+reactants
+disassociate

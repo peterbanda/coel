@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.network.domain.AbstractNetworkPerformance" table="NET_PERFORMANCE" schema="public" discriminator-value="X">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">NET_PERFORMANCE_ID_SEQ</param>
+   			</generator>
+        </id>
+
+    	<discriminator type="character">
+    		<formula>
+    			case 
+                	when result_stats_id is not null then 'N'
+                	when result_stats_seq_id is not null then 'S'  
+                	else 'X' 
+            	end
+    		</formula>
+		</discriminator>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <property name="repetitions" type="java.lang.Integer">
+            <column name="repetitions" not-null="true" />
+        </property>
+
+        <property name="runTime" type="java.lang.Integer">
+            <column name="run_time" not-null="true" />
+        </property>
+
+        <many-to-one name="interactionSeries" class="com.banda.network.domain.NetworkActionSeries" fetch="join">
+            <column name="action_series_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="network" class="com.banda.network.domain.Network" lazy="proxy" fetch="select" cascade="none">
+            <column name="network_id" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="evaluation" class="com.banda.network.domain.NetworkEvaluation" fetch="join">
+            <column name="evaluation_id" not-null="true" />
+        </many-to-one>
+
+    	<subclass name="com.banda.network.domain.NetworkPerformance" discriminator-value="N">
+	        <many-to-one name="result" class="com.banda.math.domain.Stats" lazy="false" fetch="join" cascade="all">
+    	        <column name="result_stats_id" not-null="true" />
+        	</many-to-one>
+ 		</subclass>
+
+    	<subclass name="com.banda.network.domain.SpatialNetworkPerformance" discriminator-value="S">
+
+	        <property name="sizeFrom" type="java.lang.Integer">
+    	        <column name="size_from" not-null="true" />
+        	</property>
+
+        	<property name="sizeTo" type="java.lang.Integer">
+            	<column name="size_to" not-null="true" />
+        	</property>
+
+        	<many-to-one name="results" class="com.banda.math.domain.StatsSequence" lazy="false" fetch="join" cascade="all">
+            	<column name="result_stats_seq_id" not-null="true" />
+        	</many-to-one>
+ 		</subclass>
+    </class>
+</hibernate-mapping>

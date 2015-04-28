@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.network.domain.NetworkActionSeries" table="NET_ACTION_SERIES" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">NET_ACTION_SERIES_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="name" type="java.lang.String">
+            <column name="name" length="200" not-null="true"/>
+        </property>
+
+        <property name="repeatFromElement" type="java.lang.Integer">
+            <column name="repeat_from" />
+        </property>
+
+        <property name="repetitions" type="java.lang.Integer">
+            <column name="repetitions" />
+        </property>
+
+        <property name="periodicity" type="java.lang.Integer">
+            <column name="periodicity" />
+        </property>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+	    <set name="actions" lazy="true" inverse="true" order-by="start_time" fetch="subselect" cascade="all">
+            <key column="action_series_id"/>
+            <one-to-many class="com.banda.network.domain.NetworkAction" />
+        </set>
+
+    </class>
+</hibernate-mapping>

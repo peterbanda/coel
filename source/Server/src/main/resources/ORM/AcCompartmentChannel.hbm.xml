@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.banda.chemistry.domain.AcCompartmentChannel" table="AC_COMPARTMENT_CHANNEL" schema="public">
+
+		<id name="id" type="long">
+			<column name="id" />
+			<generator
+				class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+				<param name="delegate">sequence</param>
+				<param name="sequence">AC_COMPARTMENT_CHANNEL_ID_SEQ</param>
+			</generator>
+		</id>
+
+		<version name="version" type="java.lang.Long">
+			<column name="ol_version" not-null="true" />
+		</version>
+
+        <many-to-one name="compartment" class="com.banda.chemistry.domain.AcCompartment" fetch="select">
+        	<column name="compartment_id" not-null="true"/>
+    	</many-to-one>
+
+		<property name="permeability" type="java.lang.Double">
+			<column name="permeability" not-null="true" />
+		</property>
+
+		<many-to-one name="sourceSpecies" class="com.banda.chemistry.domain.AcSpecies" fetch="join">
+			<column name="source_species_id" not-null="true" />
+		</many-to-one>
+
+		<many-to-one name="targetSpecies" class="com.banda.chemistry.domain.AcSpecies" fetch="join">
+			<column name="target_species_id" not-null="true" />
+		</many-to-one>
+
+        <property name="direction">
+            <column name="direction" not-null="true" />
+            <type name="org.hibernate.type.EnumType">
+              <param name="enumClass">com.banda.chemistry.domain.AcChannelDirection</param>
+              <param name="type">5</param> <!-- 5 is java.sql.Types.SMALLINT -->
+            </type>
+        </property>
+	</class>
+</hibernate-mapping>

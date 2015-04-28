@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.math.domain.evo.EvoRun" table="EVO_RUN">
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">EVO_RUN_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <property name="timeCreated" type="java.util.Date">
+            <column name="time_created" not-null="true"/>
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="evoTask" class="com.banda.math.domain.evo.EvoTask" lazy="false" fetch="select">
+         	<column name="evo_task_id" not-null="true"/>
+        </many-to-one>
+
+        <many-to-one name="initChromosome" class="com.banda.math.domain.evo.Chromosome" fetch="select">
+            <column name="init_chromosome_id" />
+        </many-to-one>
+
+        <bag name="populations" lazy="true" inverse="true" fetch="select" cascade="all" order-by="generation">
+            <key column="evo_run_id" not-null="true" />
+            <one-to-many class="com.banda.math.domain.evo.Population"/>
+        </bag>
+    </class>
+</hibernate-mapping>

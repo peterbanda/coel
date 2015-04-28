@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcInteractionSeries" table="AC_ACTION_SERIES" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_ACTION_SERIES_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="name" type="java.lang.String">
+            <column name="name" length="200" not-null="true"/>
+        </property>
+
+        <property name="repeatFromElement" type="java.lang.Integer">
+            <column name="repeat_from" />
+        </property>
+
+        <property name="repetitions" type="java.lang.Integer">
+            <column name="repetitions" />
+        </property>
+
+        <property name="periodicity" type="java.lang.Integer">
+            <column name="periodicity" />
+        </property>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="create_time" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
+
+        <many-to-one name="speciesSet" class="com.banda.chemistry.domain.AcSpeciesSet" lazy="proxy" fetch="select">
+            <column name="species_set_id" not-null="true" />
+        </many-to-one>
+
+        <property name="varSequenceNum" type="java.lang.Integer">
+            <column name="var_sequence_num" not-null="true" />
+        </property>
+
+        <bag name="subActionSeries" inverse="true" lazy="false" fetch="select" order-by="name" cascade="all">
+            <key column="parent_id" />
+            <one-to-many class="com.banda.chemistry.domain.AcInteractionSeries" />
+        </bag>
+
+        <many-to-one name="parent" class="com.banda.chemistry.domain.AcInteractionSeries" lazy="proxy" fetch="select">
+        	<column name="parent_id"/>
+    	</many-to-one>
+
+	    <set name="actions" lazy="true" inverse="true" order-by="start_time" fetch="subselect" cascade="all">
+            <key>
+                <column name="action_series_id"/>
+            </key>
+            <one-to-many class="com.banda.chemistry.domain.AcInteraction" />
+        </set>
+
+        <set name="variables" lazy="false" inverse="true" fetch="join" order-by="label" cascade="all-delete-orphan">
+            <key column="action_series_id" not-null="true" />
+            <one-to-many class="com.banda.chemistry.domain.AcInteractionVariable" />
+        </set>   
+
+        <bag name="immutableSpecies" lazy="true" table="ac_action_series_immutable_species_mapping">
+ 			<key column="action_series_id"/>
+      		<many-to-many column="species_id" class="com.banda.chemistry.domain.AcSpecies"/>
+    	</bag>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.network.domain.SpatialNeighborhood" table="NET_SPATIAL_NEIGHBORHOOD" schema="public">
+
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">NET_SPATIAL_NEIGHBORHOOD_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="timeCreated" type="timestamp">
+            <column name="time_created" not-null="true" />
+        </property>
+
+        <many-to-one name="createdBy" class="com.banda.core.domain.um.User" lazy="proxy" fetch="select">
+            <column name="created_by"/>
+        </many-to-one>
+
+        <property name="name" type="java.lang.String">
+            <column name="name" not-null="true" />
+        </property>
+
+		<list name="neighbors" inverse="true" lazy="false" fetch="join" cascade="all">
+			<key column="parent_id" not-null="true" />
+			<list-index column="index_" base="1" />
+            <one-to-many class="com.banda.network.domain.SpatialNeighbor" />
+		</list>
+
+    </class>
+</hibernate-mapping>

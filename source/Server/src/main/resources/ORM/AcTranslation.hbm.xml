@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.banda.chemistry.domain.AcTranslation" table="AC_RANGE_TRANSLATION" schema="public">
+        <cache usage="nonstrict-read-write" />
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">AC_RANGE_TRANSLATION_ID_SEQ</param>
+   			</generator>
+        </id>
+        <version name="version" type="java.lang.Long">
+            <column name="ol_version" not-null="true" />
+        </version>
+
+        <property name="fromTime" type="java.lang.Integer">
+            <column name="from_time" not-null="true" />
+        </property>
+
+        <property name="toTime" type="java.lang.Integer">
+            <column name="to_time"/>
+        </property>
+
+        <many-to-one name="translationSeries" class="com.banda.chemistry.domain.AcTranslationSeries" fetch="select">
+            <column name="translation_series_id" not-null="true" />
+        </many-to-one>
+
+        <set name="translationItems" lazy="false" inverse="true" fetch="join" cascade="all">
+            <key column="translation_id"/>
+            <one-to-many class="com.banda.chemistry.domain.AcTranslationItem" />
+        </set>
+    </class>
+</hibernate-mapping>

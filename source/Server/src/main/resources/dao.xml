@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/tx    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+   <tx:advice id="allDaos" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" propagation="MANDATORY" />
+            <tx:method name="find*" read-only="true" propagation="MANDATORY" />
+            <tx:method name="*" read-only="false" propagation="MANDATORY" />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="daoMethods"
+            expression="execution(* edu.banda.coel.server.dao.*DAO.*(..)) || execution(* com.banda.serverbase.persistence.*DAO.*(..))"/>
+        <aop:advisor pointcut-ref="daoMethods" advice-ref="allDaos" />
+    </aop:config>
+
+    <bean id="parentDAO" abstract="true">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="genericParentDAO" class="com.banda.serverbase.persistence.GenericHibernate3DAO" factory-method="createDaoInstance"
+    	parent="parentDAO" abstract="true"/>
+
+    <bean id="functionDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.function.domain.AbstractFunction"/>
+    </bean>
+
+    <bean id="randomDistributionDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.math.domain.rand.RandomDistribution"/>
+    </bean>
+
+<!-- Network -->
+
+    <bean id="networkDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.network.domain.Network"/>
+    </bean>
+
+    <bean id="networkActionSeriesDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.network.domain.NetworkActionSeries"/>
+    </bean>
+
+    <bean id="topologyDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.network.domain.Topology"/>
+    </bean>
+
+    <bean id="networkWeightSettingDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.network.domain.NetworkWeightSetting"/>
+    </bean>
+
+    <bean id="networkFunctionDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.network.domain.NetworkFunction"/>
+    </bean>
+
+    <bean id="networkEvaluationDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.network.domain.NetworkEvaluation"/>
+    </bean>
+
+    <bean id="networkPerformanceDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.network.domain.AbstractNetworkPerformance"/>
+    </bean>
+
+    <bean id="networkDerridaAnalysisDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.network.domain.NetworkDerridaAnalysis"/>
+    </bean>
+
+    <bean id="networkDamageSpreadingDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.network.domain.NetworkDamageSpreading"/>
+    </bean>
+
+<!-- AC -->
+
+    <bean id="artificialChemistryDAO"
+        class="edu.banda.coel.server.dao.ArtificialChemistryHibernateDAO" parent="parentDAO" />
+
+    <bean id="acSpeciesDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcSpecies"/>
+    </bean>
+
+    <bean id="acSpeciesSetDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcSpeciesSet"/>
+    </bean>
+
+    <bean id="acParameterDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcParameter"/>
+    </bean>
+
+    <bean id="acParameterSetDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcParameterSet"/>
+    </bean>
+
+    <bean id="acReactionDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcReaction"/>
+    </bean>
+
+    <bean id="acSpeciesReactionAssociationDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcSpeciesReactionAssociation"/>
+    </bean>
+
+    <bean id="acReactionSetDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcReactionSet"/>
+    </bean>
+
+    <bean id="acReactionGroupDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcReactionGroup"/>
+    </bean>
+
+    <bean id="acCompartmentDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcCompartment"/>
+    </bean>
+
+    <bean id="acInteractionSeriesDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcInteractionSeries"/>
+    </bean>
+
+    <bean id="acInteractionDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcInteraction"/>
+    </bean>
+
+    <bean id="acSpeciesInteractionDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcSpeciesInteraction"/>
+    </bean>
+
+	<bean id="acTranslationVariableDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcTranslationVariable"/>
+    </bean>
+
+    <bean id="acTranslationDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcTranslation"/>
+    </bean>
+
+	<bean id="acTranslationItemDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcTranslationItem"/>
+    </bean>
+
+    <bean id="acTranslationSeriesDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcTranslationSeries"/>
+    </bean>
+
+    <bean id="acEvaluationDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcEvaluation"/>
+    </bean>
+
+    <bean id="acEvaluatedPerformanceDAO" parent="genericParentDAO">
+    	<constructor-arg value="com.banda.chemistry.domain.AcEvaluatedPerformance"/>
+    </bean>
+    
+    <bean id="artificialChemistrySpecDAO" parent="genericParentDAO">
+    	<constructor-arg value="com.banda.chemistry.domain.ArtificialChemistrySpec"/>
+    </bean>
+
+    <bean id="acSimulationConfigDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcSimulationConfig"/>
+    </bean>
+
+    <bean id="acInteractionVariableAssignmentDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcInteractionVariableAssignment"/>
+    </bean>
+    
+<!-- UM -->
+
+    <bean id="userDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.core.domain.um.User"/>
+    </bean>
+
+    <bean id="roleDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.core.domain.um.Role"/>
+    </bean>
+
+<!--  EVO -->
+
+    <bean id="evoGaSettingDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.math.domain.evo.EvoGaSetting"/>
+    </bean>
+
+    <bean id="acRateConstantTypeBoundDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.chemistry.domain.AcRateConstantTypeBound"/>
+    </bean>
+
+    <bean id="evoTaskDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.math.domain.evo.EvoTask"/>
+    </bean>
+
+    <bean id="evoRunDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.math.domain.evo.EvoRun"/>
+    </bean>
+
+    <bean id="populationDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.math.domain.evo.Population"/>
+    </bean>
+
+    <bean id="chromosomeDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.math.domain.evo.Chromosome"/>
+    </bean>
+
+    <bean id="acSpeciesAssignmentBoundDAO" parent="genericParentDAO">
+        <constructor-arg value="edu.banda.coel.domain.evo.AcSpeciesAssignmentBound"/>
+    </bean>
+
+    <bean id="acInteractionVariableAssignmentBoundDAO" parent="genericParentDAO">
+        <constructor-arg value="edu.banda.coel.domain.evo.AcInteractionVariableAssignmentBound"/>
+    </bean>
+
+<!--  DYN -->
+
+    <bean id="singleRunAnalysisSpecDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.math.domain.dynamics.SingleRunAnalysisSpec"/>
+    </bean>
+
+    <bean id="multiRunAnalysisSpecDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.math.domain.dynamics.MultiRunAnalysisSpec"/>
+    </bean>
+
+    <bean id="singleRunAnalysisResultDAO"
+    	class="edu.banda.coel.server.dao.SingleRunAnalysisResultHibernateDAO" parent="parentDAO" />
+
+    <bean id="acMultiRunAnalysisResultDAO"
+        class="edu.banda.coel.server.dao.AcMultiRunAnalysisResultHibernateDAO" parent="parentDAO" />
+
+    <bean id="statsSequenceDAO" parent="genericParentDAO">
+        <constructor-arg value="com.banda.math.domain.StatsSequence"/>
+    </bean>
+
+<!-- TASK -->
+
+    <bean id="taskDAO"
+    	class="edu.banda.coel.server.dao.TaskHibernateDAO" parent="parentDAO" />
+</beans>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="coel-web">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/grails-app/conf"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/grails-app/controllers"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/grails-app/domain"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/grails-app/services"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/grails-app/taglib"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/grails-app/utils"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/groovy"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test/unit"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test/integration"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/coel-server/coel-server">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/coel-business/coel-business">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/coel-domain/coel-domain">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="coel-web"/>
+        <property name="java-output-path" value="/coel-web/target/classes"/>
+    </wb-module>
+</project-modules>

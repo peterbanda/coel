@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.banda.math.domain.Stats" table="DYN_STATS" schema="public">
+        <id name="id" type="long">
+        	<column name="id" />
+        	<generator class="edu.banda.coel.server.common.ConfigurableAssignedGenerator">
+      			<param name="delegate">sequence</param>
+      			<param name="sequence">DYN_STATS_ID_SEQ</param>
+   			</generator>
+        </id>
+
+        <property name="pos" type="java.lang.Double">
+            <column name="index" not-null="true"/>
+        </property>
+
+        <property name="mean" type="java.lang.Double">
+            <column name="mean" not-null="true"/>
+        </property>
+
+        <property name="standardDeviation" type="java.lang.Double">
+            <column name="standard_deviation" not-null="true"/>
+        </property>
+
+        <property name="min" type="java.lang.Double">
+            <column name="min" not-null="true"/>
+        </property>
+
+        <property name="max" type="java.lang.Double">
+            <column name="max" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
