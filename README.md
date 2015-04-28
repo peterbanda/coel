@@ -1,11 +1,13 @@
 # COEL
 Cloud Chemistry Simulation Framework
 
-![Alt text](http://github.com/peterbanda/coel/tree/master/source/Web/web-app/images/coel_gradient-01.png "COEL rocks!")
+![Alt text](/source/Web/web-app/images/coel_gradient-01.png "COEL rocks!")
 
 The framework is accessible at [coel-sim.org](http://coel-sim.org)
 
 ---
+
+# Intro
 
 COEL is a web-based chemistry simulation framework.
 
