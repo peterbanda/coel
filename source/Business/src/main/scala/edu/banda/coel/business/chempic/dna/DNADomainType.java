@@ -5,5 +5,5 @@ package edu.banda.coel.business.chempic.dna;
  * @since 2013
  */
 public enum DNADomainType {
-	Long, Short, Gap
+    Long, Short, Gap
 }

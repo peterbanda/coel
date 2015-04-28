@@ -5,5 +5,5 @@ package edu.banda.coel.business.chempic.dna;
  * @since 2013
  */
 public enum DNADomainOrientation {
-	Horizontal, DownRightDiagonal, UpRightDiagonal, DownLeftDiagonal, UpLeftDiagonal
+    Horizontal, DownRightDiagonal, UpRightDiagonal, DownLeftDiagonal, UpLeftDiagonal
 }
