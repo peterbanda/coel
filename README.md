@@ -1,3 +1,5 @@
+# COEL
+
 ![Alt text](/source/Web/web-app/images/coel_gradient-01.png "COEL rocks!")
 Cloud Chemistry Simulation Framework
 
