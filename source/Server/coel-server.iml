@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="hibernate" name="Hibernate">
-      <configuration>
-        <datasource-map>
-          <unit-entry name="hibernate.cfg.xml" />
-          <unit-entry name="sessionFactory" value="dataSource" />
-        </datasource-map>
-        <naming-strategy-map />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
-      </configuration>
-    </facet>
-    <facet type="Spring" name="Spring">
-      <configuration>
-        <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/main/resources/ActiveMQ/jetty.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/server.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/remoting.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/test-config.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/service.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/grid2.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/persistence.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/ActiveMQ/camel.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/ActiveMQ/activemq.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/dao.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/grid.xml</file>
-        </fileset>
-      </configuration>
-    </facet>
     <facet type="AspectJ" name="AspectJ">
       <configuration>
         <option name="aspectPath">
