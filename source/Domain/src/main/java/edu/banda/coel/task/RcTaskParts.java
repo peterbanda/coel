@@ -8,10 +8,13 @@ import edu.banda.coel.domain.rc.RcMachineTemplate;
  */
 public interface RcTaskParts {
 
-	public interface RcMachineTemplateHolder<M extends RcMachineTemplate> {
-		public M getRcMachineTemplate();
-		public void setRcMachineTemplate(M rcMachineTemplate);
-		public boolean isRcMachineTemplateDefined();
-		public boolean isRcMachineTemplateComplete();
-	}
+    public interface RcMachineTemplateHolder<M extends RcMachineTemplate> {
+        public M getRcMachineTemplate();
+
+        public void setRcMachineTemplate(M rcMachineTemplate);
+
+        public boolean isRcMachineTemplateDefined();
+
+        public boolean isRcMachineTemplateComplete();
+    }
 }

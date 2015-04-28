@@ -11,25 +11,25 @@ import edu.banda.coel.domain.net.SpatialNetwork;
  */
 public class BooleanNetwork extends SpatialNetwork<Boolean, FunctionNode<Boolean>> {
 
-	private Integer connectivityPerNode;                // optional
+    private Integer connectivityPerNode;                // optional
 
-	protected BooleanNetwork(Collection<FunctionNode<Boolean>> nodes) {
-		super(nodes);
-	}
+    protected BooleanNetwork(Collection<FunctionNode<Boolean>> nodes) {
+        super(nodes);
+    }
 
-	// TODO : change to protected
-	public BooleanNetwork(Collection<FunctionNode<Boolean>> nodes, Integer connectivityPerNode) {
-		this(nodes);
-		this.connectivityPerNode = connectivityPerNode;
-	}
+    // TODO : change to protected
+    public BooleanNetwork(Collection<FunctionNode<Boolean>> nodes, Integer connectivityPerNode) {
+        this(nodes);
+        this.connectivityPerNode = connectivityPerNode;
+    }
 
-	// TODO: change to protected
-	public BooleanNetwork(Collection<FunctionNode<Boolean>> nodes, Integer connectivityPerNode, boolean torusFlag) {
-		this(nodes, connectivityPerNode);
-		setTorusFlag(torusFlag);
-	}
+    // TODO: change to protected
+    public BooleanNetwork(Collection<FunctionNode<Boolean>> nodes, Integer connectivityPerNode, boolean torusFlag) {
+        this(nodes, connectivityPerNode);
+        setTorusFlag(torusFlag);
+    }
 
-	public Integer getConnectivityPerNode() {
-		return connectivityPerNode;
-	}
+    public Integer getConnectivityPerNode() {
+        return connectivityPerNode;
+    }
 }

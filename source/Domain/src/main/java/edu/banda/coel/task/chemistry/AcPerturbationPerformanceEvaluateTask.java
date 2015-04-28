@@ -9,26 +9,26 @@ import java.util.Collection;
  */
 public class AcPerturbationPerformanceEvaluateTask extends AcPerformanceEvaluateTask {
 
-	private Integer perturbationNum;
-	private Collection<Double> perturbationStrengths = new ArrayList<Double>();
+    private Integer perturbationNum;
+    private Collection<Double> perturbationStrengths = new ArrayList<Double>();
 
-	public Integer getPerturbationNum() {
-		return perturbationNum;
-	}
+    public Integer getPerturbationNum() {
+        return perturbationNum;
+    }
 
-	public void setPerturbationNum(Integer perturbationNum) {
-		this.perturbationNum = perturbationNum;
-	}
+    public void setPerturbationNum(Integer perturbationNum) {
+        this.perturbationNum = perturbationNum;
+    }
 
-	public Collection<Double> getPerturbationStrengths() {
-		return perturbationStrengths;
-	}
+    public Collection<Double> getPerturbationStrengths() {
+        return perturbationStrengths;
+    }
 
-	public void setPerturbationStrengths(Collection<Double> perturbationStrengths) {
-		this.perturbationStrengths = perturbationStrengths;
-	}
+    public void setPerturbationStrengths(Collection<Double> perturbationStrengths) {
+        this.perturbationStrengths = perturbationStrengths;
+    }
 
-	public void addPerturbationStrength(Double perturbationStrength) {
-		perturbationStrengths.add(perturbationStrength);
-	}
+    public void addPerturbationStrength(Double perturbationStrength) {
+        perturbationStrengths.add(perturbationStrength);
+    }
 }

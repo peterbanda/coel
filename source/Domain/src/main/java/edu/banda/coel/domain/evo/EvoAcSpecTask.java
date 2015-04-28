@@ -12,39 +12,39 @@ import com.banda.math.domain.evo.EvoTask;
  */
 public class EvoAcSpecTask extends EvoTask {
 
-	private ArtificialChemistrySpecBound acSpecBound;
-	private AcSimulationConfig simConfig;
-	private MultiRunAnalysisSpec<Double> multiRunAnalysisSpec;
+    private ArtificialChemistrySpecBound acSpecBound;
+    private AcSimulationConfig simConfig;
+    private MultiRunAnalysisSpec<Double> multiRunAnalysisSpec;
 
-	public EvoAcSpecTask() {
-		super();
-	}
+    public EvoAcSpecTask() {
+        super();
+    }
 
-	public AcSimulationConfig getSimConfig() {
-		return simConfig;
-	}
+    public AcSimulationConfig getSimConfig() {
+        return simConfig;
+    }
 
-	public void setSimConfig(AcSimulationConfig simConfig) {
-		this.simConfig = simConfig;
-	}
+    public void setSimConfig(AcSimulationConfig simConfig) {
+        this.simConfig = simConfig;
+    }
 
-	public MultiRunAnalysisSpec<Double> getMultiRunAnalysisSpec() {
-		return multiRunAnalysisSpec;
-	}
+    public MultiRunAnalysisSpec<Double> getMultiRunAnalysisSpec() {
+        return multiRunAnalysisSpec;
+    }
 
-	public void setMultiRunAnalysisSpec(MultiRunAnalysisSpec<Double> multiRunAnalysisSpec) {
-		this.multiRunAnalysisSpec = multiRunAnalysisSpec;
-	}
+    public void setMultiRunAnalysisSpec(MultiRunAnalysisSpec<Double> multiRunAnalysisSpec) {
+        this.multiRunAnalysisSpec = multiRunAnalysisSpec;
+    }
 
-	public SingleRunAnalysisSpec getSingleRunAnalysisSpec() {
-		return multiRunAnalysisSpec.getSingleRunSpec();
-	}
+    public SingleRunAnalysisSpec getSingleRunAnalysisSpec() {
+        return multiRunAnalysisSpec.getSingleRunSpec();
+    }
 
-	public ArtificialChemistrySpecBound getAcSpecBound() {
-		return acSpecBound;
-	}
+    public ArtificialChemistrySpecBound getAcSpecBound() {
+        return acSpecBound;
+    }
 
-	public void setAcSpecBound(ArtificialChemistrySpecBound acSpecBound) {
-		this.acSpecBound = acSpecBound;
-	}
+    public void setAcSpecBound(ArtificialChemistrySpecBound acSpecBound) {
+        this.acSpecBound = acSpecBound;
+    }
 }

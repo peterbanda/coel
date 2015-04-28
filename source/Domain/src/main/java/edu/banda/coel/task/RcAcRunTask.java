@@ -8,13 +8,13 @@ import edu.banda.coel.task.chemistry.AcRunAndTranslateTask;
  */
 public class RcAcRunTask extends RcRunTask {
 
-	private AcRunAndTranslateTask runAndTranslationTask;
+    private AcRunAndTranslateTask runAndTranslationTask;
 
-	public AcRunAndTranslateTask getRunAndTranslationTaskDef() {
-		return runAndTranslationTask;
-	}
+    public AcRunAndTranslateTask getRunAndTranslationTaskDef() {
+        return runAndTranslationTask;
+    }
 
-	public void setRunAndTranslationTaskDef(AcRunAndTranslateTask runAndTranslationTask) {
-		this.runAndTranslationTask = runAndTranslationTask;
-	}
+    public void setRunAndTranslationTaskDef(AcRunAndTranslateTask runAndTranslationTask) {
+        this.runAndTranslationTask = runAndTranslationTask;
+    }
 }

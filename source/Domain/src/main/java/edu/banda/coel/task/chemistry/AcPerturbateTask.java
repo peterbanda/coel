@@ -6,22 +6,22 @@ package edu.banda.coel.task.chemistry;
  */
 public class AcPerturbateTask extends AcRunTranslateAndEvaluateTask {
 
-	private Double perturbationStrength;
-	private Integer repetitions;
+    private Double perturbationStrength;
+    private Integer repetitions;
 
-	public Double getPerturbationStrength() {
-		return perturbationStrength;
-	}
+    public Double getPerturbationStrength() {
+        return perturbationStrength;
+    }
 
-	public void setPerturbationStrength(Double perturbationStrength) {
-		this.perturbationStrength = perturbationStrength;
-	}
+    public void setPerturbationStrength(Double perturbationStrength) {
+        this.perturbationStrength = perturbationStrength;
+    }
 
-	public Integer getRepetitions() {
-		return repetitions;
-	}
+    public Integer getRepetitions() {
+        return repetitions;
+    }
 
-	public void setRepetitions(Integer repetitions) {
-		this.repetitions = repetitions;
-	}
+    public void setRepetitions(Integer repetitions) {
+        this.repetitions = repetitions;
+    }
 }

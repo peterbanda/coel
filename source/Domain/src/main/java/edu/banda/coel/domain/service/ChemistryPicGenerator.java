@@ -9,7 +9,7 @@ import java.util.List;
 public interface ChemistryPicGenerator {
 
     /**
-     * Creates an SVG XML document of given DNA strand specified in the Visual DSD syntax. 
+     * Creates an SVG XML document of given DNA strand specified in the Visual DSD syntax.
      *
      * @param dnaStrand DNA strand to visualize
      * @return SVG XML document marshaled to String
@@ -17,10 +17,10 @@ public interface ChemistryPicGenerator {
     String createDNAStrandSVG(String dnaStrand);
 
     /**
-     * Creates an SVG XML document of given DNA strand specified in the Visual DSD syntax. 
+     * Creates an SVG XML document of given DNA strand specified in the Visual DSD syntax.
      *
      * @param reactantDNAStrands Reactant DNA strands to visualize
-     * @param productDNAStrands Product DNA strands to visualize
+     * @param productDNAStrands  Product DNA strands to visualize
      * @return SVG XML document marshaled to String
      */
     String createDNAReactionSVG(List<String> reactantDNAStrands, List<String> productDNAStrands, boolean bidirectional);

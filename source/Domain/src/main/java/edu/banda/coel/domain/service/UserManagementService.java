@@ -1,9 +1,9 @@
 package edu.banda.coel.domain.service;
 
-import java.util.List;
-
 import com.banda.core.domain.um.Role;
 import com.banda.core.domain.um.User;
+
+import java.util.List;
 
 /**
  * UserManagementService
@@ -40,6 +40,7 @@ public interface UserManagementService {
 
     /**
      * Retrieves all users.
+     *
      * @return Users
      */
     List<User> getAllUsers();
@@ -48,9 +49,8 @@ public interface UserManagementService {
      * Saves the user.
      *
      * @param user
-     *
-     * @throws UserExistsException thrown if the user already exists
      * @return user The updated user
+     * @throws UserExistsException thrown if the user already exists
      */
     User saveUser(User user);
     //throws UserExistsException;
@@ -62,31 +62,33 @@ public interface UserManagementService {
      */
     void removeUser(Long userId);
 
-	/**
+    /**
      * Retrieves all roles.
+     *
      * @return All roles
      */
-	List<Role> getAllRoles();
+    List<Role> getAllRoles();
 
-	/**
+    /**
      * Finds the role by the name.
+     *
      * @param rolename
      * @return Role
      */
-	Role getRole(String rolename);
+    Role getRole(String rolename);
 
-	/**
+    /**
      * Saves the role.
      *
      * @param role
      * @return The updated role
      */
-	Role saveRole(Role role);
+    Role saveRole(Role role);
 
-	/**
+    /**
      * Removes the role with the given id.
      *
      * @param roleId The role's id
      */
-	void removeRole(Long roleId);
+    void removeRole(Long roleId);
 }

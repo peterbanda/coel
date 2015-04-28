@@ -10,6 +10,22 @@
         </option>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/ActiveMQ/camel.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/ActiveMQ/jetty.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/ActiveMQ/activemq.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/dao.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/grid.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/server.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/persistence.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/service.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/test-config.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/remoting.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />

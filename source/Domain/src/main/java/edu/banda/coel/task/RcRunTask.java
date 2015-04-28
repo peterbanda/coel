@@ -8,30 +8,30 @@ import com.banda.core.domain.task.Task;
  */
 public abstract class RcRunTask extends Task {
 
-	public enum RcRunStoreOption {
-		StoreStatesAllTime, StoreStatesJustLastStep;
-	}
+    public enum RcRunStoreOption {
+        StoreStatesAllTime, StoreStatesJustLastStep;
+    }
 
-	private RcRunStoreOption storeOption;
-	private Integer repetitions;
+    private RcRunStoreOption storeOption;
+    private Integer repetitions;
 
-	public RcRunTask() {
-		super();
-	}
-	
-	public Integer getRepetitions() {
-		return repetitions;
-	}
+    public RcRunTask() {
+        super();
+    }
 
-	public void setRepetitions(Integer repetitions) {
-		this.repetitions = repetitions;
-	}
+    public Integer getRepetitions() {
+        return repetitions;
+    }
 
-	public RcRunStoreOption getStoreOption() {
-		return storeOption;
-	}
+    public void setRepetitions(Integer repetitions) {
+        this.repetitions = repetitions;
+    }
 
-	public void setStoreOption(RcRunStoreOption storeOption) {
-		this.storeOption = storeOption;
-	}
+    public RcRunStoreOption getStoreOption() {
+        return storeOption;
+    }
+
+    public void setStoreOption(RcRunStoreOption storeOption) {
+        this.storeOption = storeOption;
+    }
 }

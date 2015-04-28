@@ -1,12 +1,11 @@
 package edu.banda.coel.domain.net;
 
+import com.banda.core.domain.TechnicalDomainObject;
+import com.banda.core.domain.um.User;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.banda.core.domain.TechnicalDomainObject;
-
-import com.banda.core.domain.um.User;
 
 /**
  * @author © Peter Banda
@@ -14,63 +13,63 @@ import com.banda.core.domain.um.User;
  */
 public class NetworkType extends TechnicalDomainObject {
 
-	private String name;
-	private Date createTime;
-	private User createdBy;
+    private String name;
+    private Date createTime;
+    private User createdBy;
 
-	private NetworkType superType;
-	private Set<NetworkType> subTypes = new HashSet<NetworkType>();
+    private NetworkType superType;
+    private Set<NetworkType> subTypes = new HashSet<NetworkType>();
 //	private Set<NetworkDefinition> netDefinitions = new HashSet<NetworkDefinition>();
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public User getCreatedBy() {
-		return createdBy;
-	}
+    public User getCreatedBy() {
+        return createdBy;
+    }
 
-	public void setCreatedBy(User createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public NetworkType getSuperType() {
-		return superType;
-	}
+    public NetworkType getSuperType() {
+        return superType;
+    }
 
-	public void setSuperType(NetworkType superType) {
-		this.superType = superType;
-	}
+    public void setSuperType(NetworkType superType) {
+        this.superType = superType;
+    }
 
-	public Set<NetworkType> getSubTypes() {
-		return subTypes;
-	}
+    public Set<NetworkType> getSubTypes() {
+        return subTypes;
+    }
 
-	protected void setSubTypes(Set<NetworkType> subTypes) {
-		this.subTypes = subTypes;
-	}
+    protected void setSubTypes(Set<NetworkType> subTypes) {
+        this.subTypes = subTypes;
+    }
 
-	public void addSubType(NetworkType subType) {
-		subTypes.add(subType);
-		subType.setSuperType(this);
-	}
+    public void addSubType(NetworkType subType) {
+        subTypes.add(subType);
+        subType.setSuperType(this);
+    }
 
-	public void removeSubType(NetworkType subType) {
-		subTypes.remove(subType);
-		subType.setSuperType(null);
-	}
+    public void removeSubType(NetworkType subType) {
+        subTypes.remove(subType);
+        subType.setSuperType(null);
+    }
 
 //	public Set<NetworkDefinition> getNetDefinitions() {
 //		return netDefinitions;

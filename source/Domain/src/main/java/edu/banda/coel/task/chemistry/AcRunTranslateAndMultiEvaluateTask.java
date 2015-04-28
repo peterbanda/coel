@@ -6,13 +6,13 @@ package edu.banda.coel.task.chemistry;
  */
 public class AcRunTranslateAndMultiEvaluateTask extends AcMultiEvaluateTask {
 
-	private AcRunAndTranslateTask runAndTranslationTaskDefinition;
+    private AcRunAndTranslateTask runAndTranslationTaskDefinition;
 
-	public AcRunAndTranslateTask getRunAndTranslationTaskDefinition() {
-		return runAndTranslationTaskDefinition;
-	}
+    public AcRunAndTranslateTask getRunAndTranslationTaskDefinition() {
+        return runAndTranslationTaskDefinition;
+    }
 
-	public void setRunAndTranslationTaskDefinition(AcRunAndTranslateTask runAndTranslationTaskDefinition) {
-		this.runAndTranslationTaskDefinition = runAndTranslationTaskDefinition;
-	}
+    public void setRunAndTranslationTaskDefinition(AcRunAndTranslateTask runAndTranslationTaskDefinition) {
+        this.runAndTranslationTaskDefinition = runAndTranslationTaskDefinition;
+    }
 }

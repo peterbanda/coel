@@ -9,94 +9,94 @@ import com.banda.math.domain.rand.RandomDistribution;
  */
 public abstract class RcMachineTemplate extends TechnicalDomainObject {
 
-	public enum RcMachineType {
-		NeuralNetwork, ArtificialChemistry
-	}
-	
-	private Integer reservoirNodesNum;
-	private Integer inputNodesNum;
-	private Integer readoutNodesNum;
-	private boolean useFullInputToReservoirConnections;
-	private boolean useFullReservoirToReadoutConnections;
-	private boolean useFullReadoutToReservoirConnections;
-	private RandomDistribution<Double> initReservoirWeightDistribution;
+    public enum RcMachineType {
+        NeuralNetwork, ArtificialChemistry
+    }
 
-	public Integer getReservoirNodesNum() {
-		return reservoirNodesNum;
-	}
-	
-	public void setReservoirNodesNum(Integer reservoirNodesNum) {
-		this.reservoirNodesNum = reservoirNodesNum;
-	}
+    private Integer reservoirNodesNum;
+    private Integer inputNodesNum;
+    private Integer readoutNodesNum;
+    private boolean useFullInputToReservoirConnections;
+    private boolean useFullReservoirToReadoutConnections;
+    private boolean useFullReadoutToReservoirConnections;
+    private RandomDistribution<Double> initReservoirWeightDistribution;
 
-	public Integer getInputNodesNum() {
-		return inputNodesNum;
-	}
+    public Integer getReservoirNodesNum() {
+        return reservoirNodesNum;
+    }
 
-	public void setInputNodesNum(Integer inputNodesNum) {
-		this.inputNodesNum = inputNodesNum;
-	}
+    public void setReservoirNodesNum(Integer reservoirNodesNum) {
+        this.reservoirNodesNum = reservoirNodesNum;
+    }
 
-	public Integer getReadoutNodesNum() {
-		return readoutNodesNum;
-	}
+    public Integer getInputNodesNum() {
+        return inputNodesNum;
+    }
 
-	public void setReadoutNodesNum(Integer readoutNodesNum) {
-		this.readoutNodesNum = readoutNodesNum;
-	}
+    public void setInputNodesNum(Integer inputNodesNum) {
+        this.inputNodesNum = inputNodesNum;
+    }
 
-	public Integer getTotalNodesNum() {
-		return inputNodesNum + reservoirNodesNum + readoutNodesNum;
-	}
+    public Integer getReadoutNodesNum() {
+        return readoutNodesNum;
+    }
 
-	public abstract Integer getReservoirFixedInDegree();
+    public void setReadoutNodesNum(Integer readoutNodesNum) {
+        this.readoutNodesNum = readoutNodesNum;
+    }
 
-	public abstract void setReservoirFixedInDegree(Integer reservoirFixedInDegree);
+    public Integer getTotalNodesNum() {
+        return inputNodesNum + reservoirNodesNum + readoutNodesNum;
+    }
 
-	// input to reservoir connections are not counted to the reservoir in-degree
+    public abstract Integer getReservoirFixedInDegree();
+
+    public abstract void setReservoirFixedInDegree(Integer reservoirFixedInDegree);
+
+    // input to reservoir connections are not counted to the reservoir in-degree
     public abstract Integer getInputToReservoirFixedOutDegree();
 
-	public abstract void setInputToReservoirFixedOutDegree(Integer inputToReservoirFixedOutDegree);
+    public abstract void setInputToReservoirFixedOutDegree(Integer inputToReservoirFixedOutDegree);
 
-	public abstract Integer getReservoirToReadoutFixedOutDegree();
+    public abstract Integer getReservoirToReadoutFixedOutDegree();
 
-	public abstract void setReservoirToReadoutFixedOutDegree(Integer reservoirToReadoutFixedOutDegree);
+    public abstract void setReservoirToReadoutFixedOutDegree(Integer reservoirToReadoutFixedOutDegree);
 
-	public abstract Integer getReadoutToReservoirFixedOutDegree();
+    public abstract Integer getReadoutToReservoirFixedOutDegree();
 
-	public abstract void setReadoutToReservoirFixedOutDegree(Integer readoutToReservoirFixedOutDegree);
+    public abstract void setReadoutToReservoirFixedOutDegree(Integer readoutToReservoirFixedOutDegree);
 
-	public boolean isUseFullInputToReservoirConnections() {
-		return useFullInputToReservoirConnections;
-	}
+    public boolean isUseFullInputToReservoirConnections() {
+        return useFullInputToReservoirConnections;
+    }
 
-	public void setUseFullInputToReservoirConnections(boolean useFullInputToReservoirConnections) {
-		this.useFullInputToReservoirConnections = useFullInputToReservoirConnections;
-	}
+    public void setUseFullInputToReservoirConnections(boolean useFullInputToReservoirConnections) {
+        this.useFullInputToReservoirConnections = useFullInputToReservoirConnections;
+    }
 
-	public boolean isUseFullReservoirToReadoutConnections() {
-		return useFullReservoirToReadoutConnections;
-	}
+    public boolean isUseFullReservoirToReadoutConnections() {
+        return useFullReservoirToReadoutConnections;
+    }
 
-	public void setUseFullReservoirToReadoutConnections(boolean useFullReservoirToReadoutConnections) {
-		this.useFullReservoirToReadoutConnections = useFullReservoirToReadoutConnections;
-	}
+    public void setUseFullReservoirToReadoutConnections(boolean useFullReservoirToReadoutConnections) {
+        this.useFullReservoirToReadoutConnections = useFullReservoirToReadoutConnections;
+    }
 
-	public boolean isUseFullReadoutToReservoirConnections() {
-		return useFullReadoutToReservoirConnections;
-	}
+    public boolean isUseFullReadoutToReservoirConnections() {
+        return useFullReadoutToReservoirConnections;
+    }
 
-	public void setUseFullReadoutToReservoirConnections(boolean useFullReadoutToReservoirConnections) {
-		this.useFullReadoutToReservoirConnections = useFullReadoutToReservoirConnections;
-	}
+    public void setUseFullReadoutToReservoirConnections(boolean useFullReadoutToReservoirConnections) {
+        this.useFullReadoutToReservoirConnections = useFullReadoutToReservoirConnections;
+    }
 
-	public RandomDistribution<Double> getInitReservoirWeightDistribution() {
-		return initReservoirWeightDistribution;
-	}
+    public RandomDistribution<Double> getInitReservoirWeightDistribution() {
+        return initReservoirWeightDistribution;
+    }
 
-	public void setInitReservoirWeightDistribution(RandomDistribution<Double> initReservoirWeightDistribution) {
-		this.initReservoirWeightDistribution = initReservoirWeightDistribution;
-	}
+    public void setInitReservoirWeightDistribution(RandomDistribution<Double> initReservoirWeightDistribution) {
+        this.initReservoirWeightDistribution = initReservoirWeightDistribution;
+    }
 
-	public abstract RcMachineType getType();
+    public abstract RcMachineType getType();
 }

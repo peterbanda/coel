@@ -1,15 +1,13 @@
 package edu.banda.coel.task.chemistry;
 
-import java.util.Collection;
-
 import com.banda.chemistry.BndChemistryException;
 import com.banda.chemistry.domain.*;
-import com.banda.chemistry.domain.IllegalStateEventHandling;
 import com.banda.core.domain.task.Task;
-
-import edu.banda.coel.task.chemistry.AcTaskParts.AcInteractionSeriesHolder;
 import edu.banda.coel.task.chemistry.AcTaskParts.AcCompartmentHolder;
+import edu.banda.coel.task.chemistry.AcTaskParts.AcInteractionSeriesHolder;
 import edu.banda.coel.task.chemistry.AcTaskParts.AcSimulationConfigHolder;
+
+import java.util.Collection;
 
 /**
  * @author Peter Banda
@@ -17,178 +15,178 @@ import edu.banda.coel.task.chemistry.AcTaskParts.AcSimulationConfigHolder;
  */
 public class AcRunTask extends Task implements AcCompartmentHolder, AcSimulationConfigHolder, AcInteractionSeriesHolder {
 
-	private AcCompartment compartment;
-	private AcSimulationConfig simulationConfig;
-	private AcInteractionSeries actionSeries;
+    private AcCompartment compartment;
+    private AcSimulationConfig simulationConfig;
+    private AcInteractionSeries actionSeries;
 
-	private Integer runTime;
-	private Integer repetitions = 1;	
-	private IllegalStateEventHandling upperThresholdViolationHandling;
-	private IllegalStateEventHandling zeroThresholdViolationHandling;
-	private IllegalStateEventHandling notANumberConcentrationHandling;
-	private Collection<AcSpecies> storeSpeciesHistorySelectionGroup;
+    private Integer runTime;
+    private Integer repetitions = 1;
+    private IllegalStateEventHandling upperThresholdViolationHandling;
+    private IllegalStateEventHandling zeroThresholdViolationHandling;
+    private IllegalStateEventHandling notANumberConcentrationHandling;
+    private Collection<AcSpecies> storeSpeciesHistorySelectionGroup;
 
-	public AcRunTask() {
-		super();
-	}
+    public AcRunTask() {
+        super();
+    }
 
-	@Override
-	public AcCompartment getCompartment() {
-		return compartment;
-	}
+    @Override
+    public AcCompartment getCompartment() {
+        return compartment;
+    }
 
-	@Override
-	public void setCompartment(AcCompartment compartment) {
-		this.compartment = compartment;
-	}
+    @Override
+    public void setCompartment(AcCompartment compartment) {
+        this.compartment = compartment;
+    }
 
-	@Override
-	public boolean isCompartmentDefined() {
-		return compartment != null;
-	}
+    @Override
+    public boolean isCompartmentDefined() {
+        return compartment != null;
+    }
 
-	@Override
-	public boolean isCompartmentComplete() {
-		return isCompartmentDefined() && compartment.getReactionSet() != null;
-	}
+    @Override
+    public boolean isCompartmentComplete() {
+        return isCompartmentDefined() && compartment.getReactionSet() != null;
+    }
 
-	public void setCompartmentId(Long compartmentId) {
-		compartment = new AcCompartment();
-		compartment.setId(compartmentId);
-	}
+    public void setCompartmentId(Long compartmentId) {
+        compartment = new AcCompartment();
+        compartment.setId(compartmentId);
+    }
 
-	public Long getCompartmentId() {
-		if (isCompartmentDefined()) {
-			return compartment.getId();
-		}
-		return null;
-	}
-	
-	@Override
-	public AcSimulationConfig getSimulationConfig() {
-		return simulationConfig;
-	}
+    public Long getCompartmentId() {
+        if (isCompartmentDefined()) {
+            return compartment.getId();
+        }
+        return null;
+    }
 
-	@Override
-	public void setSimulationConfig(AcSimulationConfig simulationConfig) {
-		this.simulationConfig = simulationConfig;
-	}
+    @Override
+    public AcSimulationConfig getSimulationConfig() {
+        return simulationConfig;
+    }
 
-	public void setSimulationConfigId(Long simulationConfigId) {
-		simulationConfig = new AcSimulationConfig();
-		simulationConfig.setId(simulationConfigId);
-	}
+    @Override
+    public void setSimulationConfig(AcSimulationConfig simulationConfig) {
+        this.simulationConfig = simulationConfig;
+    }
 
-	@Override
-	public boolean isSimulationConfigDefined() {
-		return simulationConfig != null;
-	}
+    public void setSimulationConfigId(Long simulationConfigId) {
+        simulationConfig = new AcSimulationConfig();
+        simulationConfig.setId(simulationConfigId);
+    }
 
-	@Override
-	public boolean isSimulationConfigComplete() {
-		return simulationConfig.getOdeSolverType() != null;
-	}
+    @Override
+    public boolean isSimulationConfigDefined() {
+        return simulationConfig != null;
+    }
 
-	@Override
-	public AcInteractionSeries getActionSeries() {
-		return actionSeries;
-	}
+    @Override
+    public boolean isSimulationConfigComplete() {
+        return simulationConfig.getOdeSolverType() != null;
+    }
 
-	@Override
-	public void setActionSeries(AcInteractionSeries actionSeries) {
-		this.actionSeries = actionSeries;
-	}
+    @Override
+    public AcInteractionSeries getActionSeries() {
+        return actionSeries;
+    }
 
-	@Override
-	public boolean isActionSeriesDefined() {
-		return actionSeries != null;
-	}
+    @Override
+    public void setActionSeries(AcInteractionSeries actionSeries) {
+        this.actionSeries = actionSeries;
+    }
 
-	@Override
-	public boolean isActionSeriesComplete() {
-		return isActionSeriesDefined() && !actionSeries.getActions().isEmpty();
-	}
+    @Override
+    public boolean isActionSeriesDefined() {
+        return actionSeries != null;
+    }
 
-	public void setActionSeriesId(Long actionSeriesId) {
-		if (actionSeries != null) {
-			throw new BndChemistryException("AC interaction series already set for AC run task.");
-		}
-		actionSeries = new AcInteractionSeries();
-		actionSeries.setId(actionSeriesId);
-	}
+    @Override
+    public boolean isActionSeriesComplete() {
+        return isActionSeriesDefined() && !actionSeries.getActions().isEmpty();
+    }
 
-	public Long getActionSeriesId() {
-		if (isActionSeriesDefined()) {
-			return actionSeries.getId();
-		}
-		return null;
-	}
-	
-	public Integer getRunTime() {
-		return runTime;
-	}
+    public void setActionSeriesId(Long actionSeriesId) {
+        if (actionSeries != null) {
+            throw new BndChemistryException("AC interaction series already set for AC run task.");
+        }
+        actionSeries = new AcInteractionSeries();
+        actionSeries.setId(actionSeriesId);
+    }
 
-	public void setRunTime(Integer runTime) {
-		this.runTime = runTime;
-	}
+    public Long getActionSeriesId() {
+        if (isActionSeriesDefined()) {
+            return actionSeries.getId();
+        }
+        return null;
+    }
 
-	public Integer getRepetitions() {
-		return repetitions;
-	}
+    public Integer getRunTime() {
+        return runTime;
+    }
 
-	public void setRepetitions(Integer repetitions) {
-		this.repetitions = repetitions;
-	}
+    public void setRunTime(Integer runTime) {
+        this.runTime = runTime;
+    }
 
-	public boolean hasUpperThresholdViolationHandling() {
-		return upperThresholdViolationHandling != null;
-	}
+    public Integer getRepetitions() {
+        return repetitions;
+    }
 
-	public IllegalStateEventHandling getUpperThresholdViolationHandling() {
-		return upperThresholdViolationHandling;
-	}
+    public void setRepetitions(Integer repetitions) {
+        this.repetitions = repetitions;
+    }
 
-	public void setUpperThresholdViolationHandling(
-			IllegalStateEventHandling upperThresholdViolationHandling) {
-		this.upperThresholdViolationHandling = upperThresholdViolationHandling;
-	}
+    public boolean hasUpperThresholdViolationHandling() {
+        return upperThresholdViolationHandling != null;
+    }
 
-	public IllegalStateEventHandling getZeroThresholdViolationHandling() {
-		return zeroThresholdViolationHandling;
-	}
+    public IllegalStateEventHandling getUpperThresholdViolationHandling() {
+        return upperThresholdViolationHandling;
+    }
 
-	public void setZeroThresholdViolationHandling(
-			IllegalStateEventHandling zeroThresholdViolationHandling) {
-		this.zeroThresholdViolationHandling = zeroThresholdViolationHandling;
-	}
+    public void setUpperThresholdViolationHandling(
+            IllegalStateEventHandling upperThresholdViolationHandling) {
+        this.upperThresholdViolationHandling = upperThresholdViolationHandling;
+    }
 
-	public IllegalStateEventHandling getNotANumberConcentrationHandling() {
-		return notANumberConcentrationHandling;
-	}
+    public IllegalStateEventHandling getZeroThresholdViolationHandling() {
+        return zeroThresholdViolationHandling;
+    }
 
-	public void setNotANumberConcentrationHandling(
-			IllegalStateEventHandling notANumberConcentrationHandling) {
-		this.notANumberConcentrationHandling = notANumberConcentrationHandling;
-	}
+    public void setZeroThresholdViolationHandling(
+            IllegalStateEventHandling zeroThresholdViolationHandling) {
+        this.zeroThresholdViolationHandling = zeroThresholdViolationHandling;
+    }
 
-	public Collection<AcSpecies> getStoreSpeciesHistorySelectionGroup() {
-		return storeSpeciesHistorySelectionGroup;
-	}
+    public IllegalStateEventHandling getNotANumberConcentrationHandling() {
+        return notANumberConcentrationHandling;
+    }
 
-	public void setStoreSpeciesHistorySelectionGroup(Collection<AcSpecies> storeSpeciesHistorySelectionGroup) {
-		this.storeSpeciesHistorySelectionGroup = storeSpeciesHistorySelectionGroup;
-	}
+    public void setNotANumberConcentrationHandling(
+            IllegalStateEventHandling notANumberConcentrationHandling) {
+        this.notANumberConcentrationHandling = notANumberConcentrationHandling;
+    }
 
-	public void copyFrom(AcRunTask runTask) {
-		setRunOnGrid(runTask.isRunOnGrid());
-		setCompartment(runTask.getCompartment());
-		setSimulationConfig(runTask.getSimulationConfig());
-		setActionSeries(runTask.getActionSeries());
-		setRunTime(runTask.getRunTime());
-		setRepetitions(runTask.getRepetitions());
-		setUpperThresholdViolationHandling(runTask.getUpperThresholdViolationHandling());
-		setZeroThresholdViolationHandling(runTask.getZeroThresholdViolationHandling());
-		setNotANumberConcentrationHandling(runTask.getNotANumberConcentrationHandling());
-		setStoreSpeciesHistorySelectionGroup(runTask.getStoreSpeciesHistorySelectionGroup());
-	}
+    public Collection<AcSpecies> getStoreSpeciesHistorySelectionGroup() {
+        return storeSpeciesHistorySelectionGroup;
+    }
+
+    public void setStoreSpeciesHistorySelectionGroup(Collection<AcSpecies> storeSpeciesHistorySelectionGroup) {
+        this.storeSpeciesHistorySelectionGroup = storeSpeciesHistorySelectionGroup;
+    }
+
+    public void copyFrom(AcRunTask runTask) {
+        setRunOnGrid(runTask.isRunOnGrid());
+        setCompartment(runTask.getCompartment());
+        setSimulationConfig(runTask.getSimulationConfig());
+        setActionSeries(runTask.getActionSeries());
+        setRunTime(runTask.getRunTime());
+        setRepetitions(runTask.getRepetitions());
+        setUpperThresholdViolationHandling(runTask.getUpperThresholdViolationHandling());
+        setZeroThresholdViolationHandling(runTask.getZeroThresholdViolationHandling());
+        setNotANumberConcentrationHandling(runTask.getNotANumberConcentrationHandling());
+        setStoreSpeciesHistorySelectionGroup(runTask.getStoreSpeciesHistorySelectionGroup());
+    }
 }

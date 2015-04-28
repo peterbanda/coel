@@ -5,7 +5,6 @@ import com.banda.chemistry.domain.AcCompartment;
 import com.banda.chemistry.domain.AcInteractionSeries;
 import com.banda.chemistry.domain.AcTranslationSeries;
 import com.banda.core.domain.task.Task;
-
 import edu.banda.coel.task.chemistry.AcTaskParts.AcTranslationSeriesHolder;
 
 /**
@@ -14,86 +13,86 @@ import edu.banda.coel.task.chemistry.AcTaskParts.AcTranslationSeriesHolder;
  */
 public class AcRunAndTranslateTask extends Task implements AcTranslationSeriesHolder {
 
-	private AcTranslationSeries translationSeries;
-	private AcRunTask runTaskDefinition;
-	private boolean storeRunTrace;
+    private AcTranslationSeries translationSeries;
+    private AcRunTask runTaskDefinition;
+    private boolean storeRunTrace;
 
-	public AcRunAndTranslateTask() {
-		super();
-	}
+    public AcRunAndTranslateTask() {
+        super();
+    }
 
-	@Override
-	public AcTranslationSeries getTranslationSeries() {
-		return translationSeries;
-	}
+    @Override
+    public AcTranslationSeries getTranslationSeries() {
+        return translationSeries;
+    }
 
-	@Override
-	public void setTranslationSeries(AcTranslationSeries translationSeries) {
-		this.translationSeries = translationSeries;	
-	}
+    @Override
+    public void setTranslationSeries(AcTranslationSeries translationSeries) {
+        this.translationSeries = translationSeries;
+    }
 
-	@Override
-	public boolean isTranslationSeriesDefined() {
-		return translationSeries != null;
-	}
+    @Override
+    public boolean isTranslationSeriesDefined() {
+        return translationSeries != null;
+    }
 
-	@Override
-	public boolean isTranslationSeriesComplete() {
-		return isTranslationSeriesDefined() && !translationSeries.getTranslations().isEmpty();
-	}
+    @Override
+    public boolean isTranslationSeriesComplete() {
+        return isTranslationSeriesDefined() && !translationSeries.getTranslations().isEmpty();
+    }
 
-	public void setTranslationSeriesId(Long actionSeriesId) {
-		if (translationSeries != null) {
-			throw new BndChemistryException("AC translation series already set for AC translation task.");
-		}
-		translationSeries = new AcTranslationSeries();
-		translationSeries.setId(actionSeriesId);
-	}
+    public void setTranslationSeriesId(Long actionSeriesId) {
+        if (translationSeries != null) {
+            throw new BndChemistryException("AC translation series already set for AC translation task.");
+        }
+        translationSeries = new AcTranslationSeries();
+        translationSeries.setId(actionSeriesId);
+    }
 
-	public Long getTranslationSeriesId() {
-		if (isTranslationSeriesDefined()) {
-			return translationSeries.getId();
-		}
-		return null;
-	}
-	
-	public AcRunTask getRunTaskDefinition() {
-		return runTaskDefinition;
-	}
+    public Long getTranslationSeriesId() {
+        if (isTranslationSeriesDefined()) {
+            return translationSeries.getId();
+        }
+        return null;
+    }
 
-	public void setRunTaskDefinition(AcRunTask runTaskDefinition) {
-		this.runTaskDefinition = runTaskDefinition;
-	}
+    public AcRunTask getRunTaskDefinition() {
+        return runTaskDefinition;
+    }
 
-	public AcInteractionSeries getActionSeries() {
-		return runTaskDefinition.getActionSeries();
-	}
+    public void setRunTaskDefinition(AcRunTask runTaskDefinition) {
+        this.runTaskDefinition = runTaskDefinition;
+    }
 
-	public Long getActionSeriesId() {
-		return runTaskDefinition.getActionSeriesId();
-	}
+    public AcInteractionSeries getActionSeries() {
+        return runTaskDefinition.getActionSeries();
+    }
 
-	public boolean isStoreRunTrace() {
-		return storeRunTrace;
-	}
+    public Long getActionSeriesId() {
+        return runTaskDefinition.getActionSeriesId();
+    }
 
-	public void setStoreRunTrace(boolean storeRunTrace) {
-		this.storeRunTrace = storeRunTrace;
-	}
+    public boolean isStoreRunTrace() {
+        return storeRunTrace;
+    }
 
-	public AcCompartment getCompartment() {
-		return runTaskDefinition != null ? runTaskDefinition.getCompartment() : null;
-	}
+    public void setStoreRunTrace(boolean storeRunTrace) {
+        this.storeRunTrace = storeRunTrace;
+    }
 
-	public Long getCompartmentId() {
-		return getCompartment() != null ? getCompartment().getId() : null;
-	}
+    public AcCompartment getCompartment() {
+        return runTaskDefinition != null ? runTaskDefinition.getCompartment() : null;
+    }
 
-	public void copyFrom(AcRunAndTranslateTask taskDef) {
-		AcRunTask runTaskDef = new AcRunTask();
-		setRunTaskDefinition(runTaskDef);
-		runTaskDef.copyFrom(taskDef.getRunTaskDefinition());
-		setTranslationSeries(taskDef.getTranslationSeries());
-		setStoreRunTrace(taskDef.isStoreRunTrace());
-	}
+    public Long getCompartmentId() {
+        return getCompartment() != null ? getCompartment().getId() : null;
+    }
+
+    public void copyFrom(AcRunAndTranslateTask taskDef) {
+        AcRunTask runTaskDef = new AcRunTask();
+        setRunTaskDefinition(runTaskDef);
+        runTaskDef.copyFrom(taskDef.getRunTaskDefinition());
+        setTranslationSeries(taskDef.getTranslationSeries());
+        setStoreRunTrace(taskDef.isStoreRunTrace());
+    }
 }
