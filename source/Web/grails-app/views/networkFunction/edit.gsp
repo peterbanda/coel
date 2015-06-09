@@ -17,12 +17,13 @@
 	    <hr>
 
 		<ui:field bean="instance" name="name"/>
-		<g:set var="functionLabel" value="${instance?.function?.getClass() == TransitionTable.class ? 'Function as Table Output' : 'Function as Expression'}" />
+		<g:set var="functionLabel" value="${instance?.function?.getClass() == TransitionTable.class ? 'Transition Table (Function)' : 'Expression (Function)'}" />
 		<ui:field bean="instance" name="functionInput" label="${functionLabel}">
 			<ui:fieldInput>
-				<g:textArea name="functionInput" rows="7" cols="60" value="${render(template:'displayFunction',bean:instance.function)}"/>
+				<g:textArea name="functionInput" rows="7" class="span11" value="${render(template:'displayFunction',bean:instance.function)}"/>
 			</ui:fieldInput>
-		</ui:field>		<ui:field bean="instance" name="multiComponentUpdaterType" required="${true}"/>
+		</ui:field>
+		<ui:field bean="instance" name="multiComponentUpdaterType" required="${true}"/>
 		<ui:field bean="instance" name="statesWeightsIntegratorType" required="${false}"/>
 
 		<g:render template="layerFunctions"/>

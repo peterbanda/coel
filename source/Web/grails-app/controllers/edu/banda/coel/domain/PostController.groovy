@@ -19,6 +19,15 @@ class PostController extends BaseDomainController {
 		super.list(max)
 	}
 
+	def listView() {
+		params.projections = ['id','dateCreated','title','slug','content']
+        params.sort = 'id'
+        params.order = 'desc'
+
+        def posts = Post.listWithParamsAndProjections(params)
+		[list : posts]
+	}
+
 	def create() {
 		[instance: new Post(params)]
 	}

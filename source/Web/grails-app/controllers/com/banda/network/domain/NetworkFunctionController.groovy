@@ -37,8 +37,7 @@ class NetworkFunctionController extends BaseDomainController {
 		def networkFunctionInstance = new NetworkFunction(params)
 
 		if (params.functionInput) {
-			def integerTableOutputs = ConversionUtil.convertToList(Integer.class, params.functionInput, "Table Output")
-			def tableOutputs = integerTableOutputs.collect{ if (it.equals(new Integer(1))) true else false}
+			def tableOutputs = params.functionInput.trim().findAll { it.equals("0") || it.equals("1") }.collect{ if (it.equals("1")) true else false}
 			def transitionTable = functionFactory.createBoolTransitionTable(tableOutputs)
 			networkFunctionInstance.setFunction(transitionTable)
 		}
@@ -85,8 +84,7 @@ class NetworkFunctionController extends BaseDomainController {
 		networkFunctionInstance.properties = params
 	
 		if (params.functionInput) {
-			def integerTableOutputs = ConversionUtil.convertToList(Integer.class, params.functionInput, "Table Output")
-			def tableOutputs = integerTableOutputs.collect{ if (it.equals(new Integer(1))) true else false}
+            def tableOutputs = params.functionInput.trim().findAll { it.equals("0") || it.equals("1") }.collect{ if (it.equals("1")) true else false}
 			def newTransitionTable = functionFactory.createBoolTransitionTable(tableOutputs)
 
 			if (networkFunctionInstance.function == null) {
@@ -104,5 +102,30 @@ class NetworkFunctionController extends BaseDomainController {
 	
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'networkFunction.label', default: 'Network Function'), networkFunctionInstance.id])
 		redirect(action: "show", id: networkFunctionInstance.id)
+	}
+
+	def exportTransitionTable(Long id) {
+        def lsbFirst = params.lsbfirst
+        def networkFunctionInstance = getSafe(id)
+        def table = networkFunctionInstance.function
+
+        def binaryOutput = table.outputs.collect{ output -> if (output) 1 else 0}.join("")
+        if (!lsbFirst)
+            binaryOutput = binaryOutput.reverse()
+
+        def decimalOutput = new BigInteger(binaryOutput, 2).toString()
+        def hexadecimalOutput = new BigInteger(binaryOutput, 2).toString(16)
+
+        def text = "Id: " + networkFunctionInstance.id + "\n"
+        text <<= "Name: " + networkFunctionInstance.name + "\n\n"
+        text <<= "Transition Table\n"
+        text <<= "-----------------------------------------------------------------------\n"
+        text <<= " order:       " + ((lsbFirst) ? "lsb first" : "msb first") + "\n"
+        text <<= " binary:      " + binaryOutput  + "\n"
+        text <<= " decimal:     " + decimalOutput  + "\n"
+        text <<= " hexadecimal: " + hexadecimalOutput  + "\n"
+        text <<= "-----------------------------------------------------------------------\n"
+        response.setHeader("Content-disposition", "attachment; filename=" + "transition_table_${id}");
+        render(contentType: "text", text: text);
 	}
 }

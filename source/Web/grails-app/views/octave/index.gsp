@@ -7,8 +7,14 @@
 <body>
     <theme:zone name="body">
     	<ul>
+            <li>
+                <i>P. Banda, A. Goudarzi, C. Teuscher, and D. Stefanovic. Analytic Basis of Chemical Learning. PLOS Computational Biology (In submission), 2015</i>
+                <ul class="inline" style="margin-top: 10px;">
+                </ul>
+                <hr/>
+            </li>
 			<li>
-				<i>D. Blount, P. Banda, C. Teuscher. Feedforward Chemical Neural Network: A Compartmentalized Chemical System that Learns XOR (In submission). 2014</i>
+				<i>D. Blount, P. Banda, C. Teuscher, and D. Stefanovic. Feedforward Chemical Neural Network: A Compartmentalized Chemical System that Learns XOR. Artificial Life (In submission), 2015</i>
 	    		<ul class="inline" style="margin-top: 10px;">
 					<li><gui:actionLink controller="acReactionSet" action="exportAsOctaveMatlab" id="3611" icon="icon-download" text="OCN (AASP)"/>
 	        		<li><gui:actionLink class="export" controller="acReactionSet" action="exportAsOctaveMatlab" id="3548" icon="icon-download" text="HCN (AASP)"/></li>
@@ -17,7 +23,7 @@
 	    	</li>
 
 			<li>
-				<i>P. Banda, C. Teuscher. An Analog Chemical Circuit with Parallel-Accessible Delay Line Learning Temporal Tasks. In Sayama, H., et al. eds.: ALIFE 14: Proceedings of the Fourteenth International Conference on the Synthesis and Simulation of Living Systems, MIT Press, 482-489, 2014</i>
+				<i>P. Banda, and C. Teuscher. An Analog Chemical Circuit with Parallel-Accessible Delay Line Learning Temporal Tasks. In Sayama, H., et al. eds.: ALIFE 14: Proceedings of the Fourteenth International Conference on the Synthesis and Simulation of Living Systems, MIT Press, 482-489, 2014</i>
 				<br/>
 	    		<ul class="inline" style="margin-top: 10px;">
 	    			<li><gui:actionLink class="export" controller="acReactionSet" action="exportAsOctaveMatlab" id="3536" icon="icon-download" text="PDL n = 2"/></li>
@@ -35,7 +41,7 @@
 			</li>
 
 			<li>
-				<i>P. Banda, C. Teuscher. Learning Two-input Linear and Nonlinear Analog Functions with a Simple Chemical System. In Ibarra, O.H., et al. eds.: Unconventional Computing and Natural Computing Conference, Volume 8553 of Lecture Notes in Computer Science. Springer International Publishing Switzerland, 14-26, 2014</i>
+				<i>P. Banda, and C. Teuscher. Learning Two-input Linear and Nonlinear Analog Functions with a Simple Chemical System. In Ibarra, O.H., et al. eds.: Unconventional Computing and Natural Computing Conference, Volume 8553 of Lecture Notes in Computer Science. Springer International Publishing Switzerland, 14-26, 2014</i>
 	    		<ul class="inline" style="margin-top: 10px;">
 					<li><gui:actionLink class="export" controller="acReactionSet" action="exportAsOctaveMatlab" id="3535" icon="icon-download" text="AASP"/></li>
 	    		</ul>
@@ -43,7 +49,7 @@
 	    	</li>
 
 			<li>
-				<i>J. Moles, P. Banda, and C. Teuscher. Delay Line as a Chemical Reaction Network. Parallel Processing Letters (In press), 2014</i>
+				<i>J. Moles, P. Banda, and C. Teuscher. Delay Line as a Chemical Reaction Network. Parallel Processing Letters, 21(1), 2015</i>
 	    		<ul class="inline" style="margin-top: 10px;">
 	    		</ul>
 	    		<hr/>
