@@ -1,50 +1,29 @@
 package com.banda.math.domain.evo
 
-import java.util.Collection
-
-import com.banda.core.Pair
-
-import edu.banda.coel.web.BaseDomainController
-import edu.banda.coel.web.AcAssignmentBoundData
-import edu.banda.coel.web.AcAssignmentData
-import edu.banda.coel.business.Replicator
-import edu.banda.coel.domain.evo.EvoAcSpecTask
-import edu.banda.coel.domain.evo.EvoAcRateConstantTask
-import edu.banda.coel.domain.evo.EvoAcInteractionSeriesTask
-import edu.banda.coel.domain.evo.EvoNetworkTask
-import edu.banda.coel.domain.evo.AcSpeciesAssignmentBound
-import edu.banda.coel.domain.evo.AcInteractionVariableAssignmentBound
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.dao.DataIntegrityViolationException
-
+import com.banda.chemistry.business.ArtificialChemistryUtil
+import com.banda.chemistry.domain.*
 import com.banda.core.plotter.JavaPlotter
-import com.banda.math.business.JavaMathUtil
 import com.banda.core.plotter.Plotter
+import com.banda.core.util.ObjectUtil
+import com.banda.math.business.JavaMathUtil
+import com.banda.math.business.dynamics.JavaStatsPlotter
 import com.banda.math.domain.Stats
 import com.banda.math.domain.StatsType
-import com.banda.core.util.ObjectUtil
-import com.banda.math.business.dynamics.JavaStatsPlotter
-import com.banda.chemistry.domain.ArtificialChemistry
-import com.banda.chemistry.domain.AcInteractionSeries
-import com.banda.chemistry.domain.AcInteraction
-import com.banda.chemistry.domain.AcEvaluation
-import com.banda.chemistry.domain.AcSpeciesInteraction
-import com.banda.chemistry.domain.AcInteractionVariableAssignment
 import com.banda.network.domain.Network
 import com.banda.network.domain.NetworkActionSeries
 import com.banda.network.domain.NetworkEvaluation
-import com.banda.chemistry.business.ArtificialChemistryUtil
-
+import edu.banda.coel.business.Replicator
+import edu.banda.coel.domain.evo.*
 import edu.banda.coel.domain.service.EvolutionService
-import edu.banda.coel.web.AcDependentEvoRateConstantTaskData
-import edu.banda.coel.web.AcDependentEvoInteractionSeriesTaskData
+import edu.banda.coel.web.*
 import grails.converters.JSON
+import org.apache.commons.lang.StringUtils
 
 class EvoTaskController extends BaseDomainController {
 
 	def EvolutionService evolutionService
 	def acUtil = ArtificialChemistryUtil.getInstance()
+	def ChemistryCommonService chemistryCommonService
 
 	def index() {
 		redirect(action: "list", params: params)
@@ -204,7 +183,7 @@ class EvoTaskController extends BaseDomainController {
 			acs = ArtificialChemistry.listWithParamsAndProjections(params)
 
 			def ac = evoTaskInstance.ac 
-			def speciesSets = getThisAndParentSpeciesSets(evoTaskInstance.ac.speciesSet)
+			def speciesSets = chemistryCommonService.getThisAndParentSpeciesSets(evoTaskInstance.ac.speciesSet)
 
 			interactionSeries = AcInteractionSeries.findAll("from AcInteractionSeries as a where a.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 			evaluations = AcEvaluation.findAll("from AcEvaluation as a where a.translationSeries.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
@@ -378,7 +357,7 @@ class EvoTaskController extends BaseDomainController {
 		def ac = ArtificialChemistry.get(id)
 		def reactionSets = ([ac.skinCompartment.reactionSet] as Set) + getReactionSetsRecursively(ac.skinCompartment)
 
-		def speciesSets = getThisAndParentSpeciesSets(ac.speciesSet)
+		def speciesSets = chemistryCommonService.getThisAndParentSpeciesSets(ac.speciesSet)
 		def interactionSeries = AcInteractionSeries.findAll("from AcInteractionSeries as a where a.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 		def evaluations = AcEvaluation.findAll("from AcEvaluation as a where a.translationSeries.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 
@@ -393,7 +372,7 @@ class EvoTaskController extends BaseDomainController {
 	def getAcInteractionSeriesDependentData(Long id) {
 		def ac = ArtificialChemistry.get(id)
 
-		def speciesSets = getThisAndParentSpeciesSets(ac.speciesSet)
+		def speciesSets = chemistryCommonService.getThisAndParentSpeciesSets(ac.speciesSet)
 		def topInteractionSeries = AcInteractionSeries.findAll("from AcInteractionSeries as a where a.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 		def evaluations = AcEvaluation.findAll("from AcEvaluation as a where a.translationSeries.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 		def allInteractionSeries = getInteractionSeriesRecursively(topInteractionSeries)

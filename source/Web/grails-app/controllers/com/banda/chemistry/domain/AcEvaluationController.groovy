@@ -1,13 +1,9 @@
 package com.banda.chemistry.domain
 
-import edu.banda.coel.web.BaseDomainController
-
-import com.banda.chemistry.business.ArtificialChemistryUtil
-import com.banda.chemistry.domain.AcEvaluation
-import com.banda.chemistry.domain.ArtificialChemistry
 import com.banda.chemistry.business.AcReplicator
-
+import com.banda.chemistry.business.ArtificialChemistryUtil
 import com.banda.function.BndFunctionException
+import edu.banda.coel.web.BaseDomainController
 
 class AcEvaluationController extends BaseDomainController {
 

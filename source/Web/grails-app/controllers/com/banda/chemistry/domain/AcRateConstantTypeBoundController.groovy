@@ -2,10 +2,6 @@ package com.banda.chemistry.domain
 
 import edu.banda.coel.web.BaseDomainController
 
-import org.springframework.dao.DataIntegrityViolationException
-
-import com.banda.chemistry.domain.AcRateConstantTypeBound;
-
 class AcRateConstantTypeBoundController extends BaseDomainController {
 
 	def index() {

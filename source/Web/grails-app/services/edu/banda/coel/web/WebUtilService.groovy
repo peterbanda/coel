@@ -6,7 +6,7 @@ import org.springframework.web.context.request.RequestContextHolder
 
 class WebUtilService {
 	
-	void withSession (Closure closure) {
+	void withSession(Closure closure) {
 		try {
 			GrailsWebRequest request = RequestContextHolder.currentRequestAttributes()
 			GrailsHttpSession session = request.session

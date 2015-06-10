@@ -145,7 +145,3 @@ a.plain{
   border-color: #b2dba1;
   border-radius: 6px 6px 0 0;
 }
-
-.collapse.in {
-	overflow: visible
-}

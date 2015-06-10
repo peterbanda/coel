@@ -1,10 +1,8 @@
 package com.banda.math.domain.dynamics
 
-import edu.banda.coel.web.BaseDomainController
 import com.banda.chemistry.business.AcReplicator
-
+import edu.banda.coel.web.BaseDomainController
 import org.springframework.dao.DataIntegrityViolationException
-import java.util.Date
 
 class SingleRunAnalysisSpecController extends BaseDomainController {
 

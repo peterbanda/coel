@@ -166,20 +166,24 @@
 			}
 		</r:script>
 		<style>
-		/*		
-			.accordion-body.in { 
-				overflow:visible; 
-			}
 
-			.accordion-body.in:hover { 
-				overflow:visible;
-			}
+            .collapse.in {
+	            overflow: visible
+            }
 
-			.accordion-body[class*="in collapse"]{
-				overflow:visible;
-			}
-		*/
+			/*
+    			.accordion-body.in {
+        			overflow:visible;
+    			}
 
+			    .accordion-body.in:hover {
+        			overflow:visible;
+    			}
+
+			    .accordion-body[class*="in collapse"]{
+        			overflow:visible;
+    			}
+			*/
 		</style>
     </head>
     <body>

@@ -88,17 +88,21 @@
 	</theme:zone>
 
 	<theme:zone name="panel2">
-		<ui:h3 text="Contact"/>
-		<address>
-			<strong>Peter Banda</strong><br>
-			<i class="icon-envelope"></i> <a href="mailto:banda@pdx.edu">banda@pdx.edu</a><br>
-  			<i class="icon-chevron-right"></i> <a href="http://peterbanda.net">peterbanda.net</a><br>
-		</address>
-		<address>
-			<strong>Teuscher Lab</strong><br>
-		   	Portland State University<br>
-  			<i class=" icon-chevron-right"></i> <a href="http://www.teuscher-lab.com">teuscher-lab.com</a><br>
-		</address>
+		<div class="row-fluid">
+            <div class="offset2">
+		        <ui:h3 text="Contact"/>
+		        <address>
+			        <strong>Peter Banda</strong><br>
+			        <i class="icon-envelope"></i> <a href="mailto:banda@pdx.edu">banda@pdx.edu</a><br>
+  			        <i class="icon-chevron-right"></i> <a href="http://peterbanda.net">peterbanda.net</a><br>
+		        </address>
+		        <address>
+    			    <strong>Teuscher Lab</strong><br>
+	    	   	    Portland State University<br>
+  		    	    <i class=" icon-chevron-right"></i> <a href="http://www.teuscher-lab.com">teuscher-lab.com</a><br>
+		        </address>
+            </div>
+		</div>
 	</theme:zone>
 </body>
 </html>

@@ -1,22 +1,10 @@
 package com.banda.chemistry.domain
 
-import java.util.Collection;
-import java.util.Date
-
-import edu.banda.coel.web.BaseDomainController
-
-import com.banda.chemistry.business.AcReplicator
-import com.banda.chemistry.business.ArtificialChemistryUtil
-import com.banda.chemistry.domain.AcReactionGroup
-import com.banda.chemistry.domain.AcReactionSet
-import com.banda.core.domain.um.User
-import com.banda.core.util.ObjectUtil
-import com.banda.core.util.ParseUtil
-import com.banda.chemistry.domain.AcReaction.ReactionDirection
 import com.banda.chemistry.business.AcKineticsBO
 import com.banda.chemistry.business.AcRateConstantUtil
-
-import org.springframework.dao.DataIntegrityViolationException
+import com.banda.core.util.ObjectUtil
+import com.banda.core.util.ParseUtil
+import edu.banda.coel.web.BaseDomainController
 
 class AcReactionGroupController extends BaseDomainController {
 

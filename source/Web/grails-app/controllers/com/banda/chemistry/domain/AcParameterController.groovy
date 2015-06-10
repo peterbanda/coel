@@ -1,11 +1,7 @@
 package com.banda.chemistry.domain
 
+import com.banda.chemistry.business.ArtificialChemistryUtil
 import edu.banda.coel.web.BaseDomainController
-import org.springframework.dao.DataIntegrityViolationException
-
-import com.banda.chemistry.business.ArtificialChemistryUtil;
-import com.banda.chemistry.domain.AcParameter;
-import com.banda.chemistry.domain.AcParameterSet;
 
 class AcParameterController extends BaseDomainController {
 

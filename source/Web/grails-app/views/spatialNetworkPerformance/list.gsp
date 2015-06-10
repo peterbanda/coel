@@ -27,7 +27,7 @@
         <gui:table list="${list}" showEnabled="true" checkEnabled="true">
         	<gui:column property="id"/>
             <gui:column property="timeCreated"/>
-            <gui:column property="network"><g:link controller="post" action="show" id="${it.id}">${it.name}</g:link></gui:column>
+            <gui:column property="network"><g:link controller="network" action="show" id="${it.id}">${it.name}</g:link></gui:column>
             <gui:column property="interactionSeries"><g:link controller="networkActionSeries" action="show" id="${it.id}">${it.name}</g:link></gui:column>
             <gui:column property="evaluation"><g:link controller="networkEvaluation" action="show" id="${it.id}">${it.name}</g:link></gui:column>
         </gui:table>

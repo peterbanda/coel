@@ -1,29 +1,18 @@
 package com.banda.chemistry.domain
 
-import org.apache.commons.lang.StringUtils
-import grails.plugins.springsecurity.Secured
-import org.springframework.security.access.prepost.PostFilter
-import org.springframework.security.access.prepost.PostAuthorize
-import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.dao.DataIntegrityViolationException
-
 import com.banda.chemistry.business.AcReplicator
 import com.banda.chemistry.business.ArtificialChemistryUtil
-import edu.banda.coel.task.chemistry.AcRunTask
 import com.banda.core.plotter.JavaPlotter
 import com.banda.core.plotter.Plotter
-import com.banda.math.domain.dynamics.SingleRunAnalysisResult
-import com.banda.math.domain.dynamics.SingleRunAnalysisResultType
-import com.banda.math.domain.StatsType
-import com.banda.core.domain.um.User
 import com.banda.core.util.ObjectUtil
 import com.banda.math.business.dynamics.JavaStatsPlotter
-
-import edu.banda.coel.core.util.ImageUtils
+import com.banda.math.domain.StatsType
+import com.banda.math.domain.dynamics.SingleRunAnalysisResult
+import com.banda.math.domain.dynamics.SingleRunAnalysisResultType
 import edu.banda.coel.domain.service.ArtificialChemistryService
+import edu.banda.coel.task.chemistry.AcRunTask
 import edu.banda.coel.web.BaseDomainController
-
-import org.hibernate.transform.Transformers
+import org.apache.commons.lang.StringUtils
 
 class ArtificialChemistryController extends BaseDomainController {
 

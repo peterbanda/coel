@@ -1,32 +1,18 @@
 package com.banda.chemistry.domain
 
-import edu.banda.coel.web.BaseController
-
 import com.banda.chemistry.business.ArtificialChemistryUtil
-import com.banda.core.util.ObjectUtil
-import com.banda.core.domain.um.User
-
-import edu.banda.coel.domain.service.ArtificialChemistryService
-
-import com.banda.chemistry.domain.AcVariable.AcVariableIndexComparator
 import com.banda.chemistry.domain.AcItemHistory.AcItemHistoryLabelComparator
-import com.banda.chemistry.domain.AcChannelDirection
-import com.banda.chemistry.domain.AcTranslatedRun
-
-import edu.banda.coel.task.chemistry.AcRunTask
-import edu.banda.coel.task.chemistry.AcRunAndTranslateTask
-
 import com.banda.core.domain.ComponentRunTrace
-
-import edu.banda.coel.web.AcRunData
+import com.banda.core.util.ObjectUtil
+import edu.banda.coel.domain.service.ArtificialChemistryService
+import edu.banda.coel.task.chemistry.AcRunAndTranslateTask
+import edu.banda.coel.task.chemistry.AcRunTask
+import edu.banda.coel.web.AcDependentRunData
+import edu.banda.coel.web.BaseController
 import edu.banda.coel.web.ChartData
 import edu.banda.coel.web.ChartData.SeriesGroup
-import edu.banda.coel.web.AcDependentRunData
-
+import edu.banda.coel.web.ChemistryCommonService
 import grails.converters.JSON
-
-import org.springframework.dao.DataIntegrityViolationException
-import java.util.UUID
 
 class AcRunController extends BaseController {
 
@@ -34,6 +20,7 @@ class AcRunController extends BaseController {
 
 	def ArtificialChemistryService artificialChemistryService
 	def acUtil = ArtificialChemistryUtil.getInstance()
+	def ChemistryCommonService chemistryCommonService
 
 	def index = {
 		if (!isAdmin())
@@ -65,7 +52,7 @@ class AcRunController extends BaseController {
 		def selectedCompartment = AcCompartment.get(id)
 
 		if (selectedCompartment) {
-			def speciesSets = getThisAndParentSpeciesSets(selectedCompartment.speciesSet)
+			def speciesSets = chemistryCommonService.getThisAndParentSpeciesSets(selectedCompartment.speciesSet)
 			def actionSeries = AcInteractionSeries.findAll("from AcInteractionSeries as a where a.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 			def translationSeries = AcTranslationSeries.findAll("from AcTranslationSeries as a where a.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 

@@ -14,7 +14,6 @@ class UrlMappings {
 	  "/test"(uri:"/test.dispatch")
 
       "/"(controller: 'home', action: 'index')
-	  "/download"(view:"/octave/index")
 
 	  "/public/post/$id" {
 		  controller = "post"

@@ -1,41 +1,32 @@
 package com.banda.math.domain.evo
 
-import java.util.HashSet
-
-import org.apache.commons.lang.StringUtils
-import org.springframework.dao.DataIntegrityViolationException
-
+import com.banda.chemistry.business.AcRateConstantUtil
+import com.banda.chemistry.business.AcReplicator
+import com.banda.chemistry.domain.AcCompartment
+import com.banda.chemistry.domain.AcInteractionSeries
+import com.banda.chemistry.domain.AcReaction.ReactionDirection
+import com.banda.chemistry.domain.AcReactionSet
 import com.banda.core.util.ObjectUtil
+import com.banda.core.util.ParseUtil
+import com.banda.function.business.FunctionFactory
+import com.banda.math.business.evo.EvolutionUtil
+import com.banda.math.domain.StatsType
 import com.banda.math.task.EvoPopulationContentStoreOption
 import com.banda.math.task.EvoPopulationSelection
 import com.banda.math.task.EvoRunTask
-import com.banda.chemistry.domain.AcCompartment
-import com.banda.chemistry.domain.AcInteractionSeries
-import com.banda.chemistry.domain.AcReactionSet
-import com.banda.chemistry.domain.AcReaction.ReactionDirection
-import com.banda.chemistry.business.AcRateConstantUtil
-import com.banda.chemistry.business.AcReplicator
-import com.banda.math.business.evo.EvolutionUtil
-import com.banda.network.domain.NetworkFunction
 import com.banda.network.domain.Network
-
-import edu.banda.coel.domain.evo.EvoNetworkTask
-import edu.banda.coel.domain.evo.EvoAcRateConstantTask
-import edu.banda.coel.domain.evo.EvoAcInteractionSeriesTask
-
-import com.banda.function.business.FunctionFactory
-
-import edu.banda.coel.domain.service.EvolutionService
-
+import com.banda.network.domain.NetworkFunction
 import edu.banda.coel.business.evo.fitness.EvoChromosomeAcInteractionSeriesConverter
+import edu.banda.coel.domain.evo.EvoAcInteractionSeriesTask
+import edu.banda.coel.domain.evo.EvoAcRateConstantTask
+import edu.banda.coel.domain.evo.EvoNetworkTask
+import edu.banda.coel.domain.service.EvolutionService
 import edu.banda.coel.web.BaseDomainController
 import edu.banda.coel.web.ChartData
 import edu.banda.coel.web.ChartData.SeriesGroup
+import edu.banda.coel.web.ChemistryCommonService
 import grails.converters.JSON
-
-import com.banda.core.util.ParseUtil
-import com.banda.math.domain.StatsType
-import com.banda.math.business.JavaMathUtil
+import org.apache.commons.lang.StringUtils
 
 class EvoRunController extends BaseDomainController {
 
@@ -44,6 +35,7 @@ class EvoRunController extends BaseDomainController {
 	def acRateUtil = AcRateConstantUtil.instance
 	def functionFactory = new FunctionFactory()
 	def replicator = AcReplicator.instance
+	def ChemistryCommonService chemistryCommonService
 
 	def EvolutionService evolutionService
 
@@ -361,7 +353,7 @@ class EvoRunController extends BaseDomainController {
 			actionSeriesCloneMap += newInteractionSeriesCloneMap
 		}
 
-		topMultiActionSeries.each{saveActionSeriesRecursively(it, actionSeriesCloneMap)}
+		topMultiActionSeries.each{chemistryCommonService.saveActionSeriesRecursively(it, actionSeriesCloneMap)}
 		def newIds = actionSeriesCloneMap.values()*.id
 	
 		if (newIds.size() == 1)

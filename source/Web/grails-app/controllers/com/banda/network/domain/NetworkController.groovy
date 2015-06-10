@@ -1,7 +1,5 @@
 package com.banda.network.domain
 
-import org.springframework.dao.DataIntegrityViolationException
-
 import edu.banda.coel.web.BaseDomainController
 
 class NetworkController extends BaseDomainController {

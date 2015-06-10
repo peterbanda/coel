@@ -1,17 +1,13 @@
 package com.banda.network.domain
 
-import edu.banda.coel.web.BaseDomainController
-
 import com.banda.function.business.FunctionFactory
-import com.banda.function.domain.Expression
-import com.banda.function.domain.FunctionHolder
-import com.banda.core.util.ConversionUtil
-
-import org.springframework.dao.DataIntegrityViolationException
+import edu.banda.coel.web.BaseDomainController
+import edu.banda.coel.web.NetworkCommonService
 
 class NetworkFunctionController extends BaseDomainController {
 
 	def functionFactory = new FunctionFactory()
+	def NetworkCommonService networkCommonService
 
 	def index() {
 		redirect(action: "list", params: params)
@@ -107,24 +103,8 @@ class NetworkFunctionController extends BaseDomainController {
 	def exportTransitionTable(Long id) {
         def lsbFirst = params.lsbfirst
         def networkFunctionInstance = getSafe(id)
-        def table = networkFunctionInstance.function
+        def text = networkCommonService.getTransitionTableInfo(networkFunctionInstance, lsbFirst)
 
-        def binaryOutput = table.outputs.collect{ output -> if (output) 1 else 0}.join("")
-        if (!lsbFirst)
-            binaryOutput = binaryOutput.reverse()
-
-        def decimalOutput = new BigInteger(binaryOutput, 2).toString()
-        def hexadecimalOutput = new BigInteger(binaryOutput, 2).toString(16)
-
-        def text = "Id: " + networkFunctionInstance.id + "\n"
-        text <<= "Name: " + networkFunctionInstance.name + "\n\n"
-        text <<= "Transition Table\n"
-        text <<= "-----------------------------------------------------------------------\n"
-        text <<= " order:       " + ((lsbFirst) ? "lsb first" : "msb first") + "\n"
-        text <<= " binary:      " + binaryOutput  + "\n"
-        text <<= " decimal:     " + decimalOutput  + "\n"
-        text <<= " hexadecimal: " + hexadecimalOutput  + "\n"
-        text <<= "-----------------------------------------------------------------------\n"
         response.setHeader("Content-disposition", "attachment; filename=" + "transition_table_${id}");
         render(contentType: "text", text: text);
 	}

@@ -78,6 +78,13 @@ navigation = {
 
 		chemPic(controller:'chemPic', action:'index')
 
+        download(controller:'download', action:'index', data:[icon:'dna']) {
+            DownloadHome(titleText: "Download", action:'index', data: [icon: 'icon-home'])
+			Model(data:[header:'true'])
+            Chemistry(action: 'chemistry')
+            Network(action: 'network')
+        }
+
 		// Items pointing to ContentController, using the specific action
 //		about(controller:'content')
 //		contact(controller:'content')

@@ -1,32 +1,17 @@
 package com.banda.chemistry.domain
 
-import edu.banda.coel.web.BaseDomainController
-
 import com.banda.chemistry.business.AcKineticsBO
-import com.banda.chemistry.business.ArtificialChemistryUtil
 import com.banda.chemistry.business.AcRateConstantUtil
-import com.banda.chemistry.business.BndChemistryValidationException;
-import com.banda.chemistry.domain.AcReaction
-import com.banda.chemistry.domain.AcReactionGroup
-import com.banda.chemistry.domain.AcReactionSet
-import com.banda.chemistry.domain.AcSpeciesAssociationType
-import com.banda.chemistry.domain.KineticsType
-import com.banda.function.domain.Expression
-import com.banda.core.util.ConversionUtil
-
-import edu.banda.coel.domain.util.GeneralUtil
-
+import com.banda.chemistry.business.AcReplicator
+import com.banda.chemistry.business.ArtificialChemistryUtil
 import com.banda.chemistry.domain.AcReaction.ReactionDirection
-
-import org.hibernate.transform.Transformers
-import org.apache.commons.lang.StringUtils
-
+import com.banda.core.util.ConversionUtil
+import com.banda.core.util.ParseUtil
+import com.banda.function.BndFunctionException
 import edu.banda.coel.business.chempic.ChemistryPicGeneratorImpl
 import edu.banda.coel.domain.service.ChemistryPicGenerator
-
-import com.banda.core.util.ParseUtil
-import com.banda.chemistry.business.AcReplicator
-import com.banda.function.BndFunctionException
+import edu.banda.coel.domain.util.GeneralUtil
+import edu.banda.coel.web.BaseDomainController
 
 class AcReactionController extends BaseDomainController {
 

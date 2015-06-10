@@ -1,18 +1,9 @@
 package com.banda.network.domain
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import edu.banda.coel.web.BaseDomainController
-
-import org.springframework.dao.DataIntegrityViolationException
-
-import com.banda.network.domain.NetworkEvaluation
-import com.banda.network.domain.Network
 import com.banda.function.BndFunctionException
 import com.banda.function.business.FunctionUtility
+import edu.banda.coel.web.BaseDomainController
+import org.springframework.dao.DataIntegrityViolationException
 
 class NetworkEvaluationController extends BaseDomainController {
 

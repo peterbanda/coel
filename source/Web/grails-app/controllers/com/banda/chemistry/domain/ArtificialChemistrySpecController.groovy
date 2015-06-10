@@ -1,32 +1,18 @@
 package com.banda.chemistry.domain
 
-import java.util.Date
-
-import com.banda.core.plotter.JavaPlotter
-import com.banda.math.business.MathUtil
+import com.banda.chemistry.business.AcReplicator
+import com.banda.chemistry.business.ArtificialChemistryUtil
 import com.banda.core.plotter.Plotter
 import com.banda.core.util.ConversionUtil
-import com.banda.core.util.ObjectUtil
-
-import edu.banda.coel.core.util.ImageUtils
+import com.banda.math.business.MathUtil
+import com.banda.math.business.dynamics.JavaStatsPlotter
+import com.banda.math.domain.StatsType
+import com.banda.math.domain.dynamics.SingleRunAnalysisResultType
+import edu.banda.coel.business.evo.fitness.EvoChromosomeAcSpecConverter
 import edu.banda.coel.domain.service.ArtificialChemistryService
 import edu.banda.coel.web.BaseDomainController
-
-import com.banda.chemistry.business.*
-import com.banda.chemistry.domain.ArtificialChemistrySpec
-import edu.banda.coel.business.evo.fitness.EvoChromosomeAcSpecConverter
-import com.banda.math.domain.dynamics.SingleRunAnalysisResultType
-import com.banda.math.domain.StatsType
-import com.banda.core.domain.um.User
-import com.banda.chemistry.domain.AcReaction.ReactionDirection
-import com.banda.math.business.dynamics.DynamicsAnalysisResultProcessor
-import com.banda.math.business.dynamics.JavaStatsPlotter
-import com.banda.math.business.MathUtil
-
 import org.apache.commons.lang.StringUtils
-import org.springframework.dao.DataIntegrityViolationException
 import org.hibernate.transform.Transformers
-import org.hibernate.criterion.CriteriaSpecification
 
 class ArtificialChemistrySpecController extends BaseDomainController {
 	

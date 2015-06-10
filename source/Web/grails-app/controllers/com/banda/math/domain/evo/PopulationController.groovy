@@ -1,14 +1,11 @@
 package com.banda.math.domain.evo
 
-import com.banda.core.util.ObjectUtil
-import com.banda.math.task.EvoPopulationSelection
-import com.banda.math.task.EvoRunTask
-import com.banda.chemistry.domain.AcCompartment
-import com.banda.chemistry.domain.AcReactionSet
-import com.banda.chemistry.domain.AcReaction.ReactionDirection
 import com.banda.chemistry.business.AcRateConstantUtil
+import com.banda.chemistry.domain.AcCompartment
+import com.banda.chemistry.domain.AcReaction.ReactionDirection
+import com.banda.chemistry.domain.AcReactionSet
 import edu.banda.coel.web.BaseDomainController
-	
+
 class PopulationController extends BaseDomainController {
 
 	static allowedMethods = [create:"", edit: "", save: "", update: "", delete: ""]  // only show is allowed

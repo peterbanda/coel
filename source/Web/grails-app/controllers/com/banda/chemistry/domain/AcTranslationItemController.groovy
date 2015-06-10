@@ -1,12 +1,8 @@
 package com.banda.chemistry.domain
 
-import edu.banda.coel.web.BaseDomainController
-
 import com.banda.chemistry.business.ArtificialChemistryUtil
-import com.banda.chemistry.domain.AcTranslation
-import com.banda.chemistry.domain.AcTranslationItem
-import com.banda.chemistry.domain.AcTranslationVariable
 import com.banda.function.BndFunctionException
+import edu.banda.coel.web.BaseDomainController
 
 class AcTranslationItemController extends BaseDomainController {
 

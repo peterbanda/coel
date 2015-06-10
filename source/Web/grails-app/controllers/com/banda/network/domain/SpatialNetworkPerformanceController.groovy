@@ -1,32 +1,18 @@
 package com.banda.network.domain
 
-import java.util.Collection
-import java.util.Arrays
-
-import org.apache.commons.lang.StringUtils
-import org.springframework.dao.DataIntegrityViolationException
-
-import edu.banda.coel.domain.service.NetworkService
-import edu.banda.coel.web.BaseDomainController
-
-import com.banda.network.domain.SpatialNetworkPerformance
-import com.banda.network.domain.NetworkSimulationConfig
-import com.banda.network.domain.SpatialNetworkPerformance
-
-import edu.banda.coel.task.network.SpatialNetworkPerformanceEvaluateTask
-
 import com.banda.core.util.ConversionUtil
-import com.banda.network.domain.Network
-
+import com.banda.core.util.ParseUtil
+import com.banda.math.business.JavaMathUtil
+import com.banda.math.domain.StatsSequence
+import com.banda.math.domain.StatsType
+import edu.banda.coel.domain.service.NetworkService
+import edu.banda.coel.task.network.SpatialNetworkPerformanceEvaluateTask
+import edu.banda.coel.web.BaseDomainController
 import edu.banda.coel.web.ChartData
 import edu.banda.coel.web.ChartData.SeriesGroup
 import grails.converters.JSON
+import org.apache.commons.lang.StringUtils
 
-import com.banda.core.util.ParseUtil
-import com.banda.math.domain.StatsSequence
-import com.banda.math.domain.StatsType
-import com.banda.math.business.JavaMathUtil
-	
 class SpatialNetworkPerformanceController extends BaseDomainController {
 
 	def NetworkService networkService

@@ -1,7 +1,7 @@
 package com.banda.network.domain
 
-import edu.banda.coel.web.BaseDomainController
 import com.banda.core.util.ConversionUtil
+import edu.banda.coel.web.BaseDomainController
 
 class SpatialNeighborController extends BaseDomainController {
 	

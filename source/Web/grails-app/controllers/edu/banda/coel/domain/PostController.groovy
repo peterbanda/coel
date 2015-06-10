@@ -1,7 +1,5 @@
 package edu.banda.coel.domain
 
-import org.springframework.dao.DataIntegrityViolationException
-
 import edu.banda.coel.web.BaseDomainController
 
 class PostController extends BaseDomainController {

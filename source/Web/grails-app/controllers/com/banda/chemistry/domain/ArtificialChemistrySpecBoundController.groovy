@@ -1,6 +1,5 @@
 package com.banda.chemistry.domain
 
-import java.util.Date
 import edu.banda.coel.web.BaseDomainController
 
 class ArtificialChemistrySpecBoundController extends BaseDomainController {

@@ -1,27 +1,11 @@
 package edu.banda.coel.web
 
-import grails.util.GrailsNameUtils
-
-import javax.servlet.AsyncContext
-import javax.servlet.AsyncEvent
-
-import org.springframework.context.ApplicationListener
-
 import edu.banda.coel.core.task.GridTaskSpringEvent
-import edu.banda.coel.core.task.GridTaskState;
-import edu.banda.coel.core.task.SimpleMessageEvent
+import edu.banda.coel.core.task.GridTaskState
 import edu.banda.coel.core.util.ImageUtils
-import edu.banda.coel.web.AsyncListenerAdapter
-import edu.banda.coel.web.AsyncLogger
-import edu.banda.coel.web.AsyncMessageManager
-import edu.banda.coel.domain.util.GeneralUtil
-import org.springframework.context.ApplicationListener
-
 import edu.banda.coel.task.chemistry.AcRunEventData
-
-import edu.banda.coel.core.task.GridTaskSpringEvent
-import edu.banda.coel.web.*
 import grails.converters.JSON
+import org.springframework.context.ApplicationListener
 
 @Deprecated
 class AcRunImageController extends AsyncNotificationController implements ApplicationListener<GridTaskSpringEvent<AcRunEventData>> { 

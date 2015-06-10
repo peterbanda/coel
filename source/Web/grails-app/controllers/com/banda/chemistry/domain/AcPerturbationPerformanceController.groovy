@@ -1,28 +1,23 @@
 package com.banda.chemistry.domain
 
-import java.util.Map.Entry;
-
-import org.apache.commons.lang.StringUtils
-import org.hibernate.transform.Transformers
-import org.springframework.dao.DataIntegrityViolationException
-
-import edu.banda.coel.task.chemistry.AcPerturbationPerformanceEvaluateTask
-
-import com.banda.math.business.JavaMathUtil
-import com.banda.math.domain.StatsType
 import com.banda.core.util.ConversionUtil
 import com.banda.core.util.ParseUtil
-
+import com.banda.math.business.JavaMathUtil
+import com.banda.math.domain.StatsType
 import edu.banda.coel.domain.service.ArtificialChemistryService
-import edu.banda.coel.web.BaseDomainController
-import grails.converters.JSON
+import edu.banda.coel.task.chemistry.AcPerturbationPerformanceEvaluateTask
 import edu.banda.coel.web.AcDependentPerformanceData
+import edu.banda.coel.web.BaseDomainController
+import edu.banda.coel.web.ChemistryCommonService
+import grails.converters.JSON
+import org.apache.commons.lang.StringUtils
 
 class AcPerturbationPerformanceController extends BaseDomainController {
 
 	static allowedMethods = [edit: "", save: "", update: ""]  // can't edit, save or update
 
 	def ArtificialChemistryService artificialChemistryService
+	def ChemistryCommonService chemistryCommonService
 
 	def index() {
 		redirect(action: "list", params: params)
@@ -166,7 +161,7 @@ class AcPerturbationPerformanceController extends BaseDomainController {
 	def getAcDependentData(Long id) {
 		def ac = ArtificialChemistry.get(id)
 
-		def speciesSets = getThisAndParentSpeciesSets(ac.speciesSet)
+		def speciesSets = chemistryCommonService.getThisAndParentSpeciesSets(ac.speciesSet)
 		def interactionSeries = AcInteractionSeries.findAll("from AcInteractionSeries as a where a.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 		def evaluations = AcEvaluation.findAll("from AcEvaluation as a where a.translationSeries.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 

@@ -1,42 +1,16 @@
 package edu.banda.coel.web
 
-import net.sf.beanlib.hibernate.HibernateBeanReplicator;
-
-import org.apache.commons.lang.StringUtils
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.grails.plugin.filterpane.FilterPaneUtils
-import org.hibernate.Criteria
-import org.hibernate.criterion.Order
-import org.hibernate.criterion.Projections
-import org.hibernate.criterion.Restrictions
-
-import com.banda.chemistry.domain.AcInteractionSeries;
-
-
 import com.banda.core.Pair
-import com.banda.core.reflection.GenericReflectionProvider;
-import com.banda.core.util.ObjectUtil
-import com.banda.math.domain.rand.RandomDistributionType
-import com.banda.math.domain.rand.ShapeLocationDistribution
-import com.banda.math.domain.rand.UniformDistribution
-import com.banda.math.domain.rand.DiscreteDistribution
-import com.banda.math.domain.rand.RandomDistribution
-import com.banda.math.domain.rand.BooleanDensityUniformDistribution
+import com.banda.core.reflection.GenericReflectionProvider
 import com.banda.core.util.ConversionUtil
+import com.banda.core.util.ObjectUtil
 import com.banda.core.util.ParseUtil
-import com.banda.chemistry.domain.AcInteractionSeries
-import com.banda.chemistry.domain.AcInteractionVariableAssignment
-
-import java.util.HashSet
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.dao.DataIntegrityViolationException
-
-import edu.banda.coel.web.SecureAccessService
-
+import com.banda.math.domain.rand.*
+import net.sf.beanlib.hibernate.HibernateBeanReplicator
+import org.apache.commons.lang.StringUtils
+import org.grails.plugin.filterpane.FilterPaneUtils
 import org.postgresql.util.PSQLException
+import org.springframework.dao.DataIntegrityViolationException
 
 abstract class BaseDomainController extends BaseController {
 
@@ -522,42 +496,5 @@ abstract class BaseDomainController extends BaseController {
 			case RandomDistributionType.BooleanDensityUniform:
 				return true;
 		}
-	}
-
-	// move elsewhere
-	protected def saveActionSeries(AcInteractionSeries acInteractionSeriesInstance, AcInteractionSeries acInteractionSeriesInstanceClone) {
-		def interactionVariableAssignmentMap = [ : ]
-		acInteractionSeriesInstanceClone.actions.each{action ->
-			interactionVariableAssignmentMap.put(action, action.variableAssignments)
-			action.setVariableAssignments(new HashSet<AcInteractionVariableAssignment>())
-		}
-		if (!acInteractionSeriesInstanceClone.save(flush: true)) {
-			render(view: "edit", model: [instance: acInteractionSeriesInstance])
-			return
-		}
-		// now add variable assignments and save again
-		interactionVariableAssignmentMap.entrySet().each { actionInteractionVariableAssignments ->
-			def action = actionInteractionVariableAssignments.getKey()
-			def interactionVariableAssignments = actionInteractionVariableAssignments.getValue()
-			action.addVariableAssignments(interactionVariableAssignments)
-			if (!action.save(flush: true)) {
-				render(view: "edit", model: [instance: acInteractionSeriesInstance])
-				return
-			}
-		}
-	}
-
-	protected def saveActionSeriesRecursively(acInteractionSeriesInstance, actionSeriesCloneMap) {
-		def actionSeriesClone = actionSeriesCloneMap.get(acInteractionSeriesInstance)
-		actionSeriesClone.removeAllSubActionSeries()
-
-		acInteractionSeriesInstance.subActionSeries.each{
-			saveActionSeriesRecursively(it, actionSeriesCloneMap)
-		}
-		acInteractionSeriesInstance.subActionSeries.each{
-			def subActionSeriesClone = actionSeriesCloneMap.get(it)
-			actionSeriesClone.addSubActionSeries(subActionSeriesClone)
-		}
-		saveActionSeries(acInteractionSeriesInstance, actionSeriesClone)
 	}
 }

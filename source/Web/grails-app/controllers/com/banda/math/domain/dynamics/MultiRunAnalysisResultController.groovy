@@ -1,10 +1,9 @@
 package com.banda.math.domain.dynamics
 
 import com.banda.chemistry.domain.ArtificialChemistry
-import edu.banda.coel.task.chemistry.AcMultiRunAnalysisTask
 import com.banda.core.util.ConversionUtil
-
 import edu.banda.coel.domain.service.ArtificialChemistryService
+import edu.banda.coel.task.chemistry.AcMultiRunAnalysisTask
 import edu.banda.coel.web.BaseDomainController
 
 class MultiRunAnalysisResultController extends BaseDomainController {

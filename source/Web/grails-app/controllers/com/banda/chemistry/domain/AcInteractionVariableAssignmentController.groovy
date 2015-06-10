@@ -1,13 +1,8 @@
 package com.banda.chemistry.domain
 
-import edu.banda.coel.web.BaseDomainController
-
 import com.banda.chemistry.business.ArtificialChemistryUtil
-import com.banda.chemistry.domain.AcInteraction
-import com.banda.chemistry.domain.AcInteractionVariableAssignment
-import com.banda.function.domain.Expression
-
 import com.banda.function.BndFunctionException
+import edu.banda.coel.web.BaseDomainController
 
 class AcInteractionVariableAssignmentController extends BaseDomainController {
 

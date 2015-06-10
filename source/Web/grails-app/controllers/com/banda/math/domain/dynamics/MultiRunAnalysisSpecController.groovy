@@ -1,14 +1,8 @@
 package com.banda.math.domain.dynamics
 
-import org.springframework.dao.DataIntegrityViolationException
-
-import com.banda.chemistry.business.AcReplicator;
-import com.banda.math.domain.rand.RandomDistributionType
-import com.banda.math.domain.rand.ShapeLocationDistribution
-import com.banda.math.domain.rand.UniformDistribution
-import java.util.Date
-
+import com.banda.chemistry.business.AcReplicator
 import edu.banda.coel.web.BaseDomainController
+import org.springframework.dao.DataIntegrityViolationException
 
 class MultiRunAnalysisSpecController extends BaseDomainController {
 

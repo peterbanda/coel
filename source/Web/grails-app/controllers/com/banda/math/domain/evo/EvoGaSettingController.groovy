@@ -1,8 +1,7 @@
 package com.banda.math.domain.evo
 
-import edu.banda.coel.web.BaseDomainController
 import com.banda.core.util.ObjectUtil
-import edu.banda.coel.business.Replicator
+import edu.banda.coel.web.BaseDomainController
 
 class EvoGaSettingController extends BaseDomainController {
 

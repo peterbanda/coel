@@ -1,13 +1,7 @@
 package com.banda.chemistry.domain
 
-import java.util.Date;
-
-import edu.banda.coel.web.BaseDomainController
-
-import com.banda.chemistry.business.AcReplicator
-import com.banda.chemistry.domain.AcSimulationConfig
-import com.banda.core.domain.um.User
 import com.banda.function.domain.ODESolverType
+import edu.banda.coel.web.BaseDomainController
 
 class AcSimulationConfigController extends BaseDomainController {
 

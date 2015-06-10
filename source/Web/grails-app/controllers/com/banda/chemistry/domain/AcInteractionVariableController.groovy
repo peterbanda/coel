@@ -1,10 +1,8 @@
 package com.banda.chemistry.domain
 
 import edu.banda.coel.web.BaseDomainController
-
-import org.apache.commons.lang.StringUtils
-
 import grails.converters.JSON
+import org.apache.commons.lang.StringUtils
 
 class AcInteractionVariableController extends BaseDomainController {
 

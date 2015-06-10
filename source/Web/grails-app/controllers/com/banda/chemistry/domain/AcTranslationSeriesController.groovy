@@ -1,16 +1,13 @@
 package com.banda.chemistry.domain
 
-import edu.banda.coel.web.BaseDomainController
-
 import com.banda.chemistry.business.AcReplicator
-
-import com.banda.chemistry.domain.AcSpeciesSet
-import com.banda.chemistry.domain.AcTranslationSeries
-import com.banda.chemistry.domain.ArtificialChemistry
+import edu.banda.coel.web.BaseDomainController
+import edu.banda.coel.web.ChemistryCommonService
 
 class AcTranslationSeriesController extends BaseDomainController {
 
 	def replicator = AcReplicator.instance
+	def ChemistryCommonService chemistryCommonService
 
 	def list(Integer max) {
 		params.projections = ['id','name','timeCreated','createdBy','speciesSet']
@@ -72,7 +69,7 @@ class AcTranslationSeriesController extends BaseDomainController {
 
 			acSpeciesSets = AcSpeciesSet.listWithParamsAndProjections(params)
 		} else
-			acSpeciesSets = getThisAndDerivedSpeciesSets(result.instance.speciesSet)
+			acSpeciesSets = chemistryCommonService.getThisAndDerivedSpeciesSets(result.instance.speciesSet)
 
 		result << [acSpeciesSets : acSpeciesSets]
 	}

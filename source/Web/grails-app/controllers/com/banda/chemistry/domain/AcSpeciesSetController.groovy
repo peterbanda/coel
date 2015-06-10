@@ -1,13 +1,8 @@
 package com.banda.chemistry.domain
 
-import edu.banda.coel.web.BaseDomainController
-
-import com.banda.chemistry.domain.AcParameterSet
-import com.banda.chemistry.domain.AcSpeciesSet
-import com.banda.core.domain.um.User
-import com.banda.core.util.ObjectUtil
 import com.banda.chemistry.business.AcReplicator
-
+import com.banda.core.util.ObjectUtil
+import edu.banda.coel.web.BaseDomainController
 
 class AcSpeciesSetController extends BaseDomainController {
 

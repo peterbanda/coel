@@ -2,8 +2,6 @@ package com.banda.network.domain
 
 import edu.banda.coel.web.BaseDomainController
 
-import org.springframework.dao.DataIntegrityViolationException
-
 class NetworkActionSeriesController extends BaseDomainController {
 
 	def index() {

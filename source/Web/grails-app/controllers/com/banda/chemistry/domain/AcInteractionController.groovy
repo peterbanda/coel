@@ -2,9 +2,6 @@ package com.banda.chemistry.domain
 
 import edu.banda.coel.web.BaseDomainController
 
-import com.banda.chemistry.domain.AcInteraction;
-import com.banda.chemistry.domain.AcInteractionSeries;
-
 class AcInteractionController extends BaseDomainController {
 	
 	def create() {

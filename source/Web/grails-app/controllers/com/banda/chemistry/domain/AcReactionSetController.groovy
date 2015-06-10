@@ -1,23 +1,22 @@
 package com.banda.chemistry.domain
 
-import edu.banda.coel.business.chempic.ChemistryPicGeneratorImpl
-import edu.banda.coel.domain.service.ChemistryPicGenerator
-
-import edu.banda.coel.web.BaseDomainController
-import grails.converters.JSON
-
-import com.banda.core.util.ParseUtil
 import com.banda.chemistry.business.*
 import com.banda.chemistry.domain.AcReaction.ReactionDirection
-import com.banda.chemistry.business.OctaveGenerator
+import com.banda.core.util.ParseUtil
+import edu.banda.coel.business.chempic.ChemistryPicGeneratorImpl
+import edu.banda.coel.domain.service.ChemistryPicGenerator
+import edu.banda.coel.web.BaseDomainController
+import edu.banda.coel.web.ChemistryCommonService
 import edu.banda.coel.web.SvgStructureData
+import grails.converters.JSON
 
 class AcReactionSetController extends BaseDomainController {
 
 	def acUtil = ArtificialChemistryUtil.instance
 	def acRateUtil = AcRateConstantUtil.instance
 	def replicator = AcReplicator.instance
-	def ChemistryPicGenerator chemPicGenerator = new ChemistryPicGeneratorImpl(true);
+	def ChemistryPicGenerator chemPicGenerator = new ChemistryPicGeneratorImpl(true)
+	def ChemistryCommonService chemistryCommonService
 
 	def index() {
 		redirect(action: "list", params: params)
@@ -107,7 +106,7 @@ class AcReactionSetController extends BaseDomainController {
 			params.order = 'desc'
 			acSpeciesSets = AcSpeciesSet.listWithParamsAndProjections(params)
 		} else
-			acSpeciesSets = getThisAndDerivedSpeciesSets(result.instance.speciesSet)
+			acSpeciesSets = chemistryCommonService.getThisAndDerivedSpeciesSets(result.instance.speciesSet)
 		result << [acSpeciesSets : acSpeciesSets]
 	}
 
@@ -382,8 +381,7 @@ class AcReactionSetController extends BaseDomainController {
 	}
 
 	def exportAsOctaveMatlab(Long id) {
-		// TODO not safe
-		def acReactionSetInstance = AcReactionSet.get(id)
+		def acReactionSetInstance = getSafe(id)
 		def octaveOutput = OctaveGenerator.apply(acReactionSetInstance)
 		response.setHeader("Content-disposition", "attachment; filename=" + "reactionSet_${id}_ode.m");
 		render(contentType: "text", text: octaveOutput.toString());

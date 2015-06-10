@@ -1,36 +1,25 @@
 package com.banda.chemistry.domain
 
-import java.util.Collection
-
-import java.util.Arrays
-
-import org.apache.commons.lang.StringUtils
-import org.springframework.dao.DataIntegrityViolationException
-
-import edu.banda.coel.server.service.impl.ArtificialChemistryServiceAsyncHelper
-import edu.banda.coel.domain.service.ArtificialChemistryService
-import edu.banda.coel.web.BaseDomainController
-
-import com.banda.chemistry.domain.AcEvaluatedPerformance;
-
-import edu.banda.coel.task.chemistry.AcPerformanceEvaluateTask
-
 import com.banda.core.util.ConversionUtil
-
+import com.banda.core.util.ParseUtil
+import edu.banda.coel.domain.service.ArtificialChemistryService
+import edu.banda.coel.server.service.impl.ArtificialChemistryServiceAsyncHelper
+import edu.banda.coel.task.chemistry.AcPerformanceEvaluateTask
+import edu.banda.coel.web.AcDependentPerformanceData
+import edu.banda.coel.web.BaseDomainController
 import edu.banda.coel.web.ChartData
 import edu.banda.coel.web.ChartData.SeriesGroup
+import edu.banda.coel.web.ChemistryCommonService
 import grails.converters.JSON
-import edu.banda.coel.web.AcDependentPerformanceData
+import org.apache.commons.lang.StringUtils
 
-import org.grails.plugin.filterpane.FilterPaneUtils
-import com.banda.core.util.ParseUtil
-	
 class AcEvaluatedPerformanceController extends BaseDomainController {
 
 	static allowedMethods = [edit: "", save: "", update: ""]  // can't edit, save or update
 
 	def ArtificialChemistryServiceAsyncHelper artificialChemistryServiceAsyncHelper
 	def ArtificialChemistryService artificialChemistryService
+	def ChemistryCommonService chemistryCommonService
 
 	def index() {
 		redirect(action: "list", params: params)
@@ -203,7 +192,7 @@ class AcEvaluatedPerformanceController extends BaseDomainController {
 	def getCompartmentDependentData(Long id) {
 		def compartment = AcCompartment.get(id)
 
-		def speciesSets = getThisAndParentSpeciesSets(compartment.speciesSet)
+		def speciesSets = chemistryCommonService.getThisAndParentSpeciesSets(compartment.speciesSet)
 		def interactionSeries = AcInteractionSeries.findAll("from AcInteractionSeries as a where a.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 		def evaluations = AcEvaluation.findAll("from AcEvaluation as a where a.translationSeries.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 

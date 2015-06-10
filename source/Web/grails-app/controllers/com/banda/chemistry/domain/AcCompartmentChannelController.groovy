@@ -2,8 +2,6 @@ package com.banda.chemistry.domain
 
 import edu.banda.coel.web.BaseDomainController
 
-import com.banda.chemistry.domain.AcCompartmentChannel
-
 class AcCompartmentChannelController extends BaseDomainController {
 
 	def create() {

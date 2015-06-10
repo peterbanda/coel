@@ -1,20 +1,11 @@
 package edu.banda.coel.web
 
+import edu.banda.coel.domain.util.GeneralUtil
 import grails.util.GrailsNameUtils
 
 import javax.servlet.AsyncContext
-import javax.servlet.AsyncEvent
 
-import org.springframework.context.ApplicationListener;
-
-import edu.banda.coel.core.task.SimpleMessageEvent
-import edu.banda.coel.web.AsyncCleanupListener;
-import edu.banda.coel.web.AsyncListenerAdapter
-import edu.banda.coel.web.AsyncLogger
-import edu.banda.coel.web.AsyncMessageManager
-import edu.banda.coel.domain.util.GeneralUtil
-
-abstract class AsyncNotificationController { 
+abstract class AsyncNotificationController {
 
 	protected static final String JUNK = '<!-- Comet is a programming technique that enables web servers to send data to the client without having any need for the client to request it. -->\n'
 	protected static final long TIMEOUT = 10 * 60 * 1000 // 10 minutes

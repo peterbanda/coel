@@ -1,14 +1,9 @@
 package com.banda.network.domain
 
-import edu.banda.coel.web.BaseDomainController
-
-import org.springframework.dao.DataIntegrityViolationException
-
-import com.banda.network.domain.NetworkEvaluation
-import com.banda.network.domain.NetworkEvaluationItem
-import com.banda.network.domain.NetworkEvaluationVariable
 import com.banda.function.BndFunctionException
 import com.banda.function.business.FunctionUtility
+import edu.banda.coel.web.BaseDomainController
+import org.springframework.dao.DataIntegrityViolationException
 
 class NetworkEvaluationItemController extends BaseDomainController {
 

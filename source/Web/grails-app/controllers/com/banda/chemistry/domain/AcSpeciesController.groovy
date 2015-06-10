@@ -1,22 +1,10 @@
 package com.banda.chemistry.domain
 
-import edu.banda.coel.CoelRuntimeException;
 import edu.banda.coel.business.chempic.ChemistryPicGeneratorImpl
 import edu.banda.coel.domain.service.ChemistryPicGenerator
-import edu.banda.coel.core.svg.SVGUtil;
 import edu.banda.coel.web.BaseDomainController
-
-import org.junit.Test;
-import org.springframework.dao.DataIntegrityViolationException
-
-import com.banda.chemistry.domain.AcSpecies
-import com.banda.chemistry.domain.AcSpeciesSet
-import com.banda.core.util.ParseUtil
-
-import org.apache.batik.svggen.SVGGraphics2D;
-import org.apache.commons.lang.StringUtils
-
 import grails.converters.JSON
+import org.apache.commons.lang.StringUtils
 
 class AcSpeciesController extends BaseDomainController {
 

@@ -1,13 +1,9 @@
 package com.banda.chemistry.domain
 
-import java.util.ArrayList;
-import java.util.HashSet
-
-import edu.banda.coel.web.BaseDomainController
-
-import com.banda.chemistry.business.*
-import com.banda.core.domain.um.User
+import com.banda.chemistry.business.AcRateConstantUtil
+import com.banda.chemistry.business.AcReplicator
 import com.banda.chemistry.domain.AcReaction.ReactionDirection
+import edu.banda.coel.web.BaseDomainController
 
 class AcCompartmentController extends BaseDomainController {
 

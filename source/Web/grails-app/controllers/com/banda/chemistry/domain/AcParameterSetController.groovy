@@ -2,8 +2,6 @@ package com.banda.chemistry.domain
 
 import edu.banda.coel.web.BaseDomainController
 
-import com.banda.chemistry.domain.AcParameterSet;
-
 class AcParameterSetController extends BaseDomainController {
 
 	static allowedMethods = [create: "", delete: ""]  // can't create or delete

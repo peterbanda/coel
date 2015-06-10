@@ -1,28 +1,18 @@
 package com.banda.chemistry.domain
 
-import java.util.Map
-
-import edu.banda.coel.web.BaseDomainController
-import grails.converters.JSON
-
-import org.springframework.dao.DataIntegrityViolationException
-
 import com.banda.chemistry.business.AcReplicator
 import com.banda.chemistry.business.ArtificialChemistryUtil
-import com.banda.chemistry.domain.AcInteractionSeries
-import com.banda.chemistry.domain.AcSpeciesSet
-import com.banda.chemistry.domain.AcInteraction
-import com.banda.chemistry.domain.ArtificialChemistry
-
-import org.grails.plugin.filterpane.FilterPaneUtils
-
 import com.banda.core.dynamics.StateAlternationType
 import com.banda.core.util.ParseUtil
+import edu.banda.coel.web.BaseDomainController
+import edu.banda.coel.web.ChemistryCommonService
+import grails.converters.JSON
 
 class AcInteractionSeriesController extends BaseDomainController {
 
 	def acUtil = ArtificialChemistryUtil.instance
 	def replicator = AcReplicator.instance
+	def ChemistryCommonService chemistryCommonService
 	  
 	def index() {
 		redirect(action: "list", params: params)
@@ -92,7 +82,7 @@ class AcInteractionSeriesController extends BaseDomainController {
 		if (result.instance.actions.isEmpty()) {
 			acSpeciesSets = AcSpeciesSet.listWithParamsAndProjections(params)
 		} else
-			acSpeciesSets = getThisAndDerivedSpeciesSets(result.instance.speciesSet)
+			acSpeciesSets = chemistryCommonService.getThisAndDerivedSpeciesSets(result.instance.speciesSet)
 
 		def acInteractionSeries = AcInteractionSeries.listWithParamsAndProjections(params)
 		result << [acSpeciesSets : acSpeciesSets, acInteractionSeries : acInteractionSeries]
@@ -160,11 +150,11 @@ class AcInteractionSeriesController extends BaseDomainController {
 	protected def copyInstance(instance) {
 		if (params.recursively) {
 			def actionSeriesCloneMap = cloneActionSeriesRecursively(instance)
-			saveActionSeriesRecursively(instance, actionSeriesCloneMap)
+            chemistryCommonService.saveActionSeriesRecursively(instance, actionSeriesCloneMap)
 			actionSeriesCloneMap.get(instance)
 		} else {
 			def acInteractionSeriesCloneInstance = cloneActionSeries(instance)
-			saveActionSeries(instance, acInteractionSeriesCloneInstance)
+            chemistryCommonService.saveActionSeries(instance, acInteractionSeriesCloneInstance)
 			acInteractionSeriesCloneInstance
 		}
 	}

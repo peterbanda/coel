@@ -1,16 +1,15 @@
 package com.banda.network.domain
 
-import edu.banda.coel.web.BaseController
-import grails.converters.JSON
-import edu.banda.coel.domain.service.NetworkService
-import edu.banda.coel.task.network.NetworkRunTask
-
 import com.banda.core.dynamics.StateAlternationType
+import com.banda.core.util.ConversionUtil
 import com.banda.core.util.ObjectUtil
 import com.banda.math.domain.rand.DiscreteDistribution
 import edu.banda.coel.business.netpic.JavaNetworkRunSpatialPicGenerator
-import com.banda.core.util.ConversionUtil
+import edu.banda.coel.domain.service.NetworkService
+import edu.banda.coel.task.network.NetworkRunTask
+import edu.banda.coel.web.BaseController
 import edu.banda.coel.web.NetworkRunSpatialImageData
+import grails.converters.JSON
 
 class NetworkRunController extends BaseController {
 

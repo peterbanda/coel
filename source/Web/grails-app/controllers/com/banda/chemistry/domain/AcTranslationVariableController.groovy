@@ -2,8 +2,6 @@ package com.banda.chemistry.domain
 
 import edu.banda.coel.web.BaseDomainController
 
-import org.springframework.dao.DataIntegrityViolationException
-
 class AcTranslationVariableController extends BaseDomainController {
 
 	def create() {
