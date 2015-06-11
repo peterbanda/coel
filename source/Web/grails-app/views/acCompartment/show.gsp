@@ -14,7 +14,9 @@
     			<span class="caret"></span>
   			</ui:button>
   			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showImportRatesDialog();">Import rates</a></li>
+				<li role="presentation"><a role="menuitem" href="${createLink(controller:"acInteractionSeries", action: 'create', params:['speciesSet.id':instance.reactionSet.speciesSet.id])}">Create Interaction Series</a></li>
+				<li role="presentation" class="divider"></li>
+				<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showImportRatesDialog();">Import rates</a></li>
   			</ul>
 		</div>
     </theme:zone>

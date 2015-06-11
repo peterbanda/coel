@@ -4,7 +4,9 @@
     			Extras
     			<span class="caret"></span>
   			</ui:button>
-  			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">  			
+  			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" href="${createLink(controller:"acInteractionSeries", action: 'create', params:['speciesSet.id':instance.speciesSet.id])}">Create Interaction Series</a></li>
+                <li role="presentation" class="divider"></li>
     			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showMassActionCopyDialog();">Copy as Mass-Action</a></li>
     			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showDNASDCopyDialog();">Copy as DNA SD</a></li>
 				<li role="presentation" class="divider"></li>
@@ -16,6 +18,7 @@
     			<li role="presentation" class="divider"></li>
     			<li role="presentation"><a role="menuitem" href="${createLink(action: 'exportAsOctaveMatlab', id: instance.id)}">Export as Octave/Matlab</a></li>
     			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showExportAsLatexTableDialog();">Export as Latex</a></li>
+				<li role="presentation" class="divider"></li>
 				<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showReactionStructureSVGImages();">Show Structured Reactions</a></li>
 				<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="exportReactionStructureSVGImages();">Export Structured Reactions</a></li>
 				<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="exportSpeciesStructureSVGImages();">Export Structured Species</a></li>

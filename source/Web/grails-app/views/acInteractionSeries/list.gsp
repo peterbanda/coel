@@ -7,7 +7,7 @@
 <body>
 	<theme:zone name="actions">
         <gui:actionButton action="create" hint="Add New"/>
-       	<gui:actionButton action="delete" onclick="if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) doTableSelectionAction('${domainName}Table','deleteMultiple');return false;" hint="Delete"/>
+		<gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
        	<gui:actionButton action="copy" hint="Copy" onclick="showCopyMultipleDialog();return false;"/>
        	<filterpane:filterButton/>
 		<filterpane:filterPane domain="${className}" excludeProperties="varSequenceNum, repeatFromElement, timeCreated"/>

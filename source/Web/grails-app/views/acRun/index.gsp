@@ -131,6 +131,10 @@
 						$("#translationSeriesId").populateAndSortKeyValues(data.translationSeries, true, true);
 						$('#actionSeriesId').selectpicker('refresh');
 						$('#translationSeriesId').selectpicker('refresh');
+                        if (Object.keys(data.actionSeries).length == 0) {
+					        $('#add-interaction-series-modal').find("#speciesSet\\.id").val(data.speciesSetId);
+					        $('#add-interaction-series-modal').modal({ keyboard: true });
+					    }
 				});
   			};
 
@@ -192,7 +196,14 @@
       			<p>Chemistry simulation has been successfully launched.</p>
       			<p>The result will appear in a while.</p>
 			</gui:modal>
-			<div id="errorDiv" >
+
+            <gui:modal id="add-interaction-series-modal" title="Interaction Series Needed" controller="acInteractionSeries" action="create">
+                <g:hiddenField name="speciesSet.id" value=""/>
+                <p>No interaction series found for the selected compartment.</p>
+                <p>Do you want to create one?</p>
+            </gui:modal>
+
+            <div id="errorDiv" >
 				<g:hasErrors bean="${instance}">
         		    <ul class="errors" role="alert">
 						<g:eachError bean="${instance}" var="error">

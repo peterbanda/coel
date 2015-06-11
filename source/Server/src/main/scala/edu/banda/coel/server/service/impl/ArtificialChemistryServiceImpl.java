@@ -23,6 +23,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.banda.core.domain.DomainObject.DomainObjectKeyComparator;
 
 import com.banda.chemistry.business.AcRateConstantUtil;
 import com.banda.chemistry.business.AcReactionRatePerturbationBO;
@@ -505,7 +506,7 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 		List<AcInteractionSeries> sortedActionSeries = new ArrayList<AcInteractionSeries>(task.getActionSeries());
 		Collections.sort(sortedActionSeries, new AcInteractionSeriesIdComparator());
 		List<AcEvaluation> sortedEvaluations = new ArrayList<AcEvaluation>(task.getAcEvaluations());
-		Collections.sort(sortedEvaluations, new AcEvaluationIdComparator());
+		Collections.sort(sortedEvaluations, new DomainObjectKeyComparator<Long>());
 
 		Map<AcTranslationSeries, List<AcEvaluation>> translationSeriesEvaluationMap = new HashMap<AcTranslationSeries, List<AcEvaluation>>();
 		for (AcEvaluation evaluation : sortedEvaluations) {
@@ -543,7 +544,7 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 		List<AcInteractionSeries> sortedActionSeries = new ArrayList<AcInteractionSeries>(task.getActionSeries());
 		Collections.sort(sortedActionSeries, new AcInteractionSeriesIdComparator());
 		List<AcEvaluation> sortedEvaluations = new ArrayList<AcEvaluation>(task.getAcEvaluations());
-		Collections.sort(sortedEvaluations, new AcEvaluationIdComparator());
+		Collections.sort(sortedEvaluations, new DomainObjectKeyComparator<Long>());
 
 		for (final AcInteractionSeries actionSeries : sortedActionSeries)
 			for (final AcEvaluation evaluation : sortedEvaluations)
@@ -567,7 +568,7 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 		List<AcInteractionSeries> sortedActionSeries = new ArrayList<AcInteractionSeries>(task.getActionSeries());
 		Collections.sort(sortedActionSeries, new AcInteractionSeriesIdComparator());
 		List<AcEvaluation> sortedEvaluations = new ArrayList<AcEvaluation>(task.getAcEvaluations());
-		Collections.sort(sortedEvaluations, new AcEvaluationIdComparator());
+		Collections.sort(sortedEvaluations, new DomainObjectKeyComparator<Long>());
 
 		for (Double perturbationStrength : task.getPerturbationStrengths())
 			for (final AcInteractionSeries actionSeries : sortedActionSeries)

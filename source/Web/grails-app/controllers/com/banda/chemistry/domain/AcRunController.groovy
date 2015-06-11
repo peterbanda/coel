@@ -57,6 +57,7 @@ class AcRunController extends BaseController {
 			def translationSeries = AcTranslationSeries.findAll("from AcTranslationSeries as a where a.speciesSet IN (:speciesSets) order by a.id DESC", [speciesSets : speciesSets])
 
 			def acDependentRunData = new AcDependentRunData()
+			acDependentRunData.speciesSetId = selectedCompartment.speciesSet.id
 			acDependentRunData.actionSeries = [ : ]
 			acDependentRunData.translationSeries = [ : ]
 

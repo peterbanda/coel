@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import com.banda.core.domain.DomainObject.DomainObjectKeyComparator;
 
 import com.banda.chemistry.domain.AcEvaluation;
 import com.banda.chemistry.domain.AcInteractionSeries;
@@ -47,7 +48,7 @@ public class ArtificialChemistryServiceAsyncHelper extends AbstractService {
 		List<AcInteractionSeries> sortedActionSeries = new ArrayList<AcInteractionSeries>(task.getActionSeries());
 		Collections.sort(sortedActionSeries, new AcInteractionSeriesIdComparator());
 		List<AcEvaluation> sortedEvaluations = new ArrayList<AcEvaluation>(task.getAcEvaluations());
-		Collections.sort(sortedEvaluations, new AcEvaluationIdComparator());
+		Collections.sort(sortedEvaluations, new DomainObjectKeyComparator<Long>());
 
 		Map<AcTranslationSeries, List<AcEvaluation>> translationSeriesEvaluationMap = new HashMap<AcTranslationSeries, List<AcEvaluation>>();
 		for (AcEvaluation evaluation : sortedEvaluations) {

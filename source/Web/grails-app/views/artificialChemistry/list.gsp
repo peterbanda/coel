@@ -9,7 +9,7 @@
 	<theme:zone name="actions">
         <gui:actionButton action="create" hint="Add New"/>
         <gui:actionButton action="createQuick" icon="icon-plus" text="Quick" hint="Add New Quick"/>
-       	<gui:actionButton action="delete" onclick="if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) doTableSelectionAction('artificialChemistryTable','deleteMultiple');return false;" hint="Delete"/>
+		<gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
        	<gui:actionButton action="copy" hint="Copy" onclick="doTableSelectionAction('artificialChemistryTable','copyMultiple');return false;"/>
        	<filterpane:filterButton/>
 		<filterpane:filterPane domain="${className}" excludeProperties="createTime"/>

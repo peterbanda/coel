@@ -5,7 +5,6 @@
     <theme:layout name="main"/>
     <r:script>
         function showExportDialogTransitionTableDialog(functionId) {
-            console.log(functionId)
             $('#export-transition-table-modal').find("#id").val(functionId);
             $('#export-transition-table-modal').modal({ keyboard: true });
         }

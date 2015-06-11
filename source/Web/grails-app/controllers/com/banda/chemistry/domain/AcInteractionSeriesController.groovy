@@ -154,7 +154,7 @@ class AcInteractionSeriesController extends BaseDomainController {
 			actionSeriesCloneMap.get(instance)
 		} else {
 			def acInteractionSeriesCloneInstance = cloneActionSeries(instance)
-            chemistryCommonService.saveActionSeries(instance, acInteractionSeriesCloneInstance)
+            chemistryCommonService.saveActionSeries(acInteractionSeriesCloneInstance)
 			acInteractionSeriesCloneInstance
 		}
 	}

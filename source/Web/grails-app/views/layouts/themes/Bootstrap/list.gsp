@@ -34,8 +34,8 @@
         				<ui:h4 text="Actions"/>
         				<div class="row-fluid">
         					<div class="span10">
+								<gui:modal id="confirm-delete-modal" title="Delete" onclick="doTableSelectionAction('${domainName}Table','deleteMultiple')" text="Are you sure?"/>
 								<theme:ifNoZoneContent name="actions">
-                                    <gui:modal id="confirm-delete-modal" title="Delete" onclick="doTableSelectionAction('${domainName}Table','deleteMultiple')" text="Are you sure?"/>
         							<gui:actionButton action="create" hint="Add New"/>
         							<gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
         							<gui:actionButton action="copy" hint="Copy" onclick="doTableSelectionAction('${domainName}Table','copyMultiple');return false;"/>

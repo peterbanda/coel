@@ -9,7 +9,7 @@
     	<gui:actionButton action="createTemplate" icon="icon-plus" text="Template"/>
     	<gui:actionButton action="createLayered" icon="icon-plus" text="Layered"/>
     	<gui:actionButton action="createSpatial" icon="icon-plus" text="Spatial"/>
-    	<gui:actionButton action="delete" onclick="if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) doTableSelectionAction(topologyTable','deleteMultiple');return false;"/>
+        <gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
 		<filterpane:filterButton/>
 		<filterpane:filterPane domain="${className}"/>
     </theme:zone>
