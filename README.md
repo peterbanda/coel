@@ -16,4 +16,5 @@ COEL framework is built on Grails, Spring, Hibernate, and GridGain technology st
 
 A paper summarizing COEL's functionality and architecture can be found [here](http://arxiv.org/abs/1407.4027).
 
-This project has been developed and maintained by <a href="http://peterbanda.net">Peter Banda</a>. If you wish to collaborate in the develepment of this project contact me at `banda@pdx.edu`.
+This project has been developed and maintained by <a href="http://peterbanda.net">Peter Banda</a>.</br>
+If you wish to collaborate in the develepment of this project contact me at `banda@pdx.edu`.
