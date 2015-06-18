@@ -28,13 +28,13 @@
 			</ui:fieldInput>
 		</ui:field>
 
-		<ui:field bean="instance" name="lowerThreshold">
+		<ui:field bean="instance" name="lowerThreshold" label="Lower Bound">
 			<ui:fieldInput>
 				<g:textField name="lowerThreshold" value="${formatNumber(number: instance.lowerThreshold, type: 'number', maxFractionDigits: 10)}"/>
 			</ui:fieldInput>
 		</ui:field>
 
-		<ui:field bean="instance" name="upperThreshold">
+		<ui:field bean="instance" name="upperThreshold" label="Upper Bound">
 			<ui:fieldInput>
 				<g:textField name="upperThreshold" value="${formatNumber(number: instance.upperThreshold, type: 'number', maxFractionDigits: 10)}"/>
 			</ui:fieldInput>

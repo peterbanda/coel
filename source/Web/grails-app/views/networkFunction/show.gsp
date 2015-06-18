@@ -35,7 +35,7 @@
 			<f:display property="name"/>
 
             <g:if test="${instance.function?.getClass() == TransitionTable.class}">
-                <f:display property="function" label="Transition Table (Function)">${render(template:'displayTransitionTable',bean:value)}</f:display>
+                <f:display property="function" label="Transition Table (Function)">${render(template:'displayTransitionTable', bean:value, model: [editable:"false"])}</f:display>
             </g:if>
             <g:if test="${it?.getClass() == Expression.class}">
                 <f:display property="function" label="Expression (Function)">${value.formula}</f:display>

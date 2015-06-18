@@ -2,11 +2,11 @@
     <div class="navbar-inner">
         <div class="container">
         	<div class="row">
-                <div class="span7">
+                <div class="span8">
                 	<ui:logo/>
                     <theme:layoutZone name="navigation"/>
                 </div>
-                <div class="span3">
+                <div class="span2">
                     <theme:layoutZone name="admin-navigation"/>
                 </div>
             	<div class="pull-right">

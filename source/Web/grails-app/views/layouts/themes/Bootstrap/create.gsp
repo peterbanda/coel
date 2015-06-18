@@ -4,6 +4,10 @@
 		<g:message code="default.create.label" args="[domainNameLabel]" />
 	</theme:title>
 	<theme:head/>
+    <r:script>
+    	$("[rel=popover]").popover();
+    	$("[hint-show=true]").popover('show');
+    </r:script>
     <theme:body>
         <theme:layoutTemplate name="header"/>
 
@@ -21,13 +25,9 @@
     					</g:if>
     				</div>
 					<div id="errorDiv" >
-		            	<g:hasErrors bean="${instance}">
-        		    		<ul class="errors" role="alert">
-								<g:eachError bean="${instance}" var="error">
-									<ui:message type="error"><g:message error="${error}"/></ui:message>
-								</g:eachError>
-							</ul>
-            			</g:hasErrors>
+						<g:eachError bean="${instance}" var="error">
+							<ui:message type="error"><g:message error="${error}"/></ui:message>
+						</g:eachError>
             		</div>
 
 	                <div class="row-fluid">

@@ -2,7 +2,9 @@ package com.banda.network.domain
 
 import com.banda.function.business.FunctionFactory
 import edu.banda.coel.web.BaseDomainController
+import edu.banda.coel.web.BinaryStringRepresentations
 import edu.banda.coel.web.NetworkCommonService
+import grails.converters.JSON
 
 class NetworkFunctionController extends BaseDomainController {
 
@@ -108,4 +110,34 @@ class NetworkFunctionController extends BaseDomainController {
         response.setHeader("Content-disposition", "attachment; filename=" + "transition_table_${id}");
         render(contentType: "text", text: text);
 	}
+
+	def getRepresentationsForBinaryString(String string) {
+		def repres = new BinaryStringRepresentations()
+		repres.binaryString = string.replaceAll("[^0-1]", "")
+        if (!repres.binaryString.isEmpty()) {
+		    repres.decimalString = new BigInteger(repres.binaryString, 2).toString()
+		    repres.hexadecimalString = new BigInteger(repres.binaryString, 2).toString(16)
+        }
+		render repres as JSON
+	}
+
+	def getRepresentationsForDecimalString(String string) {
+		def repres = new BinaryStringRepresentations()
+		repres.decimalString = string.replaceAll("[^0-9]", "")
+        if (!repres.decimalString.isEmpty()) {
+            repres.binaryString = new BigInteger(repres.decimalString, 10).toString(2)
+            repres.hexadecimalString = new BigInteger(repres.binaryString, 2).toString(16)
+        }
+		render repres as JSON
+	}
+
+    def getRepresentationsForHexadecimalString(String string) {
+        def repres = new BinaryStringRepresentations()
+        repres.hexadecimalString = string.replaceAll("[^0-9a-fA-F]", "")
+        if (!repres.hexadecimalString.isEmpty()) {
+            repres.binaryString = new BigInteger(repres.hexadecimalString, 16).toString(2)
+            repres.decimalString = new BigInteger(repres.binaryString, 2).toString()
+        }
+        render repres as JSON
+    }
 }

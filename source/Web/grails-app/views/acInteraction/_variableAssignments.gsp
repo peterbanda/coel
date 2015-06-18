@@ -3,7 +3,10 @@
 				<div class="row-fluid span8">
     		    	<div class="spacedTop spacedLeft">
     					<gui:actionLink controller="acInteractionVariableAssignment" action="create" params="['action.id':instance.id]" hint="Add New"/>
-    			    	<gui:actionLink action="delete" onclick="if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) doTableSelectionAction('acInteractionVariableAssignmentTable','deleteMultiple');return false;" hint="Delete"/>
+						<g:if test="${!instance?.variableAssignments.isEmpty()}">
+							<gui:modal id="confirm-variableInteraction-delete-modal" title="Delete" onclick="doTableSelectionAction('acInteractionVariableAssignmentTable','deleteMultiple')" text="Are you sure?"/>
+							<gui:actionLink icon="icon-trash" onclick="openModal('confirm-variableInteraction-delete-modal')" hint="Delete"/>
+						</g:if>
     			    </div>
            		    <gui:table list="${instance?.variableAssignments.sort{ it.variable.label }}" checkEnabled="true">
        					<gui:column label="Expression">

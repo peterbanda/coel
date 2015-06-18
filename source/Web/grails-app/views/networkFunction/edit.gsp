@@ -20,7 +20,7 @@
 		<g:set var="functionLabel" value="${instance?.function?.getClass() == TransitionTable.class ? 'Transition Table (Function)' : 'Expression (Function)'}" />
 		<ui:field bean="instance" name="functionInput" label="${functionLabel}">
 			<ui:fieldInput>
-				<g:textArea name="functionInput" rows="7" class="span11" value="${render(template:'displayFunction',bean:instance.function)}"/>
+                ${render(template:'displayTransitionTable', bean:instance.function, model: [editable:"true"])}
 			</ui:fieldInput>
 		</ui:field>
 		<ui:field bean="instance" name="multiComponentUpdaterType" required="${true}"/>

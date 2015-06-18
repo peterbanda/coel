@@ -30,7 +30,7 @@
                         <li>
                             <b>Leader Election Targeting 29^2 (LE 29^2)</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1056); return false;" text="LE 29^2"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1056" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1056); return false;" text="LE 29^2"/>
                             </ul>
                             <br/>
                             Reference:
@@ -40,7 +40,7 @@
                         <li>
                             <b>Leader Election Targeting 19^2 (LE 19^2)</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1052); return false;" text="LE 19^2"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1052" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1052); return false;" text="LE 19^2"/>
                             </ul>
                             <br/>
                             Reference:
@@ -50,7 +50,7 @@
                         <li>
                             <b>Density Minimization (DM)</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1083); return false;" text="DM"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1083" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1083); return false;" text="DM"/>
                             </ul>
                             <br/>
                             Reference:
@@ -70,7 +70,7 @@
                         <li>
                             <b>Strategy of Mirror Particles (SMP)</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1041); return false;" text="SMP"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1041" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1041); return false;" text="SMP"/>
                             </ul>
                             <br/>
                             Reference:
@@ -90,7 +90,7 @@
                         <li>
                             <b>Game of Life</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1012); return false;" text="GoL"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1012" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1012); return false;" text="GoL"/>
                             </ul>
                         </li>
                     </ul>
@@ -107,7 +107,7 @@
                         <li>
                             <b>Cenek Rule</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1020); return false;" text="Cenek"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1020" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1020); return false;" text="Cenek"/>
                             </ul>
                             <br/>
                             Reference:
@@ -117,7 +117,7 @@
                         <li>
                             <b>Marques-Pita Rule</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1021); return false;" text="Marques"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1021" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1021); return false;" text="Marques"/>
                             </ul>
                             <br/>
                             Reference:
@@ -127,7 +127,7 @@
                         <li>
                             <b>Wolz and deOliveira Rule</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1022); return false;" text="Wolz"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1022" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1022); return false;" text="Wolz"/>
                             </ul>
                             <br/>
                             Reference:
@@ -137,14 +137,14 @@
                         <li>
                             <b>2DGKL</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1086); return false;" text="2DGKL"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1086" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1086); return false;" text="2DGKL"/>
                             </ul>
                             <hr/>
                         </li>
                         <li>
                             <b>Local Majority (LM)</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1087); return false;" text="LM"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1087" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1087); return false;" text="LM"/>
                             </ul>
                         </li>
                     </ul>
@@ -161,7 +161,7 @@
                         <li>
                             <b>Cenek Rule</b>
                             <ul class="inline spacedTop">
-                                <li><gui:actionLink action="exportNetworkFunction" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1024); return false;" text="Cenek"/>
+                                <li><gui:actionLink action="exportNetworkFunction" id="1024" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1024); return false;" text="Cenek"/>
                             </ul>
                             <br/>
                             Reference:

@@ -10,12 +10,12 @@
 		<ui:field bean="instance" name="name"/>
 		<ui:field label="Function Type">
 			<ui:fieldInput>
-				<g:select name="functionType" from="${["Transition Table", "Expression"]}"/>
+				<g:select name="functionType" from="${["Transition Table", "Expression"]}" disabled="true"/>
 			</ui:fieldInput>
 		</ui:field>
 		<ui:field bean="instance" name="function">
 			<ui:fieldInput>
-				<g:textArea class="input-xxlarge" rows="4" name="functionInput" value="${render(template:'displayFunction',bean:instance.function)}"/>
+				${render(template:'displayTransitionTable', bean:instance.function, model: [editable:"true"])}
 			</ui:fieldInput>
 		</ui:field>
 		<ui:field bean="instance" name="multiComponentUpdaterType" required="${true}"/>

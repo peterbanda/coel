@@ -69,8 +69,12 @@ function getCheckedIds(tableName) {
 
 function doTableSelectionAction(tableName, actionName) {
 	var ids = getCheckedIds(tableName)
-	var controller = $('#' + tableName).find('#domainName').val();
-	post('/' + controller + '/' + actionName, {ids: ids})
+    if (ids.length == 0) {
+        showErrorMessage("No rows selected!")
+    } else {
+        var controller = $('#' + tableName).find('#domainName').val();
+        post('/' + controller + '/' + actionName, {ids: ids})
+    }
 }
 
 // Post to the provided URL with the specified parameters.
@@ -116,12 +120,10 @@ function showMessage(text) {
 function showErrorMessage(message) {
 	var closeX = '<a class="close" data-dismiss="alert" href="#">x</a>'
 	$('#errorDiv').hide();
-	var ul = $('<ul class="errors" role="alert">');
 	var innerDiv = $('<div class="alert alert-block alert-error">');
 	innerDiv.append(closeX);
 	innerDiv.append(message);
-	ul.append(innerDiv);	
-	$('#errorDiv').html(ul);
+	$('#errorDiv').html(innerDiv);
 	$('#errorDiv').fadeIn('2000');
 }
 

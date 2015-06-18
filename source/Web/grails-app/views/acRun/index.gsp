@@ -169,26 +169,6 @@
 					$("#translationSeriesOptionalDiv").hide();
 			}
 		</r:script>
-		<style>
-
-            .collapse.in {
-	            overflow: visible
-            }
-
-			/*
-    			.accordion-body.in {
-        			overflow:visible;
-    			}
-
-			    .accordion-body.in:hover {
-        			overflow:visible;
-    			}
-
-			    .accordion-body[class*="in collapse"]{
-        			overflow:visible;
-    			}
-			*/
-		</style>
     </head>
     <body>
         <theme:zone name="body">
@@ -204,13 +184,9 @@
             </gui:modal>
 
             <div id="errorDiv" >
-				<g:hasErrors bean="${instance}">
-        		    <ul class="errors" role="alert">
-						<g:eachError bean="${instance}" var="error">
-							<ui:message type="error"><g:message error="${error}"/></ui:message>
-						</g:eachError>
-					</ul>
-            	</g:hasErrors>
+				<g:eachError bean="${instance}" var="error">
+					<ui:message type="error"><g:message error="${error}"/></ui:message>
+				</g:eachError>
             </div>
             <div class="accordion" id="accordion">
 				<div class="accordion-group">

@@ -1,16 +1,27 @@
     <r:script>
 
-		$(function(){
-			$("#acReactionLink").focus()			
-		});
+        $(function () {
+            $("#acReactionLink").focus()
+        });
 
-	</r:script>
+        function checkIfSpeciesExist() {
+            if ($("#speciesLabels").find("[id^='label']").length == 0) {
+                showErrorMessage("No species defined.")
+                $("[hint-show=true]").popover('show');
+                return false;
+            }
+            return true;
+        }
+    </r:script>
 
     			<div class="row-fluid">
     				<div class="spacedTop spacedLeft">
-    					<gui:actionLink controller="acReaction" action="create" params="['reactionSet.id':instance.id]" hint="Add New"/>
-    			    	<gui:actionLink action="delete" onclick="if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) doTableSelectionAction('acReactionTable','deleteMultiple');return false;" hint="Delete"/>
-    			    	<gui:actionLink action="copy" onclick="doTableSelectionAction('acReactionTable','copyMultiple');return false;" icon="icon-plus-sign" hint="Copy"/>
+    					<gui:actionLink controller="acReaction" action="create" elementId="acReactionLink" params="['reactionSet.id':instance.id]" hint="Add New" onclick="return checkIfSpeciesExist();"/>
+						<g:if test="${!instance?.reactions.isEmpty()}">
+							<gui:modal id="confirm-reaction-delete-modal" title="Delete" onclick="doTableSelectionAction('acReactionTable','deleteMultiple')" text="Are you sure?"/>
+							<gui:actionLink icon="icon-trash" onclick="openModal('confirm-reaction-delete-modal')" hint="Delete"/>
+							<gui:actionLink icon="icon-plus-sign" onclick="doTableSelectionAction('acReactionTable','copyMultiple')" hint="Copy"/>
+						</g:if>
     			    </div>
             		<gui:table list="${instance?.reactions}" showEnabled="true" editEnabled="true" checkEnabled="true">
         				<gui:column property="label" editableUrl="/acReaction/updateLabelAjax"/>

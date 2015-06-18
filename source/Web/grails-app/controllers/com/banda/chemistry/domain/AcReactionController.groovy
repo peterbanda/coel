@@ -12,6 +12,7 @@ import edu.banda.coel.business.chempic.ChemistryPicGeneratorImpl
 import edu.banda.coel.domain.service.ChemistryPicGenerator
 import edu.banda.coel.domain.util.GeneralUtil
 import edu.banda.coel.web.BaseDomainController
+import java.lang.NumberFormatException
 
 class AcReactionController extends BaseDomainController {
 
@@ -399,7 +400,7 @@ class AcReactionController extends BaseDomainController {
 			   		acReactionInstance.errors.rejectValue("reverseRateFunction", "Rate Function '" + params.reverseRateFunction.formula + "' is invalid. " + e.getMessage())
 			   }
 		   } else if (params.reverseRateConstants) {
-			   setReverseRateConstants(params.reverseRateConstants, acReactionInstance)
+               setReverseRateConstants(params.reverseRateConstants, acReactionInstance)
 			   acReactionInstance.setReverseRateFunction(null)
 		   } else {
 		   	   acReactionInstance.setReverseRateConstants(null)
@@ -436,22 +437,30 @@ class AcReactionController extends BaseDomainController {
 	* Sets the rate constants from String (user's input).
 	*/
    private def setForwardRateConstants(rateConstants, reaction) {
-	   acRateUtil.setRateConstantsFromString(rateConstants, reaction, ReactionDirection.Forward)
-	   int requiredRateConstantsNum = AcKineticsBO.createInstance(reaction, true).getRequiredRateConstantsNum()
-	   def adaptedRateConstants = GeneralUtil.expandOrShrinkArrayIfNeeded(reaction.forwardRateConstants, requiredRateConstantsNum)
-	   GeneralUtil.setNullToZero(adaptedRateConstants, Double.class)
-	   reaction.setForwardRateConstants(adaptedRateConstants)
+       try {
+           acRateUtil.setRateConstantsFromString(rateConstants, reaction, ReactionDirection.Forward)
+           int requiredRateConstantsNum = AcKineticsBO.createInstance(reaction, true).getRequiredRateConstantsNum()
+           def adaptedRateConstants = GeneralUtil.expandOrShrinkArrayIfNeeded(reaction.forwardRateConstants, requiredRateConstantsNum)
+           GeneralUtil.setNullToZero(adaptedRateConstants, Double.class)
+           reaction.setForwardRateConstants(adaptedRateConstants)
+       } catch (e) {
+           reaction.errors.rejectValue("forwardRateConstants", "Rate constant(s) '" + rateConstants + "' are invalid.")
+       }
    }
 
    /**
    	* Sets the rate constants from String (user's input).
    	*/
    private def setReverseRateConstants(rateConstants, reaction) {
-	  acRateUtil.setRateConstantsFromString(rateConstants, reaction, ReactionDirection.Reverse)
-	  int requiredRateConstantsNum = AcKineticsBO.createInstance(reaction, false).getRequiredRateConstantsNum()
-	  def adaptedRateConstants = GeneralUtil.expandOrShrinkArrayIfNeeded(reaction.reverseRateConstants, requiredRateConstantsNum)
-	  GeneralUtil.setNullToZero(adaptedRateConstants, Double.class)
-	  reaction.setReverseRateConstants(adaptedRateConstants)
+      try {
+          acRateUtil.setRateConstantsFromString(rateConstants, reaction, ReactionDirection.Reverse)
+          int requiredRateConstantsNum = AcKineticsBO.createInstance(reaction, false).getRequiredRateConstantsNum()
+          def adaptedRateConstants = GeneralUtil.expandOrShrinkArrayIfNeeded(reaction.reverseRateConstants, requiredRateConstantsNum)
+          GeneralUtil.setNullToZero(adaptedRateConstants, Double.class)
+          reaction.setReverseRateConstants(adaptedRateConstants)
+      } catch (e) {
+          reaction.errors.rejectValue("reverseRateConstants", "Rate constant(s) '" + rateConstants + "' are invalid.")
+      }
    }
 
    private def resetForwardRateConstants(reaction) {

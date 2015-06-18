@@ -3,7 +3,10 @@ package edu.banda.coel.web
 import com.banda.chemistry.business.OctaveGenerator
 import com.banda.chemistry.domain.AcReactionSet
 import com.banda.network.domain.NetworkFunction
+import grails.converters.JSON
 import org.springframework.security.access.AccessDeniedException
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 class DownloadController extends BaseController {
 
@@ -12,6 +15,8 @@ class DownloadController extends BaseController {
     private def networkFunctionIds = [1087l,1086l,1056l,1052l,1083l,1041l,1012l,1020l,1021l,1022l,1024l]
 
     def NetworkCommonService networkCommonService
+
+    def ChemistryCommonService chemistryCommonService
 
 	def index = {}
 
@@ -23,10 +28,48 @@ class DownloadController extends BaseController {
         if (!reactionSetIds.contains(id))
             throw new AccessDeniedException("Reaction set not available for download.")
 
-        def acReactionSetInstance = AcReactionSet.get(id)
-        def octaveOutput = OctaveGenerator.apply(acReactionSetInstance)
+        def reactionSet = AcReactionSet.get(id)
+        def octaveOutput = OctaveGenerator.apply(reactionSet)
         response.setHeader("Content-disposition", "attachment; filename=" + "reactionSet_${id}_ode.m");
         render(contentType: "text", text: octaveOutput.toString());
+    }
+
+    def getReactionStructureImages(Long id) {
+        if (!reactionSetIds.contains(id))
+            throw new AccessDeniedException("Reaction set not available for download.")
+
+        def reactionSet = AcReactionSet.get(id)
+        def images = chemistryCommonService.getReactionStructureImages(reactionSet, false)
+
+        response.setContentType('APPLICATION/OCTET-STREAM')
+        response.setHeader('Content-Disposition', 'Attachment;Filename=reaction_set_' + id + '.zip')
+        ZipOutputStream zip = new ZipOutputStream(response.outputStream);
+
+        images.each{ reactionImage ->
+            def file1Entry = new ZipEntry(reactionImage.label + '.svg');
+            zip.putNextEntry(file1Entry);
+            zip.write(reactionImage.image.bytes);
+        }
+        zip.close();
+    }
+
+    def getSpeciesStructureImages(Long id) {
+        if (!reactionSetIds.contains(id))
+            throw new AccessDeniedException("Reaction set not available for download.")
+
+        def reactionSet = AcReactionSet.get(id)
+        def images = chemistryCommonService.getSpeciesStructureImages(reactionSet, false)
+
+        response.setContentType('APPLICATION/OCTET-STREAM')
+        response.setHeader('Content-Disposition', 'Attachment;Filename=reaction_set_species_' + id + '.zip')
+        ZipOutputStream zip = new ZipOutputStream(response.outputStream);
+
+        images.each{ speciesImage ->
+            def file1Entry = new ZipEntry(speciesImage.label + '.svg');
+            zip.putNextEntry(file1Entry);
+            zip.write(speciesImage.image.bytes);
+        }
+        zip.close();
     }
 
     def exportNetworkFunction(Long id) {

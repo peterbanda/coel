@@ -12,8 +12,8 @@
     	<gui:actionButton action="showNext" id="${instance?.id}"/>
 	</theme:zone>
 
-    <theme:zone name="details">    
-    	<f:ref bean="instance" property="reactionSet">${it.encodeAsHTML()}</f:ref>
+    <theme:zone name="details">
+		<f:ref bean="instance" property="reactionSet">${it.label}</f:ref>
 		<hr>
 		<g:render template="editablePart"/>
 		<ui:field bean="instance" name="enabled"/>

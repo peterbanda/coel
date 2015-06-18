@@ -5,7 +5,10 @@
 						<g:if test="${!instance.subCompartments.isEmpty()}">
 					  	    <div class="spacedTop spacedLeft">
     							<gui:actionLink controller="acCompartmentChannelGroup" action="create" params="['compartment.id':instance.id]" hint="Add New"/>
-    			    			<gui:actionLink action="delete" onclick="if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) doTableSelectionAction('acCompartmentChannelGroupTable','deleteMultiple');return false;" hint="Delete"/>
+								<g:if test="${!instance?.subChannelGroups.isEmpty()}">
+									<gui:modal id="confirm-channelGroup-delete-modal" title="Delete" onclick="doTableSelectionAction('acCompartmentChannelGroupTable','deleteMultiple')" text="Are you sure?"/>
+									<gui:actionLink icon="icon-trash" onclick="openModal('confirm-channelGroup-delete-modal')" hint="Delete"/>
+								</g:if>
     			    		</div>
 						</g:if>
             		    <gui:table list="${instance?.subChannelGroups}" showEnabled="true" editEnabled="true" checkEnabled="true">

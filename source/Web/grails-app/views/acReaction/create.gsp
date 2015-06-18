@@ -8,7 +8,7 @@
     <theme:zone name="details">
     	<g:hiddenField name="reactionSet.id" value="${instance.reactionSet.id}" />
         <g:hiddenField name="sortOrder" value="${instance?.sortOrder}" />
-		<f:ref bean="instance" property="reactionSet">${it.encodeAsHTML()}</f:ref>
+		<f:ref bean="instance" property="reactionSet">${it.label}</f:ref>
         <hr>
 		<g:render template="editablePart"/>
     </theme:zone>

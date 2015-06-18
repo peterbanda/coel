@@ -12,13 +12,9 @@
     		</g:if>
     	</div>
         <div id="errorDiv" >
-			<g:hasErrors bean="${instance}">
-        		<ul class="errors" role="alert">
-			    	<g:eachError bean="${instance}" var="error">
-						<ui:message type="error"><g:message error="${error}"/></ui:message>
-					</g:eachError>
-			    </ul>
-            </g:hasErrors>
+			<g:eachError bean="${instance}" var="error">
+				<ui:message type="error"><g:message error="${error}"/></ui:message>
+			</g:eachError>
         </div>
 
     	<ui:form action="registerSave" class="form-dense">

@@ -2,8 +2,14 @@
     <li>Items</li>
     <li>
         <div class="spacedTop spacedLeft">
-            <gui:actionLink controller="acTranslationItem" action="create" params="['translation.id':instance.id]" hint="Add New"/>
-            <gui:actionLink action="delete" onclick="if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) doTableSelectionAction('acTranslationItemTable','deleteMultiple');return false;" hint="Delete"/>
+            <g:if test="${!instance?.translationItems.isEmpty()}">
+                <gui:actionLink controller="acTranslationItem" action="create" params="['translation.id':instance.id]" hint="Add New"/>
+                <gui:modal id="confirm-translationItem-delete-modal" title="Delete" onclick="doTableSelectionAction('acTranslationItemTable','deleteMultiple')" text="Are you sure?"/>
+                <gui:actionLink icon="icon-trash" onclick="openModal('confirm-translationItem-delete-modal')" hint="Delete"/>
+            </g:if>
+            <g:else>
+                <gui:actionLink controller="acTranslationItem" action="create" params="['translation.id':instance.id]" hint="Start here to add a new item" hint-placement="right" hint-show="true"/>
+            </g:else>
         </div>
         <gui:table list="${instance?.translationItems.sort { it.variable.label }}" showEnabled="true" editEnabled="true" checkEnabled="true">
             <gui:column label="Variable &larr; Function">

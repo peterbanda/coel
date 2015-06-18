@@ -2,9 +2,15 @@
       			<li>Translations</li>
       			<li>
 					<div class="spacedTop spacedLeft">
-    					<gui:actionLink controller="acTranslation" action="create" params="['translationSeries.id':instance.id]" hint="Add New"/>
-    		   			<gui:actionLink action="delete" onclick="if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) doTableSelectionAction('acTranslationTable','deleteMultiple');return false;" hint="Delete"/>
-    		   		</div>
+                        <g:if test="${!instance?.translations.isEmpty()}">
+                            <gui:actionLink controller="acTranslation" action="create" params="['translationSeries.id':instance.id]" hint="Add New"/>
+						    <gui:modal id="confirm-translation-delete-modal" title="Delete" onclick="doTableSelectionAction('acTranslationTable','deleteMultiple')" text="Are you sure?"/>
+						    <gui:actionLink icon="icon-trash" onclick="openModal('confirm-translation-delete-modal')" hint="Delete"/>
+                        </g:if>
+                        <g:else>
+                            <gui:actionLink controller="acTranslation" action="create" params="['translationSeries.id':instance.id]" hint="Start here to add a new translation" hint-placement="right" hint-show="true"/>
+                        </g:else>
+                    </div>
            		    <gui:table list="${instance?.translations}" showEnabled="true" editEnabled="true" checkEnabled="true">
            		        <gui:column label="Time">
            		    		<g:if test="${bean.toTime}">

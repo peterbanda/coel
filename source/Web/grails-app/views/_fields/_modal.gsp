@@ -1,10 +1,10 @@
-		<g:if test="${attrs.action || attrs.onclick}">
+        <g:if test="${attrs.action || attrs.onclick}">
 			<r:script>
 				$('#submitButton').click(function(){
               		$('#${id}').modal('hide');
           		});
 			</r:script>
-        	<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel${id}" aria-hidden="true" style="display:none">
+        	<div class="modal fade ${attrs.class}" id="${id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel${id}" aria-hidden="true" style="display:none">
         		<div class="modal-dialog">
     				<div class="modal-content">
     					<div class="modal-header modal-success">
@@ -53,7 +53,7 @@
 			</div>			
 		</g:if>
 		<g:else>
-        	<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel${id}" aria-hidden="true" style="display:none">
+        	<div class="modal fade ${attrs.class}" id="${id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel${id}" aria-hidden="true" style="display:none">
         		<div class="modal-dialog">
     				<div class="modal-content">
     					<div class="modal-header modal-success">

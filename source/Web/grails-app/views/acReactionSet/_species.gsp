@@ -27,6 +27,8 @@
 			if ($("#speciesLabels:contains('None')").length == 1) {
 				$("#speciesLabels").html($('<li>Species</li>'));
 			}
+			$("#addSpeciesLink").data('popover').options.content = 'Add New';
+			$("#addSpeciesLink").data('popover').options.placement = 'bottom';
 			$.each(data.acSpeciesInstances, function(index, acSpeciesInstance) {			
 				var newItem = $('<li><a href="#" id="label' + acSpeciesInstance.id + '" class="plain" data-type="textdeletable" data-pk="' + + acSpeciesInstance.id + '" data-mode="inline" data-url="/acSpecies/updatePropertyAjax" data-title="Enter Label">' + acSpeciesInstance.label + '</a></li>')
 				$("#speciesLabels").append(newItem);
@@ -97,9 +99,12 @@
 					</ul>
 				</li>
 				<li>
-					<a href="javascript:void(0);" class="create" onclick="addSpeciesLabelTextField();"/>
-						<i class="icon-plus"></i>
-					</a>
+                    <g:if test="${!instance.speciesSet.getOwnAndInheritedVariables().isEmpty()}">
+					    <gui:actionLink icon="icon-plus" onclick="addSpeciesLabelTextField();" elementId="addSpeciesLink" hint="Add New"/>
+                    </g:if>
+                    <g:else>
+                        <gui:actionLink icon="icon-plus" onclick="addSpeciesLabelTextField();" elementId="addSpeciesLink" hint="Start here to add new species" hint-placement="top" hint-show="true"/>
+                    </g:else>
 					<g:textField name="labels" placeholder="Enter species label(s)"/>
 				</li>
 			</ul>

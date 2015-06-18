@@ -15,7 +15,7 @@
 
     <theme:zone name="details">
 		<f:with bean="instance">
-			<f:ref property="reactionSet">${it.encodeAsHTML()}</f:ref>
+			<f:ref bean="instance" property="reactionSet">${it.label}</f:ref>
 
 	        <hr>
 

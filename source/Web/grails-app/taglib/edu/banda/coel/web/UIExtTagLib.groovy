@@ -30,21 +30,26 @@ class UIExtTagLib {
 	BeanPropertyAccessorFactory beanPropertyAccessorFactory
 
 	def actionButton = { attrs, body ->
-		if (!attrs.action) throwTagError("Tag [gui:actionButton] is missing required attribute [type]")
 		def title = attrs.text
 		if (!title && hasBody(body)) {
 			title = body()
 		}
-		out << render(template: '/_fields/actionButton', model: [action:attrs.action, id:attrs.id, title:title, icon:attrs.icon, attrs:attrs])
+		def hint = attrs.remove("hint")
+        def hintplacement = attrs.remove("hint-placement")
+		out << render(template: '/_fields/actionButton', model: [title:title, action:attrs.action, icon:attrs.icon, hint: hint, hintplacement: hintplacement, attrs:attrs])
 	}
 
 	def actionLink = { attrs, body ->
-		if (!attrs.action) throwTagError("Tag [gui:actionLink] is missing required attribute [type]")
 		def title = attrs.text
 		if (!title && hasBody(body)) {
 			title = body()
 		}
-		out << render(template: '/_fields/actionLink', model: [action:attrs.action, id:attrs.id, title:title, icon:attrs.icon, attrs:attrs])
+		def hint = attrs.remove("hint")
+        def hintplacement = attrs.remove("hint-placement")
+
+        if (attrs.onclick && !attrs.action)
+            attrs.url="javascript:void(0);"
+		out << render(template: '/_fields/actionLink', model: [title:title, action:attrs.action, icon:attrs.icon, hint: hint, hintplacement: hintplacement, attrs:attrs])
 	}
 
 	def modal = { attrs, body ->

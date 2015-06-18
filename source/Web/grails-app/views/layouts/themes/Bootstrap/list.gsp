@@ -8,6 +8,9 @@
     	<r:require module="filterpane" />
     </theme:head>
     <r:script>
+		$("[rel=popover]").popover();
+		$("[hint-show=true]").popover('show');
+
     	function showCopyMultipleDialog() {
 			var ids = getCheckedIds("${domainName}Table")
 			$('#copy-multiple-modal').find('#ids').val(ids.toString())
@@ -24,19 +27,30 @@
     			<div id="contentDiv" class="content span10">
     				<theme:layoutZone name="pageHeader"/>
 
-                	<div id="messageDiv" >
-    					<g:if test="${flash.message}">
-        					<ui:message type="info">${flash.message}</ui:message>
-    					</g:if>
-    				</div>
+					<div id="messageDiv" >
+						<g:if test="${flash.message}">
+							<ui:message type="info">${flash.message}</ui:message>
+						</g:if>
+					</div>
 
-        			<ui:block>
+					<div id="errorDiv" >
+						<g:eachError bean="${instance}" var="error">
+							<ui:message type="error"><g:message error="${error}"/></ui:message>
+						</g:eachError>
+					</div>
+
+                    <ui:block>
         				<ui:h4 text="Actions"/>
         				<div class="row-fluid">
-        					<div class="span10">
+        					<div class="span8">
 								<gui:modal id="confirm-delete-modal" title="Delete" onclick="doTableSelectionAction('${domainName}Table','deleteMultiple')" text="Are you sure?"/>
 								<theme:ifNoZoneContent name="actions">
-        							<gui:actionButton action="create" hint="Add New"/>
+                                    <g:if test="${list.isEmpty()}">
+                                        <gui:actionButton action="create" hint="Add New (Start Here)" hint-show="true" />
+                                    </g:if>
+                                    <g:else>
+                                        <gui:actionButton action="create" hint="Add New"/>
+                                    </g:else>
         							<gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
         							<gui:actionButton action="copy" hint="Copy" onclick="doTableSelectionAction('${domainName}Table','copyMultiple');return false;"/>
         							<filterpane:filterButton/>
@@ -51,7 +65,7 @@
              						<theme:layoutZone name="actions"/>
              					</theme:ifZoneContent>
              				</div>
-             				<div class="span2">
+             				<div class="span4">
              					<theme:ifZoneContent name="extras">
              						<theme:layoutZone name="extras"/>
              					</theme:ifZoneContent>

@@ -1,12 +1,26 @@
 <%@ page import="org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils" %>
+<%@ page import="grails.util.GrailsNameUtils" %>
 <!DOCTYPE html>
 <html>
 	<theme:title>
 		<g:message code="default.edit.label" args="[domainNameLabel]" />
 	</theme:title>
 	<theme:head/>
+    <r:script>
+	    $("[rel=popover]").popover();
+	    $("[hint-show=true]").popover('show');
+    </r:script>
     <theme:body>
         <theme:layoutTemplate name="header"/>
+
+		<g:set var="domainName" value="${GrailsNameUtils.getPropertyNameRepresentation(GrailsNameUtils.getShortName(instance.class))}" scope="request" />
+		<g:set var="helpMessage" value="${message(code: domainName + '.help', default:'')}" scope="request" />
+
+		<g:if test="${helpMessage != ''}">
+			<gui:modal id="help-modal" title="Help">
+				${helpMessage}
+			</gui:modal>
+		</g:if>
 
     	<div class="container-fluid">
     		<div class="row-fluid">
@@ -22,19 +36,15 @@
     					</g:if>
     				</div>
     				<div id="errorDiv" >
-		            	<g:hasErrors bean="${instance}">
-        		    		<ul class="errors" role="alert">
-								<g:eachError bean="${instance}" var="error">
-									<ui:message type="error"><g:message error="${error}"/></ui:message>
-								</g:eachError>
-							</ul>
-            			</g:hasErrors>
+						<g:eachError bean="${instance}" var="error">
+							<ui:message type="error"><g:message error="${error}"/></ui:message>
+						</g:eachError>
             		</div>
 
         			<ui:block>
         				<ui:h4 text="Actions"/>
         				<div class="row-fluid">
-        					<div class="span10">
+        					<div class="span8">
 								<theme:ifNoZoneContent name="actions">
                                     <gui:modal id="confirm-delete-modal" title="Delete" action="delete">
                                         Are you sure?
@@ -48,12 +58,15 @@
 	    								<gui:actionButton action="showPrevious" id="${instance?.id}" hint="Show Previous"/>
     									<gui:actionButton action="showNext" id="${instance?.id}" hint="Show Next"/>
 									</g:if>
+                                    <g:if test="${helpMessage != ''}">
+                                        <gui:actionButton hint="Help" onclick="openModal('help-modal'); return false;" text="?"/>
+                                    </g:if>
 								</theme:ifNoZoneContent>
 								<theme:ifZoneContent name="actions">
              						<theme:layoutZone name="actions"/>
              					</theme:ifZoneContent>
              				</div>
-             				<div class="span2">
+             				<div class="span4">
              					<theme:ifZoneContent name="extras">
              						<theme:layoutZone name="extras"/>
              					</theme:ifZoneContent>

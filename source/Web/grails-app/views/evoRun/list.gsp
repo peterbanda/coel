@@ -6,7 +6,12 @@
 <head>
 <body>
 	<theme:zone name="actions">
-        <gui:actionButton action="create" hint="Add New"/>
+		<g:if test="${list.isEmpty()}">
+			<gui:actionButton action="create" hint="Add New (Start Here)" hint-show="true" />
+		</g:if>
+		<g:else>
+			<gui:actionButton action="create" hint="Add New"/>
+		</g:else>
 		<gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
        	<filterpane:filterButton/>
  		<filterpane:filterPane domain="${className}" associatedProperties="evoTask.name,evoTask.taskType" excludeProperties="timeCreated"/>

@@ -21,8 +21,16 @@
                                     <li><gui:actionLink class="export" action="exportReactionSet" id="3548" icon="icon-download" text="HCN (AASP)"/></li>
                                 </ul>
                                 <br/>
-                                Reference:
-                                <i>D. Blount, P. Banda, C. Teuscher, and D. Stefanovic. Feedforward Chemical Neural Network: A Compartmentalized Chemical System that Learns XOR. Artificial Life (In submission), 2015</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                            <i>D. Blount, P. Banda, C. Teuscher, and D. Stefanovic. Feedforward Chemical Neural Network: A Compartmentalized Chemical System that Learns XOR. Artificial Life (In submission), 2015</i>
+                                        </td>
+                                    </tr>
+                                </table>
                             </li>
                         </ul>
                     </div>
@@ -41,10 +49,21 @@
                                     <li><gui:actionLink action="exportReactionSet" id="4154" icon="icon-download" text="CHLP"/></li>
                                     <li><gui:actionLink action="exportReactionSet" id="4152" icon="icon-download" text="CHLP Scaled"/></li>
                                     <li><gui:actionLink action="exportReactionSet" id="4153" icon="icon-download" text="CHLP DNA SD"/></li>
+                                    <li><gui:actionLink action="getSpeciesStructureImages" id="4153" icon="icon-download" text="CHLP DNA SD Species Images"/></li>
+                                    <li><gui:actionLink action="getReactionStructureImages" id="4153" icon="icon-download" text="CHLP DNA SD Reaction Images"/></li>
                                 </ul>
                                 <br/>
-                                Reference:
-                                <i>P. Banda, A. Goudarzi, C. Teuscher, and D. Stefanovic. Analytical Basis of Chemical Learning. PLOS Computational Biology (In submission), 2015</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                            <i>P. Banda, A. Goudarzi, C. Teuscher, and D. Stefanovic. Analytical Basis of Chemical Learning. PLOS Computational Biology (In submission), 2015</i>
+                                        </td>
+                                    </tr>
+                                </table>
+
                                 <hr/>
                             </li>
 
@@ -54,8 +73,17 @@
                                     <li><gui:actionLink class="export" action="exportReactionSet" id="3535" icon="icon-download" text="AASP"/></li>
                                 </ul>
                                 <br/>
-                                Reference:
-                                <i>P. Banda, and C. Teuscher. Learning Two-input Linear and Nonlinear Analog Functions with a Simple Chemical System. In Ibarra, O.H., et al. eds.: Unconventional Computing and Natural Computing Conference, Volume 8553 of Lecture Notes in Computer Science. Springer International Publishing Switzerland, 14-26, 2014</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                             <i>P. Banda, and C. Teuscher. Learning Two-input Linear and Nonlinear Analog Functions with a Simple Chemical System. In Ibarra, O.H., et al. eds.: Unconventional Computing and Natural Computing Conference, Volume 8553 of Lecture Notes in Computer Science. Springer International Publishing Switzerland, 14-26, 2014, <a title="doi" href="http://dx.doi.org/10.1007/978-3-319-08123-6_2">doi</a>, <a title="arxiv" href="http://arxiv.org/abs/1404.0427">arxiv</a></i>
+                                        </td>
+                                    </tr>
+                                </table>
+
                             </li>
                         </ul>
                     </div>
@@ -75,8 +103,17 @@
                                     <li><gui:actionLink class="export" action="exportReactionSet" id="3466" icon="icon-download" text="TASP MA"/></li>
                                 </ul>
                                 <br/>
-                                Reference:
-                                <i>P. Banda, C. Teuscher, and D. Stefanovic. Training an Asymmetric Signal Perceptron through Reinforcements in an Artificial Chemistry. Journal of the Royal Society, Interface, 11(93), 2014</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                             <i>P. Banda, C. Teuscher, and D. Stefanovic. Training an Asymmetric Signal Perceptron through Reinforcements in an Artificial Chemistry. Journal of the Royal Society, Interface, 11(93), 2014, <a title="doi" href="http://dx.doi.org/10.1098/rsif.2013.1100">doi</a></i>
+                                        </td>
+                                    </tr>
+                                </table>
+
                                 <hr/>
                             </li>
                             <li>
@@ -86,8 +123,17 @@
                                     <li><gui:actionLink class="export" action="exportReactionSet" id="1033" icon="icon-download" text="SASP MA"/></li>
                                 </ul>
                                 </br>
-                                Reference:
-                                <i>P. Banda, C. Teuscher, and D. Stefanovic. Training an Asymmetric Signal Perceptron through Reinforcements in an Artificial Chemistry. Journal of the Royal Society, Interface, 11(93), 2014</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                            <i>P. Banda, C. Teuscher, and D. Stefanovic. Training an Asymmetric Signal Perceptron through Reinforcements in an Artificial Chemistry. Journal of the Royal Society, Interface, 11(93), 2014, <a title="doi" href="http://dx.doi.org/10.1098/rsif.2013.1100">doi</a></i>
+                                        </td>
+                                    </tr>
+                                </table>
+
                                 <hr/>
                             </li>
                             <li>
@@ -96,8 +142,17 @@
                                     <li><gui:actionLink class="export" action="exportReactionSet" id="1022" icon="icon-download" text="WRP"/></li>
                                 </ul>
                                 <br/>
-                                Reference:
-                                <i>P. Banda, C. Teuscher, and M. R. Lakin. Online Learning in a Chemical Perceptron. Artificial Life, MIT Press, 19(2), 2013</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                            <i>P. Banda, C. Teuscher, and M. R. Lakin. Online Learning in a Chemical Perceptron. Artificial Life, MIT Press, 19(2), 2013, <a title="doi" href="http://dx.doi.org/10.1162/ARTL_a_00105">doi</a>, <a title="free download" href="http://www.mitpressjournals.org/doi/pdf/10.1162/ARTL_a_00105">free download</a></i>
+                                        </td>
+                                    </tr>
+                                </table>
+
                                 <hr/>
                             </li>
                             <li>
@@ -106,8 +161,17 @@
                                     <li><gui:actionLink class="export" action="exportReactionSet" id="1024" icon="icon-download" text="WLP"/></li>
                                 </ul>
                                 <br/>
-                                Reference:
-                                <i>P. Banda, C. Teuscher, and M. R. Lakin. Online Learning in a Chemical Perceptron. Artificial Life, MIT Press, 19(2), 2013</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                            <i>P. Banda, C. Teuscher, and M. R. Lakin. Online Learning in a Chemical Perceptron. Artificial Life, MIT Press, 19(2), 2013, <a title="doi" href="http://dx.doi.org/10.1162/ARTL_a_00105">doi</a>, <a title="free download" href="http://www.mitpressjournals.org/doi/pdf/10.1162/ARTL_a_00105">free download</a></i>
+                                        </td>
+                                    </tr>
+                                </table>
+
                             </li>
                         </ul>
                     </div>
@@ -135,8 +199,17 @@
                                     <li><gui:actionLink class="export" action="exportReactionSet" id="3544" icon="icon-download" text="AASP w. PDL n = 5"/></li>
                                 </ul>
                                 <br/>
-                                Reference:
-                                <i>P. Banda, and C. Teuscher. An Analog Chemical Circuit with Parallel-Accessible Delay Line Learning Temporal Tasks. In Sayama, H., et al. eds.: ALIFE 14: Proceedings of the Fourteenth International Conference on the Synthesis and Simulation of Living Systems, MIT Press, 482-489, 2014</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                            <i>P. Banda, and C. Teuscher. An Analog Chemical Circuit with Parallel-Accessible Delay Line Learning Temporal Tasks. In Sayama, H., et al. eds.: ALIFE 14: Proceedings of the Fourteenth International Conference on the Synthesis and Simulation of Living Systems, MIT Press, 482-489, 2014, <a title="doi" href="http://mitpress.mit.edu/sites/default/files/titles/content/alife14/ch078.html">doi</a>, <a title="download" href="http://dx.doi.org/10.7551/978-0-262-32621-6-ch078">free download</a></i>
+                                        </td>
+                                    </tr>
+                                </table>
+
                                 <hr/>
                             </li>
 
@@ -146,8 +219,16 @@
                                     <li>N/A</li>
                                 </ul>
                                 <br/>
-                                Reference:
-                                <i>J. Moles, P. Banda, and C. Teuscher. Delay Line as a Chemical Reaction Network. Parallel Processing Letters, 21(1), 2015</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                            <i>J. Moles, P. Banda, and C. Teuscher. Delay Line as a Chemical Reaction Network. Parallel Processing Letters, 21(1), 2015, <a title="doi" href="http://dx.doi.org/10.1142/S0129626415400022">doi</a>, <a title="arxiv" href="http://arxiv.org/abs/1404.1152">arxiv</a></i>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <hr/>
                             </li>
 
@@ -160,8 +241,16 @@
                                     <li><gui:actionLink class="export" action="exportReactionSet" id="3674" icon="icon-download" text="MDL n = 5"/></li>
                                 </ul>
                                 <br/>
-                                Reference:
-                                <i>J. Moles, P. Banda, and C. Teuscher. Delay Line as a Chemical Reaction Network. Parallel Processing Letters, 21(1), 2015</i>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            Reference:
+                                        </td>
+                                        <td>
+                                            <i>J. Moles, P. Banda, and C. Teuscher. Delay Line as a Chemical Reaction Network. Parallel Processing Letters, 21(1), 2015, <a title="doi" href="http://dx.doi.org/10.1142/S0129626415400022">doi</a>, <a title="arxiv" href="http://arxiv.org/abs/1404.1152">arxiv</a></i>
+                                        </td>
+                                    </tr>
+                                </table>
                             </li>
                         </ul>
                     </div>

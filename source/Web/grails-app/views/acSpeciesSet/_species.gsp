@@ -63,15 +63,14 @@
 
    		<ui:field name="acSpeciesSet.species">
     		<ui:fieldInput>
-				<div class="row-fluid span3">
+				<div class="row-fluid span4">
 					<div class="spacedTop spacedLeft">
-						<a href="javascript:void(0);" class="create" onclick="addSpeciesLabelTextField();" title="Add New"/>
-							<i class="icon-plus"></i>										
-						</a>
+						<gui:actionLink icon="icon-plus" onclick="addSpeciesLabelTextField();" hint="Add New"/>
 						<g:textField name="labels" placeholder="Enter species label(s)"/>
-						<gui:actionLink action="delete" onclick="if (confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}')) doTableSelectionAction('acSpeciesTable','deleteMultiple');return false;" hint="Delete"/>
+						<gui:modal id="confirm-species-delete-modal" title="Delete" onclick="doTableSelectionAction('acSpeciesTable','deleteMultiple')" text="Are you sure?"/>
+						<gui:actionLink icon="icon-trash" onclick="openModal('confirm-species-delete-modal')" hint="Delete"/>
 					</div>
-					<gui:table domainName="acSpecies" list="${instance?.variables}" editEnabled="true" checkEnabled="true" showEmpty="true">
+					<gui:table domainName="acSpecies" list="${instance?.variables}" editEnabled="true" checkEnabled="true" displayEmpty="true">
 					    <gui:column property="label" editable="true"/>
         			</gui:table>
             	</div>

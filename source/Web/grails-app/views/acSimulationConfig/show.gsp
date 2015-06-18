@@ -27,8 +27,8 @@
 			<f:display property="odeSolverType"/>
 			<f:display property="timeStep">${formatNumber(number: value, type: 'number', maxFractionDigits: 10)}</f:display>
 			<f:display property="tolerance">${formatNumber(number: value, type: 'number', maxFractionDigits: 10)}</f:display>
-			<f:display property="lowerThreshold">${formatNumber(number: value, type: 'number', maxFractionDigits: 10)}</f:display>
-			<f:display property="upperThreshold">${formatNumber(number: value, type: 'number', maxFractionDigits: 10)}</f:display>
+			<f:display property="lowerThreshold" label="Lower Bound">${formatNumber(number: value, type: 'number', maxFractionDigits: 10)}</f:display>
+			<f:display property="upperThreshold" label="Upper Bound">${formatNumber(number: value, type: 'number', maxFractionDigits: 10)}</f:display>
 			<f:display property="fixedPointDetectionPrecision">${formatNumber(number: value, type: 'number', maxFractionDigits: 10)}</f:display>
 			<f:display property="fixedPointDetectionPeriodicity">${formatNumber(number: value, type: 'number', maxFractionDigits: 10)}</f:display>
 			<f:display property="influxScale">${formatNumber(number: value, type: 'number', maxFractionDigits: 10)}</f:display>

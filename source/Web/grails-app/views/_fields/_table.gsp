@@ -31,7 +31,7 @@
 									<gui:actionLink controller="${attrs.domainName}" action="edit" id="${id}"/>
 								</g:if>
 								<g:if test="${attrs.deleteEnabled}">
-									<gui:actionLink controller="${attrs.domainName}" action="delete" id="${id}"/>
+									<gui:actionLink controller="${attrs.domainName}" action="delete" id="${id}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
 								</g:if>
 							</td>
 						</g:if>

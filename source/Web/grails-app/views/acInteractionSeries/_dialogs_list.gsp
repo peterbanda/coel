@@ -1,19 +1,27 @@
 	<r:script>
 		function showCopyMultipleDialog() {
 			var ids = getCheckedIds("acInteractionSeriesTable")
-			$('#copy-multiple-modal').find('#ids').val(ids.toString())
-			$("#copy-multiple-modal" ).modal();
+			if (ids.length == 0) {
+        		showErrorMessage("No rows selected!")
+    		} else {
+				$('#copy-multiple-modal').find('#ids').val(ids.toString())
+				$("#copy-multiple-modal" ).modal();
+			}
 		}
 
 		function showAddInteractionsMultipleDialog() {
 			var ids = getCheckedIds("acInteractionSeriesTable")
-			$('#add-interactions-multiple-modal').find('#ids').val(ids.toString())
+			if (ids.length == 0) {
+        		showErrorMessage("No rows selected!")
+    		} else {
+				$('#add-interactions-multiple-modal').find('#ids').val(ids.toString())
 
-			$.getJSON('${createLink(action: "getInteractionSeriesData")}',
-				function(data) {
-					$("#additionalInteractionSeriesId").populateKeyValues(data, false);
-			});
-			$("#add-interactions-multiple-modal" ).modal({ keyboard: true });
+				$.getJSON('${createLink(action: "getInteractionSeriesData")}',
+					function(data) {
+						$("#additionalInteractionSeriesId").populateKeyValues(data, false);
+				});
+				$("#add-interactions-multiple-modal" ).modal({ keyboard: true });
+			}
 		}
 	</r:script>
 

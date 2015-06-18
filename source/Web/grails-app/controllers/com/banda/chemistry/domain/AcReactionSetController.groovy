@@ -15,7 +15,6 @@ class AcReactionSetController extends BaseDomainController {
 	def acUtil = ArtificialChemistryUtil.instance
 	def acRateUtil = AcRateConstantUtil.instance
 	def replicator = AcReplicator.instance
-	def ChemistryPicGenerator chemPicGenerator = new ChemistryPicGeneratorImpl(true)
 	def ChemistryCommonService chemistryCommonService
 
 	def index() {
@@ -389,28 +388,13 @@ class AcReactionSetController extends BaseDomainController {
 
 	def getReactionStructureImages(Long id) {
 		def instance = getSafe(id)
-		def images = instance.reactions.collect{ reaction ->
-			def structData = new SvgStructureData()
-			structData.label = reaction.label
-			structData.image = getStructureImage(reaction)
-			structData
-		}
+		def images = chemistryCommonService.getReactionStructureImages(instance, true)
 		render images as JSON
 	}
 
 	def getSpeciesStructureImages(Long id) {
 		def instance = getSafe(id)
-		def refSpecies = acUtil.getReferencedSpecies(instance).toList()
-
-		def images = refSpecies.sort{ it.label }.collect{ species -> 
-			def structData = new SvgStructureData()
-			structData.label = species.label
-			if (species.structure && !species.structure.isEmpty()) {
-				structData.image = chemPicGenerator.createDNAStrandSVG(species.structure)
-			}			
-			structData
-		}
-
+		def images = chemistryCommonService.getSpeciesStructureImages(instance, true)
 		render images as JSON
 	}
 
@@ -442,35 +426,4 @@ class AcReactionSetController extends BaseDomainController {
 		}
 		redirect(action: "show", id: instance.id)
 	}
-
-    private def getStructureImage(acReaction) {
-	   def reactantStructures = acReaction.getSpeciesAssociations(AcSpeciesAssociationType.Reactant).collect{ assoc ->
-	   		def structure = assoc.species.structure
-   			int intStoichiometry = assoc.getStoichiometricFactor().intValue()
-   			def structureList = []
-			for (i in 1..intStoichiometry) {
-   				structureList.add(structure)
-			}
-			structureList
-	   }.flatten()
-
-	   def productStructures = acReaction.getSpeciesAssociations(AcSpeciesAssociationType.Product).collect{ assoc ->
-	   		def structure = assoc.species.structure
-   			int intStoichiometry = assoc.getStoichiometricFactor().intValue()
-   			def structureList = []
-			for (i in 1..intStoichiometry) {
-   				structureList.add(structure)
-			}
-			structureList
-	   }.flatten()
-
-	   reactantStructures = reactantStructures.findAll{ it != null && !it.isEmpty() }
-	   productStructures = productStructures.findAll{ it != null && !it.isEmpty() }
-
-	   if (!reactantStructures.isEmpty() || !productStructures.isEmpty()) {
-		   chemPicGenerator.createDNAReactionSVG(reactantStructures, productStructures, acReaction.hasReverseRateConstants())
-	   } else {
-		   null
-	   }
-   }
 }

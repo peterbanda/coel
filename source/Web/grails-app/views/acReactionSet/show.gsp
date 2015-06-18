@@ -102,16 +102,18 @@
       				</div>
       			</div>
     		</div>
-  			<div class="accordion-group">
-    			<div class="accordion-heading">
-        			<a class="accordion-toggle" data-toggle="collapse" href="#collapseTwo">Reaction Groups</a>
-    			</div>
-    			<div id="collapseTwo" class="accordion-body collapse in">
-      				<div class="accordion-inner">
-						<g:render template="reactionGroups"/>
-      				</div>
-      			</div>
-    		</div>
+			<g:if test="${!instance?.reactions.isEmpty()}">
+  			    <div class="accordion-group">
+    			    <div class="accordion-heading">
+        			    <a class="accordion-toggle" data-toggle="collapse" href="#collapseTwo">Reaction Groups</a>
+    			    </div>
+    			    <div id="collapseTwo" class="accordion-body collapse in">
+      				    <div class="accordion-inner">
+						    <g:render template="reactionGroups"/>
+      				    </div>
+      			    </div>
+    		    </div>
+            </g:if>
   		</div>
     </theme:zone>
 </body>

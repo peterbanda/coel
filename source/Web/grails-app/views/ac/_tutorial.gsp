@@ -1,4 +1,4 @@
-		<gui:modal id="tutorial-modal" title="Chemistry Tutorial">
+		<gui:modal id="tutorial-modal" title="Chemistry Tutorial" class="modal-large">
       		<p>This tutorial walks you through the creation and simulation of a CRN in the COEL framework.</p>
       		<p>As an example CRN we will define and simulate the Lotka-Volterra system, a popular chemical oscillator which models predator-prey relations. It contains three molecular species:
       			<ul>
@@ -38,25 +38,34 @@
       			<li>
       				<p>
       					Enter the label, e.g., 'Lotka-Volterra', and press Enter or click [Create].
-      					<ui:image uri="/images/tutorial/compartment.png" alt="CRN"/>
+      					<ui:image uri="/images/tutorial/compartment.png" alt="CRN" class="image-tutorial" width="500px"/>
+						<div class="alert alert-info" role="alert">
+							<h4>Note</h4>
+							<p>This action will create also a new reaction set, which is referenced by the new compartment. Keep in mind that a single reaction set can be used by several compartments if desired.</p>
+						</div>
       				</p>
       			</li>
       			<li>
       				<p>
       					Define species in the Species section. Click [+] and type 'G, R, F' (with or without commas) and press Enter.
-      					<ui:image uri="/images/tutorial/reaction_set.png" alt="Species"/>
+      					<ui:image uri="/images/tutorial/reaction_set.png" alt="Species" class="image-tutorial" width="500px"/>
       				</p>
       			</li>
       			<li>
       				<p>
-      					Define reactions in the Reaction section. Click [+ New reaction] and type 'R + G' &rarr; '2 R' in the two Reaction text fields, set Forward Rate Constants to '0.1', and press Enter. Repeat for the two remaining reactions 'F + R' &rarr; '2 F' and 'F' &rarr; ''. In both cases you can use '0.1' as a forward rate.
-      					<ui:image uri="/images/tutorial/reaction.png" alt="Reaction"/>
+      					Define reactions in the Reaction section. Click [+] and type 'R + G' &rarr; '2R' in the two Reaction text fields, set Forward Rate Constants to '0.1', and press Enter. Repeat for the two remaining reactions 'F + R' &rarr; '2F' and 'F' &rarr; ''. In both cases you can use '0.1' as a forward rate.
+      					<ui:image uri="/images/tutorial/reaction.png" alt="Reaction" class="image-tutorial" width="600px"/>
       				</p>
-      				<br>
       				<div class="alert alert-info" role="alert">
       					<h4>Tip</h4>
       					<p>After you finish the tutorial try experimenting with different rate constants.</p>      					
       				</div>
+                </li>
+                <li>
+					<p>
+						At the end the reaction set should look like:
+						<ui:image uri="/images/tutorial/reaction_set_final.png" alt="Reaction Set Final" class="image-tutorial"/>
+					</p>
       			</li>
       		</ul>
 			<hr>
@@ -70,31 +79,31 @@
       			<li>
       				<p>
       					Enter the name, e.g., 'Lotka-Volterra', and press Enter or click [Create].
-      					<ui:image uri="/images/tutorial/interaction_series.png" alt="Interaction Series"/>
+      					<ui:image uri="/images/tutorial/interaction_series.png" alt="Interaction Series" class="image-tutorial" width="500px"/>
       				</p>
       			</li>
       			<li>
       				<p>
-      					Define a species interaction for each species (G, R, F) by clicking [+ Species Assignment] for the initial interaction at time zero, which is created automatically.
-      					Enter '2' as a concentration Setting Function for 'F', as well as for 'R', and enter '1' for 'G'. 
-      					<ui:image uri="/images/tutorial/species_action.png" alt="Species Action"/>
-      				</p>
+      					Define an assignment for each species (G, R, F) by clicking [+ Species Assignment] for the initial interaction at time zero, which is created automatically.
+      					Enter '2' as a concentration Setting Function for 'F', as well as for 'R', and enter '1' for 'G'.
+						<ui:image uri="/images/tutorial/species_action.png" alt="Species Action" class="image-tutorial" width="550px"/>
+					</p>
       			</li>
       			<li>
       				<p>
       					Set species G as immutable, i.e., its concentration remains constant despite being consumed by reaction 'R + G &rarr; 2 R'.
       					Click [Edit icon] in the interaction series (show) view and select 'G' as Immutable Species and submit (Update). 
-      					<ui:image uri="/images/tutorial/interaction_series_immutable.png" alt="Immutable Species"/>
+      					<ui:image uri="/images/tutorial/interaction_series_immutable.png" alt="Immutable Species" class="image-tutorial"/>
       				</p>
-      				<br>
       				<div class="alert alert-info" role="alert">
       					<h4>Tip</h4>
       					<p>What happens if we skip this step and keep G (grass) mutable?</p>      					
       				</div>
-      				<br>
+                </li>
+                <li>
       				<p>
       			     At the end the interaction series should look like:
-      				<ui:image uri="/images/tutorial/interaction_series_final.png" alt="Interaction Series Final"/>
+      				<ui:image uri="/images/tutorial/interaction_series_final.png" alt="Interaction Series Final" class="image-tutorial"/>
       				</p>
       			</li>
       		</ul>
@@ -109,19 +118,19 @@
       			<li>
       				<p>
       					Enter the name, e.g., 'Lotka-Volterra', click [Show Advanced Settings] and set Periodicity to '100' and press Enter or click [Create].
-      					<ui:image uri="/images/tutorial/translation_series.png" alt="Translation Series"/>
+      					<ui:image uri="/images/tutorial/translation_series.png" alt="Translation Series" class="image-tutorial" width="500px"/>
       				</p>
       			</li>
       			<li>
       				<p>
       					Define a point translation with Apply Time '10' by clicking [+ Translation]. 
-      					<ui:image uri="/images/tutorial/translation.png" alt="Translation"/>
+      					<ui:image uri="/images/tutorial/translation.png" alt="Translation" class="image-tutorial" width="400px"/>
       				</p>
       			</li>
       			<li>
       				<p>
       				    Add a translation item ([+ Item]) with Variable 'R10' and Function 'R'.
-      					<ui:image uri="/images/tutorial/translation_item.png" alt="Translation Item"/>
+      					<ui:image uri="/images/tutorial/translation_item.png" alt="Translation Item" class="image-tutorial" width="450px"/>
       				</p>
       				<br>
       				<div class="alert alert-info" role="alert">
@@ -142,26 +151,22 @@
       				<p>
       					Select the Compartment you defined in step 1 ('Lotka-Volterra') and the Interaction Series you defined in step 2 ('Lotka-Volterra').
       					If you defined a Translation Series in step 3 select it as well. Press Enter or click [Run].
-      					<ui:image uri="/images/tutorial/launch_chemistry.png" alt="Launch Chemistry"/>
+      					<ui:image uri="/images/tutorial/launch_chemistry.png" alt="Launch Chemistry" class="image-tutorial" width="500px"/>
       				</p>
       			</li>
       			<li>
       				<p>
       					After a while the concentration chart and translation chart (if you defined a Translation series) will appear.
 						You can investigate concentration traces of selected species, increase the resolution by adjusting the number of interpolated points, and restrict the plot's domain with the slider at the bottom.  
-      					<ui:image uri="/images/tutorial/chemistry_chart.png" alt="Concentration Chart"/>
+      					<ui:image uri="/images/tutorial/chemistry_chart.png" alt="Concentration Chart" class="image-tutorial"/>
       				</p>
       			</li>
       		</ul>
             <ui:h3>5. Compile to DNA Strand Displacement</ui:h3>
-            <div class="alert alert-info" role="alert">
-                <h4>Note</h4>
-                <p>Be sure that the reaction set you want to compile contains reactions driven purely by mass-action kinetics (i.e. contains no explicit catalysts or inhibitors and no custom rates).
-            </div>
             <ul>
                 <li>
                     <p>
-                        Open a reaction set you want to work with.
+                        Open the Lotka-Volterra reaction set by navigating through the <a href="/acReactionSet">Reaction Set</a> menu item located on the left.
                     </p>
                 </li>
                 <li>
@@ -178,6 +183,10 @@
                     <p>
                         To view the structured (DNA strand/domain specified) reactions select [Show Structured Reactions] in Extras menu located on the right.
                     </p>
+                    <div class="alert alert-info" role="alert">
+                        <h4>Note</h4>
+                        <p>Be sure that the reaction set you want to compile (such as Lotka-Volterra) contains reactions driven purely by mass-action kinetics (i.e., contains no explicit catalysts or inhibitors and no custom rates).
+                    </div>
                 </li>
             </ul>
 		</gui:modal>

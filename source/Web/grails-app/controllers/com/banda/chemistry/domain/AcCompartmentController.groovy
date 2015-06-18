@@ -118,7 +118,13 @@ class AcCompartmentController extends BaseDomainController {
 
 	def show(Long id) {
 		def result = super.show(id)
-		def acCompartments = AcCompartment.listWithProjections(['id', 'label'])
+		if (!isAdmin())
+			params.createdBy = getCurrentUserOrError()
+
+		params.projections = ['id','label']
+		params.sort = 'id'
+		params.order = 'desc'
+		def acCompartments = AcCompartment.listWithParamsAndProjections(params)
 		result << [acCompartments : acCompartments]
 	}
 	
@@ -208,7 +214,7 @@ class AcCompartmentController extends BaseDomainController {
 		compartmentCloneMap.get(instance)
 	}
 
-	private def removeSubCompartmentAssocFromParent(Long id) {
+	def removeSubCompartmentAssocFromParent(Long id) {
 		def compartmentAssociation = AcCompartmentAssociation.get(id)
 		def parentCompartment = compartmentAssociation.parentCompartment
 		def subCompartment = compartmentAssociation.subCompartment
