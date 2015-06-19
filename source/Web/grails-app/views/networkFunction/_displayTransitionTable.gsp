@@ -2,8 +2,6 @@
 <g:set var="binaryOutput" value="${StringUtils.join(it?.outputs.collect{ output -> if (output) 1 else 0}, "")}" />
 
 <r:script>
-    var lsbFirst = true;
-
 	$(function(){
 		updateStringsForBinary();
 		if (!${editable}) {
@@ -16,10 +14,12 @@
     function reverseOrder() {
         $("#binaryValue").val($("#binaryValue").val().split('').reverse().join(''));
         updateStringsForBinary();
-        lsbFirst = !lsbFirst;
-        if (lsbFirst) {
+
+        if ($("#lsbFirst").val() == "false") {
+            $("#lsbFirst").val("true");
             $("#bitOderValue").html("Least Significant Bit First");
         } else {
+            $("#lsbFirst").val("false");
             $("#bitOderValue").html("Most Significant Bit First");
         }
     };
@@ -45,6 +45,7 @@
 </r:script>
 
 <div class="row-fluid thumbnail">
+    <g:hiddenField name="lsbFirst" value="${true}" />
     <div class="spacedTop">
         <div id="showAdvancedButton" class="pull-right">
             <a href="javascript:void(0);" onclick="reverseOrder();">Reverse Order</a>

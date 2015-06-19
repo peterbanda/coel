@@ -8,7 +8,7 @@
     <theme:zone name="body">
         <div id="messageDiv" >
     		<g:if test="${flash.message}">
-        <ui:message type="info">${flash.message}</ui:message>
+				<ui:message type="info">${flash.message}</ui:message>
     		</g:if>
     	</div>
         <div id="errorDiv" >
@@ -26,7 +26,7 @@
 			</ui:field>
 			<g:render template="editablePart"/>
 			<ui:actions>
-				<ui:button kind="submit" mode="primary">Submit</ui:button>
+				<ui:button type="submit" kind="button" mode="primary">Submit</ui:button>
                 <a class="btn btn-cancel" href="${g.createLink(uri:'/')}">${message(code: 'default.button.cancel.label', default: 'Cancel')}</a>
 			</ui:actions>
 		</ui:form>

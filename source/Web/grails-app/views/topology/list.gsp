@@ -10,6 +10,7 @@
     	<gui:actionButton action="createLayered" icon="icon-plus" text="Layered"/>
     	<gui:actionButton action="createSpatial" icon="icon-plus" text="Spatial"/>
         <gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
+        <gui:actionButton action="copy" hint="Copy" onclick="doTableSelectionAction('topologyTable','copyMultiple');return false;"/>
 		<filterpane:filterButton/>
 		<filterpane:filterPane domain="${className}"/>
     </theme:zone>

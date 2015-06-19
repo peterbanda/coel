@@ -1,10 +1,14 @@
 package com.banda.network.domain
 
 import com.banda.core.util.ConversionUtil
+import com.banda.core.util.ObjectUtil
+import edu.banda.coel.business.Replicator
 import edu.banda.coel.web.BaseDomainController
 
 class TopologyController extends BaseDomainController {
-	
+
+    def replicator = Replicator.instance
+
 	def index() {
 		redirect(action: "list", params: params)
 	}
@@ -101,18 +105,15 @@ class TopologyController extends BaseDomainController {
 	def update(Long id, Long version) {
 		def topologyInstance = getSafe(id)
 		if (!topologyInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'topology.label', default: 'Topology'), id])
-			redirect(action: "list")
+			handleObjectNotFound(id)
 			return
 		}
 
 		if (version != null) {
 			if (topologyInstance.version > version) {
-				topologyInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-						  [message(code: 'topology.label', default: 'Topology')] as Object[],
-						  "Another user has updated this Topology while you were editing")
-					render(view: "edit", model: [topologyInstance: topologyInstance])
-					return
+				setOlcFailureMessage(topologyInstance)
+				render(view: "edit", model: [topologyInstance: topologyInstance])
+				return
 			}
 		}
 
@@ -141,4 +142,19 @@ class TopologyController extends BaseDomainController {
 
 		redirect(action: "show", id: id)
 	}
+
+    protected def copyInstance(instance) {
+        def newInstance = replicator.cloneTopology(instance)
+        ObjectUtil.nullIdAndVersion(newInstance)
+
+        def name = newInstance.name + " copy"
+        if (name.size() > 30) name = name.substring(0, 30)
+
+        newInstance.name = name
+        newInstance.timeCreated = new Date()
+        newInstance.createdBy = currentUserOrError
+
+        newInstance.save(flush: true)
+        newInstance
+    }
 }

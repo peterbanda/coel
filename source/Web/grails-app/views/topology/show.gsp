@@ -1,3 +1,4 @@
+<%@ page import="org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <html>
 <head>
@@ -12,11 +13,17 @@
     	<gui:actionButton action="list"/>
     	<gui:actionButton action="createTemplate" icon="icon-plus" text="Template"/>
     	<gui:actionButton action="createLayered" icon="icon-plus" text="Layered"/>
-    	<gui:actionButton action="createSpatial" icon="icon-plus" text="Spatial"/>    	
+    	<gui:actionButton action="createSpatial" icon="icon-plus" text="Spatial"/>
     	<gui:actionButton action="edit" id="${instance?.id}"/>
-    	<gui:actionButton action="delete" id="${instance?.id}"/>
-    	<gui:actionButton action="showPrevious" id="${instance?.id}"/>
-    	<gui:actionButton action="showNext" id="${instance?.id}"/>
+		<gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
+		<gui:actionButton action="copy" hint="Copy" id="${instance?.id}"/>
+		<g:if test="${SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')}">
+			<gui:actionButton action="showPrevious" id="${instance?.id}" hint="Show Previous"/>
+			<gui:actionButton action="showNext" id="${instance?.id}" hint="Show Next"/>
+		</g:if>
+		<g:if test="${helpMessage != ''}">
+			<gui:actionButton hint="Help" onclick="openModal('help-modal'); return false;" text="?"/>
+		</g:if>
     </theme:zone>
 
     <theme:zone name="details">

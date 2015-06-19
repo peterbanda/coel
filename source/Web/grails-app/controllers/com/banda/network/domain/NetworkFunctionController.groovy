@@ -1,6 +1,8 @@
 package com.banda.network.domain
 
+import com.banda.core.util.ObjectUtil
 import com.banda.function.business.FunctionFactory
+import edu.banda.coel.business.Replicator
 import edu.banda.coel.web.BaseDomainController
 import edu.banda.coel.web.BinaryStringRepresentations
 import edu.banda.coel.web.NetworkCommonService
@@ -8,8 +10,9 @@ import grails.converters.JSON
 
 class NetworkFunctionController extends BaseDomainController {
 
+    def NetworkCommonService networkCommonService
 	def functionFactory = new FunctionFactory()
-	def NetworkCommonService networkCommonService
+    def replicator = Replicator.instance
 
 	def index() {
 		redirect(action: "list", params: params)
@@ -34,8 +37,12 @@ class NetworkFunctionController extends BaseDomainController {
 	def save() {
 		def networkFunctionInstance = new NetworkFunction(params)
 
-		if (params.functionInput) {
-			def tableOutputs = params.functionInput.trim().findAll { it.equals("0") || it.equals("1") }.collect{ if (it.equals("1")) true else false}
+		if (params.binaryValue) {
+            def binaryString = params.binaryValue
+            if (!params.boolean('lsbFirst'))
+                binaryString = binaryString.reverse()
+			def tableOutputs = binaryString.findAll { it.equals("0") || it.equals("1") }.collect{ if (it.equals("1")) true else false}
+
 			def transitionTable = functionFactory.createBoolTransitionTable(tableOutputs)
 			networkFunctionInstance.setFunction(transitionTable)
 		}
@@ -64,25 +71,26 @@ class NetworkFunctionController extends BaseDomainController {
 	def update(Long id, Long version) {
 		def networkFunctionInstance = getSafe(id)
 		if (!networkFunctionInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'networkFunction.label', default: 'Network Function'), id])
-			redirect(action: "list")
+			handleObjectNotFound(id)
 			return
 		}
 	
 		if (version != null) {
 			if (networkFunctionInstance.version > version) {
-				networkFunctionInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-						  [message(code: 'networkFunction.label', default: 'Network Function')] as Object[],
-						  "Another user has updated this Network Function while you were editing")
-					render(view: "edit", model: [networkFunctionInstance: networkFunctionInstance])
-					return
+				setOlcFailureMessage(networkFunctionInstance)
+				render(view: "edit", model: [networkFunctionInstance: networkFunctionInstance])
+				return
 			}
 		}
 
 		networkFunctionInstance.properties = params
 	
-		if (params.functionInput) {
-            def tableOutputs = params.functionInput.trim().findAll { it.equals("0") || it.equals("1") }.collect{ if (it.equals("1")) true else false}
+		if (params.binaryValue) {
+            def binaryString = params.binaryValue
+            if (!params.boolean('lsbFirst'))
+                binaryString = binaryString.reverse()
+
+            def tableOutputs = binaryString.findAll { it.equals("0") || it.equals("1") }.collect{ if (it.equals("1")) true else false}
 			def newTransitionTable = functionFactory.createBoolTransitionTable(tableOutputs)
 
 			if (networkFunctionInstance.function == null) {
@@ -139,5 +147,20 @@ class NetworkFunctionController extends BaseDomainController {
             repres.decimalString = new BigInteger(repres.binaryString, 2).toString()
         }
         render repres as JSON
+    }
+
+    protected def copyInstance(instance) {
+        def newInstance = replicator.cloneNetworkFunction(instance)
+        replicator.nullIdAndVersion(newInstance)
+
+        def name = newInstance.name + " copy"
+        if (name.size() > 50) name = name.substring(0, 50)
+
+        newInstance.name = name
+        newInstance.timeCreated = new Date()
+        newInstance.createdBy = currentUserOrError
+
+        newInstance.save(flush: true)
+        newInstance
     }
 }

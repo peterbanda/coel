@@ -55,6 +55,8 @@
       				<p>
       					Define reactions in the Reaction section. Click [+] and type 'R + G' &rarr; '2R' in the two Reaction text fields, set Forward Rate Constants to '0.1', and press Enter. Repeat for the two remaining reactions 'F + R' &rarr; '2F' and 'F' &rarr; ''. In both cases you can use '0.1' as a forward rate.
       					<ui:image uri="/images/tutorial/reaction.png" alt="Reaction" class="image-tutorial" width="600px"/>
+                        <ui:image uri="/images/tutorial/catalytic_reaction.png" style="display:none"/>
+                        <ui:image uri="/images/tutorial/custom_reaction.png" style="display:none"/>
       				</p>
       				<div class="alert alert-info" role="alert">
       					<h4>Tip</h4>

@@ -3,6 +3,8 @@ package edu.banda.coel.business;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import com.banda.function.domain.Function;
+import com.banda.network.domain.*;
 import org.springframework.beans.BeanUtils;
 
 import com.banda.chemistry.domain.AcInteractionSeries;
@@ -13,7 +15,6 @@ import com.banda.chemistry.domain.AcReactionGroup;
 import com.banda.chemistry.domain.AcSpeciesInteraction;
 import com.banda.core.util.ObjectUtil;
 import com.banda.function.domain.AbstractFunction;
-import com.banda.network.domain.NetworkActionSeries;
 
 import edu.banda.coel.domain.evo.AcInteractionVariableAssignmentBound;
 import edu.banda.coel.domain.evo.AcSpeciesAssignmentBound;
@@ -117,4 +118,52 @@ public class Replicator {
 		evoNetworkTaskClone.setEvolutionRuns(null);
 		return evoNetworkTaskClone;
 	}
+
+	public Topology cloneTopology(Topology topology) {
+		Topology topologyClone = clone(topology);
+
+        // TODO: introduce the layered interface to unify Template and Layered topologies
+		topologyClone.setParents(new ArrayList<Topology>());
+        for (Topology parent : topology.getParents())
+            if (parent.supportLayers()) {
+                if (parent.isTemplate())
+                    ((TemplateTopology) parent).addLayer(topologyClone);
+                else
+                    ((LayeredTopology) parent).addLayer(topologyClone);
+            }
+
+        if (topologyClone.supportLayers()) {
+            if (topologyClone.isTemplate()) {
+                TemplateTopology templateTopologyClone = (TemplateTopology) topologyClone;
+                templateTopologyClone.setLayers(new ArrayList<Topology>());
+                for (Topology layer : topology.getLayers()) {
+                    templateTopologyClone.addLayer(layer);
+                }
+            } else {
+                LayeredTopology layeredTopologyClone = (LayeredTopology) topologyClone;
+                layeredTopologyClone.setLayers(new ArrayList<Topology>());
+                for (Topology layer : topology.getLayers()) {
+                    layeredTopologyClone.addLayer(layer);
+                }
+            }
+        }
+
+        topologyClone.setNetworks(null);
+
+		return topologyClone;
+	}
+
+    public <T> NetworkFunction<T> cloneNetworkFunction(NetworkFunction<T> networkFunction) {
+        NetworkFunction<T> networkFunctionClone = clone(networkFunction);
+
+        networkFunctionClone.setLayerFunctions(new ArrayList<NetworkFunction<T>>());
+        networkFunctionClone.setFunction(clone(networkFunction.getFunction()));
+
+        return networkFunctionClone;
+    }
+
+    public <T> void nullIdAndVersion(NetworkFunction<T> networkFunction) {
+        ObjectUtil.nullIdAndVersion(networkFunction);
+        ObjectUtil.nullIdAndVersion(networkFunction.getFunction());
+    }
 }

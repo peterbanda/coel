@@ -61,18 +61,15 @@ class NetworkController extends BaseDomainController {
 	def update(Long id, Long version) {
 		def networkInstance = getSafe(id)
 		if (!networkInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'network.label', default: 'Network'), id])
-			redirect(action: "list")
+            handleObjectNotFound(id)
 			return
 		}
 	
 		if (version != null) {
 			if (networkInstance.version > version) {
-				networkInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-						  [message(code: 'network.label', default: 'Network')] as Object[],
-						  "Another user has updated this Network while you were editing")
-					render(view: "edit", model: [networkInstance: networkInstance])
-					return
+                setOlcFailureMessage(networkInstance)
+				render(view: "edit", model: [networkInstance: networkInstance])
+				return
 			}
 		}
 
@@ -85,5 +82,21 @@ class NetworkController extends BaseDomainController {
 	
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'network.label', default: 'Network'), networkInstance.id])
 		redirect(action: "show", id: networkInstance.id)
+	}
+
+	protected def copyInstance(instance) {
+        def newInstance = genericReflectionProvider.clone(instance)
+        newInstance.id = null
+        newInstance.version = null
+
+		def name = newInstance.name + " copy"
+		if (name.size() > 50) name = name.substring(0, 50)
+
+		newInstance.name = name
+		newInstance.timeCreated = new Date()
+		newInstance.createdBy = currentUserOrError
+
+		newInstance.save(flush: true)
+		newInstance
 	}
 }
