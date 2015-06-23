@@ -1,7 +1,12 @@
 package com.banda.network.domain
 
+import com.banda.chemistry.domain.AcSpecies
+import com.banda.chemistry.domain.AcSpeciesSet
 import com.banda.core.util.ConversionUtil
+import com.banda.core.util.ParseUtil
 import edu.banda.coel.web.BaseDomainController
+import grails.converters.JSON
+import org.apache.commons.lang.StringUtils
 
 class SpatialNeighborController extends BaseDomainController {
 	
@@ -9,25 +14,51 @@ class SpatialNeighborController extends BaseDomainController {
 		redirect(action: "show", params: params)
 	}
 
-	def create() {
-		def instance = new SpatialNeighbor(params)
+	def saveAjax() {
+        SpatialNeighborhood spatialNeighborhood = SpatialNeighborhood.get(params.parent.id)
 
-		if (params.parent.id) {
-			def spatialNeighborhood = SpatialNeighborhood.get(params.parent.id)
-			spatialNeighborhood.addNeighbor(instance)
-			[instance: instance]
-		} else {
-			flash.message = "Spatial neighborhood expected for a spatial neighbor"
-			redirect(controller: "spatialNeighborhood", action: "list")
-			return
+        def index = 0
+        if (!spatialNeighborhood.neighbors.isEmpty())
+            index = 1 + spatialNeighborhood.neighbors.max {it.index}
+
+		def neighborCoordinateDiffs = StringUtils.split(params.coordinateDiffs, '(')
+		def ids = []
+		def neighborInstances = []
+		neighborCoordinateDiffs.each{ item ->
+			def trimmedItem = item.replace(')','').trim()
+			if (trimmedItem.matches("[0-9, ]*")) {
+                def coordinateDiffs = ConversionUtil.convertToList(Integer.class, trimmedItem, "Spatial Neighbor Coordinate Diffs")
+
+				def spatialNeighbor = new SpatialNeighbor()
+                spatialNeighbor.index = index
+                spatialNeighbor.coordinateDiffs = coordinateDiffs
+                spatialNeighborhood.addNeighbor(spatialNeighbor)
+
+				if (!spatialNeighbor.save(flush: true)) {
+					return
+				}
+                ids.add(spatialNeighbor.id)
+                neighborInstances.add(spatialNeighbor)
+                index++
+			}
 		}
+
+		def size = ids.size()
+		def text = null
+		if (size == 0)
+			text = message(code: 'species.notcreated.message')
+		else if (size == 1)
+			text = message(code: 'default.created.message', args: [doClazzMessageLabel, ids.get(0)])
+		else
+			text = message(code: 'default.multicreated.message', args: [doClazzMessageLabel, ids.join(", "), size])
+		render ([message: text, neighborInstances : neighborInstances] as JSON)
 	}
 
 	def save() {
 		def spatialNeighborInstance = new SpatialNeighbor(params)
 
 		if (params.coordinateDiffs) {
-			def coordinateDiffs = ConversionUtil.convertToList(Integer.class, params.coordinateDiffs, "Spatial Topology Sizes")
+			def coordinateDiffs = ConversionUtil.convertToList(Integer.class, params.coordinateDiffs, "Spatial Neighbor Coordinate Diffs")
 			spatialNeighborInstance.setCoordinateDiffs(coordinateDiffs)
 		}
 
@@ -40,36 +71,27 @@ class SpatialNeighborController extends BaseDomainController {
 		redirect(action: "show", id: spatialNeighborInstance.id)
 	}
 
-	def update(Long id, Long version) {
-		def spatialNeighborInstance = getSafe(id)
-		if (!spatialNeighborInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'spatialNeighbor.label', default: 'Network Weight Setting'), id])
-			redirect(action: "list")
-			return
-		}
-	
-		if (version != null) {
-			if (spatialNeighborInstance.version > version) {
-				spatialNeighborInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-						  [message(code: 'spatialNeighbor.label', default: 'Spatial Neighbor')] as Object[],
-						  "Another user has updated this spatial neighbor while you were editing")
-					render(view: "edit", model: [spatialNeighborInstance: spatialNeighborInstance])
-					return
-			}
-		}
+    protected def deleteInstance(instance) {
+        def spatialNeighborhood = instance.parent
+        SpatialNeighbor.withTransaction{ status ->
+            spatialNeighborhood.removeNeighbor(instance)
+            instance.delete(flush: true)
+        }
+    }
 
-		spatialNeighborInstance.properties = params
-		if (params.coordinateDiffs) {
-			def coordinateDiffs = ConversionUtil.convertToList(Integer.class, params.coordinateDiffs, "Spatial Topology Sizes")
-			spatialNeighborInstance.setCoordinateDiffs(coordinateDiffs)
-		}
+    protected def notFoundRedirect(id) {
+        redirect(controller: "SpatialNeighborhood", action: "list")
+    }
 
-		if (!spatialNeighborInstance.save(flush: true)) {
-			render(view: "edit", model: [instance: spatialNeighborInstance])
-			return
-		}
-	
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'spatialNeighbor.label', default: 'Network Weight Setting'), spatialNeighborInstance.id])
-		redirect(action: "show", id: spatialNeighborInstance.id)
-	}
+    protected def deleteSuccessfulRedirect(instance, owner) {
+        redirect(controller: "SpatialNeighborhood", action: "show", id: owner.id)
+    }
+
+    protected def deleteMultiSuccessfulRedirect(instancesWithOwners) {
+        redirect(controller: "SpatialNeighborhood", action: "show", id: instancesWithOwners.first().value.id)
+    }
+
+    protected def getOwner(instance) {
+        instance.parentSet
+    }
 }

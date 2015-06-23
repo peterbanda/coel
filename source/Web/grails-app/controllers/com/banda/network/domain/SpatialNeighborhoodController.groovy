@@ -8,13 +8,19 @@ class SpatialNeighborhoodController extends BaseDomainController {
 		redirect(action: "show", params: params)
 	}
 
+	def create() {
+		def instance = new SpatialNeighborhood(params)
+
+		[instance: instance]
+	}
+
 	def save() {
 		def spatialNeighborhoodInstance = new SpatialNeighborhood(params)
 
 		spatialNeighborhoodInstance.createdBy = currentUserOrError
 
 		if (!spatialNeighborhoodInstance.save(flush: true)) {
-			render(view: "create", model: [spatialNeighborhoodInstance: spatialNeighborhoodInstance])
+			render(view: "create", model: [instance: spatialNeighborhoodInstance])
 			return
 		}
 
@@ -35,7 +41,7 @@ class SpatialNeighborhoodController extends BaseDomainController {
 				spatialNeighborhoodInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
 						  [message(code: 'spatialNeighborhood.label', default: 'Spatial Neighborhood')] as Object[],
 						  "Another user has updated this spatial neighborhood while you were editing")
-					render(view: "edit", model: [spatialNeighborhoodInstance: spatialNeighborhoodInstance])
+					render(view: "edit", model: [instance: spatialNeighborhoodInstance])
 					return
 			}
 		}
@@ -43,7 +49,7 @@ class SpatialNeighborhoodController extends BaseDomainController {
 		spatialNeighborhoodInstance.properties = params
 	
 		if (!spatialNeighborhoodInstance.save(flush: true)) {
-			render(view: "edit", model: [spatialNeighborhoodInstance: spatialNeighborhoodInstance])
+			render(view: "edit", model: [instance: spatialNeighborhoodInstance])
 			return
 		}
 	

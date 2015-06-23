@@ -16,7 +16,7 @@ class SecureAccessService {
 	def createdByClasses = [ArtificialChemistry, AcCompartment, AcReactionSet, AcReactionGroup, AcSpeciesSet, AcParameterSet, AcSimulationConfig, 
 							AcInteractionSeries, AcTranslationSeries, AcEvaluation, AcEvaluatedPerformance, AcRandomRatePerformance,
 							AcPerturbationPerformance, ArtificialChemistrySpec, AcRateConstantTypeBound,
-							Network, Topology, SpatialTopology, NetworkFunction, NetworkWeightSetting, NetworkActionSeries, NetworkEvaluation,
+							Network, Topology, SpatialTopology, SpatialNeighborhood, NetworkFunction, NetworkWeightSetting, NetworkActionSeries, NetworkEvaluation,
 							NetworkPerformance, SpatialNetworkPerformance,
 							EvoGaSetting, EvoTask, EvoRun, ArtificialChemistrySpecBound, Task]
 
