@@ -21,6 +21,9 @@
     			<div class="span5">
 					<ui:field bean="instance" name="label"/>
 					<f:ref property="speciesSet" textProperty="name"/>
+					<f:display label="Reaction #" property="id">
+						${instance.reactions.size()}
+					</f:display>
     			</div>
 			</f:with>    		
 		</div>

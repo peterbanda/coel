@@ -7,8 +7,8 @@
   			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                 <li role="presentation"><a role="menuitem" href="${createLink(controller:"acInteractionSeries", action: 'create', params:['speciesSet.id':instance.speciesSet.id])}">Create Interaction Series</a></li>
                 <li role="presentation" class="divider"></li>
-    			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showMassActionCopyDialog();">Copy as Mass-Action</a></li>
-    			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showDNASDCopyDialog();">Copy as DNA SD</a></li>
+    			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showMassActionCopyDialog();">Transform to Mass-Action</a></li>
+    			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showDNASDCopyDialog();">Transform to DNA SD</a></li>
 				<li role="presentation" class="divider"></li>
     			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showReplaceSpeciesSetDialog();">Replace Species Set</a></li>
     			<li role="presentation"><a role="menuitem" href="javascript:void(0);" onclick="showAddReactionsDialog();">Add Reactions</a></li>

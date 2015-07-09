@@ -15,15 +15,45 @@
 			}
 
 			function showDNASDCopyDialog() {
-				$('#copy-as-dsd-modal').modal();
-			}
+            	$.getJSON('${createLink(action: "getInteractionSeriesData")}?id=' + ${instance?.id},
+					function(data) {
+					    if (Object.keys(data).length > 0) {
+					        var alertDiv = $('<div class="alert alert-block alert-info">');
+                            var message = 'The initial concentrations of the following referenced interaction series will be transformed to match DNA SD<br/>'
+                            alertDiv.append(message)
+
+						    $.each(data, function(k, v) {
+    		    				var outerDiv = $('<div class="control-group">');
+                                outerDiv.append('<label for="" class="control-label">' + v + '</label>');
+
+                                var innerDiv = $('<div class="controls">');
+                                innerDiv.append('<input name="_interactionSeriesId.' + k + '" type="hidden"><input name="interactionSeriesId.' + k + '" checked="checked" id="interactionSeriesId.' + k + '" type="checkbox">');
+                                outerDiv.append(innerDiv);
+                                alertDiv.append(outerDiv)
+                            });
+                            $('#copy-as-dsd-modal-interactionSeries').html("<hr/>");
+                            $('#copy-as-dsd-modal-interactionSeries').append(alertDiv);
+                        } else {
+                            $('#copy-as-dsd-modal-interactionSeries').html("");
+                        }
+                        $('#copy-as-dsd-modal').modal();
+                });
+            }
+
+            function showAddReactionsDialog() {
+                $.getJSON('${createLink(action: "getReactionSetsData")}',
+					function(data) {
+						$("#additionalReactionSetId").populateKeyValues(data, false);
+						$('#add-reactions-modal').modal({ keyboard: true });
+				});
+            }
 
 			function showReplaceSpeciesSetDialog() {
 				$.getJSON('${createLink(action: "getSpeciesSetsData")}',
 					function(data) {
 						$("#speciesSetId").populateKeyValues(data, false);
+					    $('#replace-species-set-modal').modal({ keyboard: true });
 				});
-				$('#replace-species-set-modal').modal({ keyboard: true });
 			}
 
 			function showMassActionCopyDialog() {
@@ -49,7 +79,7 @@
 			</ul>
 		</gui:modal>
 
-		<gui:modal id="copy-as-mass-action-modal" title="Copy/Convert to Mass-action" action="createCatalysisMassActionSubstReactionSet">
+		<gui:modal id="copy-as-mass-action-modal" title="Transform to Mass-action" action="createCatalysisMassActionSubstReactionSet">
 			<g:hiddenField name="id" value="${instance?.id}" />
 			<g:select id="massActionType" name="massActionType" from="${MassActionType?.values()}"/>
 		</gui:modal>
@@ -62,30 +92,69 @@
 		<gui:modal id="add-reactions-modal" title="Add Reactions From" action="addReactions">
 			<g:hiddenField name="id" value="${instance?.id}" />
 			<div class="row-fluid">
-				<div class="span5">
- 					<g:select name="additionalReactionSetId" from=""/>
- 				</div>
- 				<div class="span5 offset1">
- 					<g:message code="acReactionSet.createNewSpeciesSet.label" default="Create New Species Set" />
- 					<g:checkBox id="createNewSpeciesSet" name="createNewSpeciesSet" checked="true">Create New Species Set</g:checkBox>
- 				</div>
+                <ui:field label="Source Reaction Set">
+                    <ui:fieldInput>
+ 					    <g:select name="additionalReactionSetId" from=""/>
+                    </ui:fieldInput>
+                </ui:field>
+                <ui:field label="New Species Set">
+                    <ui:fieldInput>
+ 					    <g:checkBox id="createNewSpeciesSet" name="createNewSpeciesSet" checked="true"/>
+                    </ui:fieldInput>
+                </ui:field>
  			</div>
 		</gui:modal>
 
-		<gui:modal id="copy-as-dsd-modal" title="Copy/Convert to DSD" action="copyAsDNASD">
+		<gui:modal id="copy-as-dsd-modal" title="Transform to DNA SD" action="copyAsDNASD">
 			<g:hiddenField name="id" value="${instance?.id}" />
- 			<g:message code="acReactionSet.cmax.label" default="CMAX " />
- 			<g:textField name="CMax" value="0.00001" />
+
+            <div class="row-fluid">
+                <ui:field label="C_max">
+                    <ui:fieldInput>
+                        <g:textField name="CMax" value="0.00001"/>
+                    </ui:fieldInput>
+                </ui:field>
+
+                <ui:field label="New Compartment">
+                    <ui:fieldInput>
+                        <g:checkBox name="createNewCompartment" checked="true"/>
+                    </ui:fieldInput>
+                </ui:field>
+
+                <div id="copy-as-dsd-modal-interactionSeries">
+                </div>
+            </div>
 		</gui:modal>
 
 		<gui:modal id="scale-forward-rates-modal" title="Scale Forward Rate Constants" action="scaleForwardRateConstants">
 			<g:hiddenField name="id" value="${instance?.id}" />
-			<ul class="inline">
-  				<li>Unimolecular</li>
-  				<li><g:textField name="uniScale" value="0.0005"/></li>
-			</ul>
-			<ul class="inline">
-  				<li>Bimolecular</li>
-  				<li><g:textField name="biScale" value="500000"/></li>
-			</ul>
+
+            <div class="row-fluid">
+
+                    <ui:field label="Unimolecular">
+                        <ui:fieldInput>
+                            <g:textField name="uniScale" value="0.0005"/>
+                            <div class="pull-right">
+                                1/x
+                                <g:checkBox style="margin-top:0px;" id="uniScaleInverse" name="uniScaleInverse" checked="false">1/x</g:checkBox>
+                            </div>
+                        </ui:fieldInput>
+                    </ui:field>
+
+                    <ui:field label="Bimolecular">
+                        <ui:fieldInput>
+                            <g:textField name="biScale" value="500000"/>
+                            <div class="pull-right">
+                                1/x
+                                <g:checkBox style="margin-top:0px;" id="biScaleInverse" name="biScaleInverse" checked="false">1/x</g:checkBox>
+                            </div>
+                        </ui:fieldInput>
+                    </ui:field>
+
+                    <ui:field label="New Reaction Set (Copy)">
+                        <ui:fieldInput>
+                            <g:checkBox id="createNewReactionSet" name="createNewReactionSet" checked="false"/>
+                        </ui:fieldInput>
+                    </ui:field>
+            </div>
 		</gui:modal>

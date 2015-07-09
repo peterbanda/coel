@@ -159,6 +159,23 @@ class AcInteractionSeriesController extends BaseDomainController {
 		}
 	}
 
+	protected def deleteInstance(instance) {
+		def singleRefInteractionSeries = AcInteractionSeries.countBySpeciesSet(instance.speciesSet) == 1
+
+		doClazz.withTransaction{ status ->
+			instance.delete(flush: true)
+		}
+
+		if (singleRefInteractionSeries) {
+			def noRefReactionSet = AcReactionSet.countBySpeciesSet(instance.speciesSet) == 0
+			def noRefTranslationSeries = AcTranslationSeries.countBySpeciesSet(instance.speciesSet) == 0
+			if (noRefReactionSet && noRefTranslationSeries)
+				AcSpeciesSet.withTransaction { status ->
+					instance.speciesSet.delete(flush: true)
+				}
+		}
+	}
+
 	def getSpeciesSetsData() {
 		def speciesSetsData = [ : ]
 		if (!isAdmin())

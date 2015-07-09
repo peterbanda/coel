@@ -84,7 +84,10 @@
     			<div class="span5">
 					<f:display property="label"/>
 					<f:ref property="speciesSet" textProperty="name"/>
-    			</div>
+					<f:display label="Reaction #" property="id">
+						${instance.reactions.size()}
+					</f:display>
+				</div>
 			</f:with>    		
 		</div>
 		<hr/>

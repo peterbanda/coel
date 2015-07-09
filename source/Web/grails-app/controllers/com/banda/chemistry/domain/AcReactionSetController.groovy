@@ -3,11 +3,10 @@ package com.banda.chemistry.domain
 import com.banda.chemistry.business.*
 import com.banda.chemistry.domain.AcReaction.ReactionDirection
 import com.banda.core.util.ParseUtil
-import edu.banda.coel.business.chempic.ChemistryPicGeneratorImpl
-import edu.banda.coel.domain.service.ChemistryPicGenerator
+import com.banda.function.domain.Expression
 import edu.banda.coel.web.BaseDomainController
 import edu.banda.coel.web.ChemistryCommonService
-import edu.banda.coel.web.SvgStructureData
+import edu.banda.coel.business.chemistry.AcDNAStrandDisplacementConverter
 import grails.converters.JSON
 
 class AcReactionSetController extends BaseDomainController {
@@ -148,6 +147,23 @@ class AcReactionSetController extends BaseDomainController {
 		newInstance.save(flush: true)
 		newInstance
 	}
+
+    protected def deleteInstance(instance) {
+        def singleRefReactionSet = AcReactionSet.countBySpeciesSet(instance.speciesSet) == 1
+
+        doClazz.withTransaction{ status ->
+            instance.delete(flush: true)
+        }
+
+        if (singleRefReactionSet) {
+            def noRefInteractionSeries = AcInteractionSeries.countBySpeciesSet(instance.speciesSet) == 0
+            def noRefTranslationSeries = AcTranslationSeries.countBySpeciesSet(instance.speciesSet) == 0
+            if (noRefInteractionSeries && noRefTranslationSeries)
+                AcSpeciesSet.withTransaction { status ->
+                    instance.speciesSet.delete(flush: true)
+                }
+        }
+    }
 
 	def replaceSpeciesSet(Long id, Long speciesSetId) {
 		def acReactionSetInstance = getSafe(id)
@@ -342,16 +358,19 @@ class AcReactionSetController extends BaseDomainController {
 
 	def copyAsDNASD(Long id) {
 		def acReactionSetInstance = getSafe(id)
+        def interactionSeriesIds = params.interactionSeriesId.collect{ if (it.value == "on") it.key else null } - null
 
         def newReactionSet = new AcReactionSet()
+		def stats
         try {
             def converter = new AcDNAStrandDisplacementConverter(acReactionSetInstance, params.double('CMax'), true)
             newReactionSet = converter.convert()
+            stats = converter.getStats()
             def newSpeciesSet = newReactionSet.speciesSet
             acReactionSetInstance.speciesSet.save(flush: true)
 
             if (newSpeciesSet != acReactionSetInstance.speciesSet) {
-                newSpeciesSet.name = acReactionSetInstance.speciesSet.name + "-ext"
+                newSpeciesSet.name = acReactionSetInstance.speciesSet.name + "-DNA SD"
                 newSpeciesSet.createTime = new Date()
                 newSpeciesSet.createdBy = currentUserOrError
 
@@ -360,8 +379,6 @@ class AcReactionSetController extends BaseDomainController {
                 newParameterSet.createTime = newSpeciesSet.createTime
                 newParameterSet.createdBy = newSpeciesSet.createdBy
                 newSpeciesSet.save(flush: true)
-            } else {
-//			flash.message = "No catalysis to replace, hence no action taken. Try basic copy function, if you want to clone existing reaction set."
             }
         } catch (e) {
             acReactionSetInstance.errors.rejectValue("reactions", e.message)
@@ -375,9 +392,87 @@ class AcReactionSetController extends BaseDomainController {
             render(view: "show", model: [instance: acReactionSetInstance])
             return
 		}
-        flash.message = "${message(code: 'default.created.message', args: [message(code: 'acReactionSet.label', default: 'AcReactionSet'), newReactionSet.id])}"
+
+        flash.message = message(code: 'reactionSet.dnasd.message', args: [acReactionSetInstance.id, Double.toString(stats.cMax), Double.toString(stats.qMax), Double.toString(stats.sigmaMax), Double.toString(stats.gammaInverse)]) + "</br>" +
+                        message(code: 'default.created.message', args: [doClazzMessageLabel, newReactionSet.id])
+
+        if (params.createNewCompartment) {
+            def newCompartment = new AcCompartment()
+            newCompartment.label = acReactionSetInstance.label + "-DNA SD"
+            newCompartment.createTime = new Date()
+            newCompartment.createdBy = currentUserOrError
+            newCompartment.reactionSet = newReactionSet
+            if (!newCompartment.save(flush: true)) {
+                render(view: "show", model: [instance: acReactionSetInstance])
+                return
+            }
+            flash.message = flash.message + "</br>" + message(code: 'default.created.message', args: [message(code: 'acCompartment.label', default: 'Compartment'), newCompartment.id])
+        }
+
+        if (!interactionSeriesIds.isEmpty()) {
+            def newSpeciesSet = newReactionSet.speciesSet
+            def fuelSpecies = newSpeciesSet.variables.findAll{ it.label.matches("^(G_|L_|T_|B_|LS_|BS_).*\$") }
+
+            interactionSeriesIds.each{
+                def interactionSeries = AcInteractionSeries.get(it)
+                def newInteractionSeries = transformInteractionSeriesToDNASD(interactionSeries, newSpeciesSet, stats.gammaInverse, stats.cMax, fuelSpecies)
+                if (!newInteractionSeries.save(flush: true)) {
+                    render(view: "show", model: [instance: acReactionSetInstance])
+                    return
+                }
+                flash.message = flash.message + "</br>" + message(code: 'default.created.message', args: [message(code: 'acInteractionSeries.label', default: 'Interaction Series'), newInteractionSeries.id])
+            }
+        }
+
         render(view: "show", model: [instance: newReactionSet])
 	}
+
+    private def transformInteractionSeriesToDNASD(
+        AcInteractionSeries interactionSeries,
+        AcSpeciesSet dnaSdSpeciesSet,
+        Double gammaInverse,
+        Double cMax,
+        Collection<AcSpecies> fuelGates
+    ) {
+        def newInteractionSeries = replicator.cloneActionSeriesWithActions(interactionSeries)
+
+        replicator.nullIdAndVersionRecursively(newInteractionSeries)
+        newInteractionSeries.name = interactionSeries.name + "-DNA SD"
+        newInteractionSeries.timeCreated = new Date()
+        newInteractionSeries.createdBy = currentUserOrError
+        newInteractionSeries.speciesSet = dnaSdSpeciesSet
+
+        def initialInteraction = newInteractionSeries.actions.find{it.startTime == 0}
+        if (initialInteraction) {
+            // transform the initial concentration of the original species as γ^{−1} * c_j
+            initialInteraction.speciesActions.each{speciesAction ->
+                def expression = (Expression) speciesAction.settingFunction
+                if (expression.getReferencedVariables().isEmpty()) {
+                    def oldValue = expression.formula.toDouble()
+                    expression.formula = (oldValue * gammaInverse).toString()
+                }
+            }
+
+            // set the initial concentration of the fuel gates (G,L,T,B,HS,and LS) to C_max
+            def newFuelSettings = fuelGates.collect{ fuelGate ->
+                def speciesAction = new AcSpeciesInteraction()
+                speciesAction.species = fuelGate
+                speciesAction.settingFunction = Expression.Double(cMax.toString())
+                speciesAction
+            }
+            initialInteraction.addSpeciesActions(newFuelSettings)
+        }
+        newInteractionSeries
+    }
+
+    def getInteractionSeriesData(Long id) {
+        def acReactionSetInstance = getSafe(id)
+        def interactionSeries = AcInteractionSeries.findAllBySpeciesSet(acReactionSetInstance.speciesSet)
+        def interactionSeriesMap = [ : ]
+
+        interactionSeries.each{ interactionSeriesMap.putAt(it.id, it.id + " : " + it.name) }
+        render interactionSeriesMap as JSON
+    }
 
 	def exportAsOctaveMatlab(Long id) {
 		def acReactionSetInstance = getSafe(id)
@@ -402,8 +497,27 @@ class AcReactionSetController extends BaseDomainController {
 		def instance = getSafe(id)
 		def uniScale = params.double('uniScale')
 		def biScale = params.double('biScale')
+        if (params.uniScaleInverse)
+            uniScale = 1 / uniScale
 
-		def images = instance.reactions.each{ reaction -> 
+        if (params.biScaleInverse)
+            biScale = 1/ biScale
+
+        def instanceToScale = instance
+
+		if (params.createNewReactionSet) {
+            instanceToScale = replicator.cloneReactionSetWithReactionsAndGroups(instance)
+            replicator.nullIdAndVersionRecursively(instanceToScale)
+
+            def label = instanceToScale.label + " scaled"
+            if (label.size() > 100) label = label.substring(0, 100)
+
+            instanceToScale.label = label
+            instanceToScale.createTime = new Date()
+            instanceToScale.createdBy = currentUserOrError
+        }
+
+        instanceToScale.reactions.each{ reaction ->
 			def overallStoichiometry = 0
 			reaction.getSpeciesAssociations(AcSpeciesAssociationType.Reactant).each { assoc ->
 				if (assoc.stoichiometricFactor)
@@ -421,9 +535,12 @@ class AcReactionSetController extends BaseDomainController {
 			// just to make it dirty
 			reaction.setForwardRateConstants(reaction.getForwardRateConstants().clone())
 		}
-		if (instance.save(flush: true)) {
-			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'acReactionSet.label', default: 'Reaction Set'), instance.id])}"	
+		if (instanceToScale.save(flush: true)) {
+            if (instanceToScale == instance)
+			    flash.message = message(code: 'default.updated.message', args: [doClazzMessageLabel, instanceToScale.id])
+            else
+                flash.message = message(code: 'default.created.message', args: [doClazzMessageLabel, instanceToScale.id])
 		}
-		redirect(action: "show", id: instance.id)
+		redirect(action: "show", id: instanceToScale.id)
 	}
 }

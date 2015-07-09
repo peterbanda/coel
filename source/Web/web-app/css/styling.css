@@ -118,12 +118,12 @@ a.plain{
 	margin-top:5px;
 }
 
-.spacedLeft { 
-	margin-left:10px;
-}
-
 .spacedTopMedium { 
 	margin-top:20px;
+}
+
+.spacedLeft {
+    margin-left:10px;
 }
 
 .image-tutorial {
