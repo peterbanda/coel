@@ -21,9 +21,9 @@
 			<ui:field bean="instance" name="nodesPerLayer"/>
 			<ui:field bean="instance" name="generateBias"/>
 			<ui:field bean="instance" name="allEdges"/>
-			<ui:field bean="instance" name="innerLayerAllEdges"/>
+			<ui:field bean="instance" name="intraLayerAllEdges"/>
 			<ui:field bean="instance" name="inEdgesNum"/>
-			<ui:field bean="instance" name="innerLayerInEdgesNum"/>
+			<ui:field bean="instance" name="intraLayerInEdgesNum"/>
 			<ui:field bean="instance" name="allowSelfEdges"/>
 			<ui:field bean="instance" name="allowMultiEdges"/>
 		</g:if>

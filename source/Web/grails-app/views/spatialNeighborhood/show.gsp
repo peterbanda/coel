@@ -2,6 +2,7 @@
 <head>
     <g:set var="domainNameLabel" value="${message(code: 'spatialNeighborhood.label', default: 'Spatial Neighborhood')}" scope="request" />
     <nav:set path="app/network/SpatialNeighborhood"/>
+	<r:require module="editable"/>
     <theme:layout name="show"/>
 </head>
 <body>

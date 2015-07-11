@@ -102,6 +102,9 @@ class SecureAccessService {
 			case AcTranslationItem:
 				object.translation.translationSeries
 				break
+			case SpatialNeighbor:
+				object.parent
+				break
 			default:
 				null
 				break

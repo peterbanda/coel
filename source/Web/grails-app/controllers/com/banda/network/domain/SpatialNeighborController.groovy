@@ -1,12 +1,12 @@
 package com.banda.network.domain
 
-import com.banda.chemistry.domain.AcSpecies
-import com.banda.chemistry.domain.AcSpeciesSet
 import com.banda.core.util.ConversionUtil
-import com.banda.core.util.ParseUtil
 import edu.banda.coel.web.BaseDomainController
 import grails.converters.JSON
 import org.apache.commons.lang.StringUtils
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class SpatialNeighborController extends BaseDomainController {
 	
@@ -19,16 +19,19 @@ class SpatialNeighborController extends BaseDomainController {
 
         def index = 0
         if (!spatialNeighborhood.neighbors.isEmpty())
-            index = 1 + spatialNeighborhood.neighbors.max {it.index}
+            index = 1 + spatialNeighborhood.neighbors.max{it.index}.index
 
 		def neighborCoordinateDiffs = StringUtils.split(params.coordinateDiffs, '(')
 		def ids = []
 		def neighborInstances = []
 		neighborCoordinateDiffs.each{ item ->
 			def trimmedItem = item.replace(')','').trim()
-			if (trimmedItem.matches("[0-9, ]*")) {
-                def coordinateDiffs = ConversionUtil.convertToList(Integer.class, trimmedItem, "Spatial Neighbor Coordinate Diffs")
-
+            Matcher m = Pattern.compile("[\\-]?\\d+").matcher(trimmedItem);
+            def coordinateDiffs = []
+            while (m.find()) {
+                coordinateDiffs += ConversionUtil.convertToInteger(m.group(0), "Coordinate")
+            }
+			if (!coordinateDiffs.isEmpty()) {
 				def spatialNeighbor = new SpatialNeighbor()
                 spatialNeighbor.index = index
                 spatialNeighbor.coordinateDiffs = coordinateDiffs
@@ -54,22 +57,24 @@ class SpatialNeighborController extends BaseDomainController {
 		render ([message: text, neighborInstances : neighborInstances] as JSON)
 	}
 
-	def save() {
-		def spatialNeighborInstance = new SpatialNeighbor(params)
+    def updateAjax(String value, Long id) {
+        def instance = getSafe(id)
+        if (!instance) {
+            handleObjectNotFoundAjax(id)
+            return
+        }
 
-		if (params.coordinateDiffs) {
-			def coordinateDiffs = ConversionUtil.convertToList(Integer.class, params.coordinateDiffs, "Spatial Neighbor Coordinate Diffs")
-			spatialNeighborInstance.setCoordinateDiffs(coordinateDiffs)
-		}
+        Matcher m = Pattern.compile("[\\-]?\\d+").matcher(value);
+        def coordinateDiffs = []
+        while (m.find()) {
+            coordinateDiffs += ConversionUtil.convertToInteger(m.group(0), "Coordinate")
+        }
+        if (!coordinateDiffs.isEmpty()) {
+            instance.coordinateDiffs = coordinateDiffs
+        }
 
-		if (!spatialNeighborInstance.save(flush: true)) {
-			render(view: "create", model: [instance: spatialNeighborInstance])
-			return
-		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'spatialNeighbor.label', default: 'Spatial Neighbor'), spatialNeighborInstance.id])
-		redirect(action: "show", id: spatialNeighborInstance.id)
-	}
+        saveFromAjax(instance, "coordinateDiffs")
+    }
 
     protected def deleteInstance(instance) {
         def spatialNeighborhood = instance.parent
@@ -92,6 +97,6 @@ class SpatialNeighborController extends BaseDomainController {
     }
 
     protected def getOwner(instance) {
-        instance.parentSet
+        instance.parent
     }
 }

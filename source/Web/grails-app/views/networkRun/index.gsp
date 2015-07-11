@@ -110,7 +110,7 @@
       	};
 
 		function showNetworkRunLaunchSuccessDialog() {
-			$( "#networkRunLaunchSuccess-Dialog" ).dialog( "open" );
+			$('#launch-success-modal').modal({ keyboard: true });
 		}
 
 		function changeToBackwardDirection() {
@@ -150,9 +150,10 @@
 </head>
 <body>
 	<theme:zone name="body">
-        <div id="networkRunLaunchSuccess-Dialog" title="Network Run">
-         	<p>Network simulation has been successfully launched.</p>
-		</div>
+		<gui:modal id="launch-success-modal" title="Network Launch Success">
+			<p>Network simulation has been successfully launched.</p>
+			<p>The result will appear in a while.</p>
+		</gui:modal>
 		<div id="errorDiv" >
 			<g:eachError bean="${instance}" var="error">
 				<ui:message type="error"><g:message error="${error}"/></ui:message>

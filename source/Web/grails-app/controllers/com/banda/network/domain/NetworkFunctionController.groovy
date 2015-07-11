@@ -37,22 +37,17 @@ class NetworkFunctionController extends BaseDomainController {
 	def save() {
 		def networkFunctionInstance = new NetworkFunction(params)
 
-		if (params.binaryValue) {
-            def binaryString = params.binaryValue
-            if (!params.boolean('lsbFirst'))
-                binaryString = binaryString.reverse()
-			def tableOutputs = binaryString.findAll { it.equals("0") || it.equals("1") }.collect{ if (it.equals("1")) true else false}
-
-			def transitionTable = functionFactory.createBoolTransitionTable(tableOutputs)
-			networkFunctionInstance.setFunction(transitionTable)
-		}
+        if (params.binaryValue) {
+            def transitionTable = createTransitionTable(params.binaryValue, params.boolean('lsbFirst'))
+            networkFunctionInstance.setFunction(transitionTable)
+        }
 
 		if (params.parentFunctionId) {
 			def parentFunction = getSafe(params.parentFunctionId)
 			parentFunction.addLayerFunction(networkFunctionInstance)
 			networkFunctionInstance.setIndex(parentFunction.layerFunctions.size() + 1)
 			if (!parentFunction.save(flush: true)) {
-				render(view: "create", model: [networkFunctionInstance: networkFunctionInstance])
+				render(view: "create", model: [instance: networkFunctionInstance])
 				return
 			}
 		}
@@ -78,28 +73,23 @@ class NetworkFunctionController extends BaseDomainController {
 		if (version != null) {
 			if (networkFunctionInstance.version > version) {
 				setOlcFailureMessage(networkFunctionInstance)
-				render(view: "edit", model: [networkFunctionInstance: networkFunctionInstance])
+				render(view: "edit", model: [instance: networkFunctionInstance])
 				return
 			}
 		}
 
 		networkFunctionInstance.properties = params
-	
-		if (params.binaryValue) {
-            def binaryString = params.binaryValue
-            if (!params.boolean('lsbFirst'))
-                binaryString = binaryString.reverse()
 
-            def tableOutputs = binaryString.findAll { it.equals("0") || it.equals("1") }.collect{ if (it.equals("1")) true else false}
-			def newTransitionTable = functionFactory.createBoolTransitionTable(tableOutputs)
+        if (params.binaryValue) {
+            def newTransitionTable = createTransitionTable(params.binaryValue, params.boolean('lsbFirst'))
 
-			if (networkFunctionInstance.function == null) {
-				networkFunctionInstance.function = newTransitionTable
-			} else {
-				networkFunctionInstance.function.outputs = tableOutputs
-				networkFunctionInstance.function.arity = newTransitionTable.arity
-			}
-		}
+            if (networkFunctionInstance.function == null) {
+                networkFunctionInstance.function = newTransitionTable
+            } else {
+                networkFunctionInstance.function.outputs = newTransitionTable.outputs
+                networkFunctionInstance.function.arity = newTransitionTable.arity
+            }
+        }
 
 		if (!networkFunctionInstance.save(flush: true)) {
 			render(view: "edit", model: [instance: networkFunctionInstance])
@@ -109,6 +99,19 @@ class NetworkFunctionController extends BaseDomainController {
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'networkFunction.label', default: 'Network Function'), networkFunctionInstance.id])
 		redirect(action: "show", id: networkFunctionInstance.id)
 	}
+
+    private createTransitionTable(binaryValue, lsbFirst) {
+        def binaryString = binaryValue
+        if (!lsbFirst)
+            binaryString = binaryString.reverse()
+        def tableOutputs = binaryString.findAll { it.equals("0") || it.equals("1") }.collect{ if (it.equals("1")) true else false}
+
+        def oldSize = tableOutputs.size()
+        def newSize = 2 ** Math.ceil(Math.log(oldSize) / Math.log(2))
+        tableOutputs = ([false] * (newSize - oldSize)) + tableOutputs
+
+        functionFactory.createBoolTransitionTable(tableOutputs)
+    }
 
 	def exportTransitionTable(Long id) {
         def lsbFirst = params.lsbfirst

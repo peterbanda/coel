@@ -51,7 +51,14 @@ class TopologyController extends BaseDomainController {
 			parentId = params.'parent.id'
 		}
 
-		def spatialNeighborhoods = SpatialNeighborhood.listWithProjections(['id', 'name'])
+		if (!isAdmin())
+			params.createdBy = getCurrentUserOrError()
+
+		params.projections = ['id','name']
+		params.sort = 'id'
+		params.order = 'desc'
+
+		def spatialNeighborhoods = SpatialNeighborhood.listWithParamsAndProjections(params)
 
 		render(view: "create", model: [instance: topologyInstance, spatialNeighborhoods : spatialNeighborhoods, parentId : parentId])
 	}
@@ -97,8 +104,17 @@ class TopologyController extends BaseDomainController {
 	}
 
 	def edit(Long id) {
-		def result = super.edit(id)	
-		def spatialNeighborhoods = SpatialNeighborhood.listWithProjections(['id', 'name'])
+		def result = super.edit(id)
+
+		if (!isAdmin())
+			params.createdBy = getCurrentUserOrError()
+
+		params.projections = ['id','name']
+		params.sort = 'id'
+		params.order = 'desc'
+
+		def spatialNeighborhoods = SpatialNeighborhood.listWithParamsAndProjections(params)
+
 		result << [spatialNeighborhoods : spatialNeighborhoods]
 	}
 

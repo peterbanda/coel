@@ -28,11 +28,10 @@
             <column name="name" not-null="true" />
         </property>
 
-		<list name="neighbors" inverse="true" lazy="false" fetch="join" cascade="all">
+		<bag name="neighbors" inverse="true" lazy="false" fetch="join" cascade="all-delete-orphan" order-by="index_">
 			<key column="parent_id" not-null="true" />
-			<list-index column="index_" base="1" />
             <one-to-many class="com.banda.network.domain.SpatialNeighbor" />
-		</list>
+		</bag>
 
     </class>
 </hibernate-mapping>

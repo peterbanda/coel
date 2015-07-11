@@ -45,7 +45,7 @@
             </g:if>
 
             <g:if test="${instance.hasForwardRateConstants()}">
-            	<f:display property="id" label="Forward Rate Constants">
+            	<f:display property="id" label="Forward Rate Constant(s)">
             		<g:render template="displayForwardRateConstants" bean="${instance}" />
             	</f:display>
             </g:if>
@@ -62,7 +62,7 @@
             </f:display>
 
             <g:if test="${instance.hasReverseRateConstants()}">
-				<f:display property="id" label="Reverse Rate Constants">
+				<f:display property="id" label="Reverse Rate Constant(s)">
                 	<g:render template="displayReverseRateConstants" bean="${instance}" />
                 </f:display>
             </g:if>

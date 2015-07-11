@@ -124,7 +124,7 @@
     			required="${true}"/>
     	</div>
 
-    	<ui:field bean="instance" name="forwardRateConstants">
+    	<ui:field bean="instance" name="forwardRateConstants" label="Forward Rate Constant(s)">
     		<ui:fieldInput>
             	<g:textField name="forwardRateConstants" value="${render(template:'displayForwardRateConstants', bean:instance)}" />
         	</ui:fieldInput>
@@ -139,7 +139,7 @@
 		</div>
 
 		<div id="reverseRateConstantsDiv">
-    		<ui:field bean="instance" name="reverseRateConstants">
+    		<ui:field bean="instance" name="reverseRateConstants" label="Reverse Rate Constant(s)">
     			<ui:fieldInput>
             		<g:textField name="reverseRateConstants" value="${render(template:'displayReverseRateConstants', bean:instance)}" />
         		</ui:fieldInput>

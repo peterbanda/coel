@@ -40,6 +40,8 @@
 		$("#binaryValue").val(data.binaryString);
 		$("#decimalValue").val(data.decimalString);
 		$("#hexadecimalValue").val(data.hexadecimalString);
+
+		$("#binaryLength").val(data.binaryString.length);
   	};
 
 </r:script>
@@ -62,6 +64,11 @@
         <ui:field label="Binary">
             <ui:fieldInput>
                 <g:textArea name="binaryValue" rows="3" class="span11" value="${binaryOutput}" onkeyup="updateStringsForBinary();"/>
+            </ui:fieldInput>
+        </ui:field>
+        <ui:field label="Binary Length">
+            <ui:fieldInput>
+                <g:textField name="binaryLength" class="span2" value="" readonly="readonly"/>
             </ui:fieldInput>
         </ui:field>
         <ui:field label="Decimal">

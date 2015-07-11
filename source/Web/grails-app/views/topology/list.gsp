@@ -6,9 +6,17 @@
 <head>
 <body>
     <theme:zone name="actions">
-    	<gui:actionButton action="createTemplate" icon="icon-plus" text="Template"/>
-    	<gui:actionButton action="createLayered" icon="icon-plus" text="Layered"/>
-    	<gui:actionButton action="createSpatial" icon="icon-plus" text="Spatial"/>
+        <span class="dropdown">
+            <ui:button kind="button" class="btn dropdown-toggle sr-only" id="dropdownMenu1" data-toggle="dropdown">
+                <i class="icon-plus"></i>
+                <span class="caret"></span>
+            </ui:button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" href="${createLink(action: 'createSpatial')}">Spatial</a></li>
+                <li role="presentation"><a role="menuitem" href="${createLink(action: 'createTemplate')}">Template</a></li>
+                <li role="presentation"><a role="menuitem" href="${createLink(action: 'createLayered')}">Layered</a></li>
+            </ul>
+        </span>
         <gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
         <gui:actionButton action="copy" hint="Copy" onclick="doTableSelectionAction('topologyTable','copyMultiple');return false;"/>
 		<filterpane:filterButton/>

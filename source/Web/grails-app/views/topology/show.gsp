@@ -11,9 +11,17 @@
 	<theme:zone name="actions">
 		<g:render template="dialogs_show"/>
     	<gui:actionButton action="list"/>
-    	<gui:actionButton action="createTemplate" icon="icon-plus" text="Template"/>
-    	<gui:actionButton action="createLayered" icon="icon-plus" text="Layered"/>
-    	<gui:actionButton action="createSpatial" icon="icon-plus" text="Spatial"/>
+		<span class="dropdown">
+			<ui:button kind="button" class="btn dropdown-toggle sr-only" id="dropdownMenu1" data-toggle="dropdown">
+				<i class="icon-plus"></i>
+				<span class="caret"></span>
+			</ui:button>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+				<li role="presentation"><a role="menuitem" href="${createLink(action: 'createSpatial')}">Spatial</a></li>
+				<li role="presentation"><a role="menuitem" href="${createLink(action: 'createTemplate')}">Template</a></li>
+				<li role="presentation"><a role="menuitem" href="${createLink(action: 'createLayered')}">Layered</a></li>
+			</ul>
+		</span>
     	<gui:actionButton action="edit" id="${instance?.id}"/>
 		<gui:actionButton action="delete" hint="Delete" onclick="openModal('confirm-delete-modal'); return false;"/>
 		<gui:actionButton action="copy" hint="Copy" id="${instance?.id}"/>
@@ -43,9 +51,9 @@
 				<f:display property="nodesPerLayer"/>
 				<f:display property="generateBias"/>
 				<f:display property="allEdges"/>
-				<f:display property="innerLayerAllEdges"/>
+				<f:display property="intraLayerAllEdges"/>
 				<f:display property="inEdgesNum"/>
-				<f:display property="innerLayerInEdgesNum"/>
+				<f:display property="intraLayerInEdgesNum"/>
 				<f:display property="allowSelfEdges"/>
 				<f:display property="allowMultiEdges"/>
 			</g:if>

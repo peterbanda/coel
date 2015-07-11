@@ -134,7 +134,7 @@
 					<column name="its_own_neighor" not-null="true"/>
 				</property>
 
-				<many-to-one name="neighborhood" class="com.banda.network.domain.SpatialNeighborhood" fetch="select">
+				<many-to-one name="neighborhood" class="com.banda.network.domain.SpatialNeighborhood" lazy="false" fetch="select">
 					<column name="neighborhood_id" />
 				</many-to-one>
 

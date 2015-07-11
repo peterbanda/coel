@@ -25,13 +25,12 @@
 			$("#addNeighborLink").data('popover').options.content = 'Add New';
 			$("#addNeighborLink").data('popover').options.placement = 'bottom';
 			$.each(data.neighborInstances, function(index, neighborInstance) {
-				var newItem = $('<li><a href="#" id="neighbor' + neighborInstance.id + '" class="plain" data-type="textdeletable" data-pk="' + + neighborInstance.id + '" data-mode="inline" data-url="/spatialNeighbor/updatePropertyAjax" data-title="Enter Coordinates">' + neighborInstance.coordinateDiffs + '</a></li>')
+				var newItem = $('<li><a href="#" id="neighbor' + neighborInstance.id + '" class="plain" data-type="textdeletable" data-pk="' + + neighborInstance.id + '" data-mode="inline" data-url="/spatialNeighbor/updateAjax" data-title="Enter Coordinates">(' + neighborInstance.coordinateDiffs.join(",") + ')</a></li>')
 				$("#neighborCoordinateDiffs").append(newItem);
 				$('#neighbor' + neighborInstance.id).editable({
     				params: function(params) {
     					var data = {};
     					data['id'] = params.pk;
-    					data['property'] = 'neighborInstance';
     					data['value'] = params.value;
     					return data;
   					},
@@ -68,8 +67,8 @@
 			<g:if test="${!instance.neighbors.isEmpty()}">
 				<g:each in="${instance.neighbors}" var="neighbor" >
 					<li>
-						<a href="#" id="neighbor${neighbor.id}" class="plain" data-type="textdeletable" data-pk="${neighbor.id}" data-mode="inline" data-url="/spatialNeighbor/updatePropertyAjax" data-title="Enter Coordinates">
-							${neighbor.coordinateDiffs}
+						<a href="#" id="neighbor${neighbor.id}" class="plain" data-type="textdeletable" data-pk="${neighbor.id}" data-mode="inline" data-url="/spatialNeighbor/updateAjax" data-title="Enter Coordinates">
+							(${neighbor.coordinateDiffs.join(",")})
 						</a>
 						<r:script>
 							$(document).ready(function() {
@@ -77,7 +76,6 @@
     								params: function(params) {
     									var data = {};
     									data['id'] = params.pk;
-    									data['property'] = 'coordinateDiffs';
     									data['value'] = params.value;
     									return data;
   									},
