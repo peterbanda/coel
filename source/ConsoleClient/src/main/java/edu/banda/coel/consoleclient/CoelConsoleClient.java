@@ -113,7 +113,7 @@ public class CoelConsoleClient extends ConsoleClient {
 		AcRunTask acTask = new AcRunTask();
 		acTask.setCompartmentId(getCompartmentId());
 		acTask.setSimulationConfigId(getSimulationConfigId());
-		acTask.setActionSeriesId(getActionSeriesId());	
+		acTask.setInteractionSeriesId(getActionSeriesId());
 		acTask.setRunTime(getRunTime());
 		acTask.setRepetitions(getRepetitions());
 		artificialChemistryService.runSimulation(acTask);
@@ -514,7 +514,7 @@ public class CoelConsoleClient extends ConsoleClient {
 
 		acRunTask.setCompartmentId(getCompartmentId());
 		acRunTask.setSimulationConfigId(getSimulationConfigId());
-		acRunTask.setActionSeriesId(getActionSeriesId());
+		acRunTask.setInteractionSeriesId(getActionSeriesId());
 		acRunTask.setRunTime(getRunTime());
 		acRunTask.setRepetitions(getRepetitions());
 

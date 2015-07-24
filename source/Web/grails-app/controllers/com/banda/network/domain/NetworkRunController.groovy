@@ -29,9 +29,13 @@ class NetworkRunController extends BaseController {
 		if (networks.isEmpty()) {
 			flash.message = "No networks found. You must first define one."
 		}
-		def networkRunTaskInstance = new NetworkRunTask()
-		networkRunTaskInstance.runTime = 100
-		[instance: networkRunTaskInstance, networks : networks]
+
+		def instance = new NetworkRunTask()
+        instance.properties = params
+        if (!instance.runTime)
+            instance.runTime = 100
+
+        [instance: instance, networks : networks, oneZeroRatio : params.oneZeroProbability ?: 0.5, format : params.format, runnow : params.runnow != null]
 	}
 
 	def runSimulation() {

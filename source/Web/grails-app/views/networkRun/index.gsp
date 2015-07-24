@@ -40,7 +40,7 @@
 	    	   	},
 	    	   	stop: function( event, ui ) {
 	    	   		imageSize = ui.value
-	    	   		$('#networkRunChartDiv').attr('style', "height:" + (imageSize + 75) + "px");
+	    	   		$('#networkRunChartDiv').attr('style', "height:" + Math.max(imageSize + 75, 320) + "px");
 	    	   		timer.play()
 	    		}
 	    	});
@@ -63,6 +63,10 @@
 			$("#delay").val(100)
 			$("#size").val(200)
 			$("#topologySizesDiv").hide()
+
+			if (${runnow}) {
+				$("#runSimulationForm").submit();
+			}
 		});
 
 		var timer = $.timer(function() {
@@ -172,7 +176,7 @@
 									<g:select name="networkId" from="${networks}"
 										optionKey="id"
                         	            optionValue="${{it.id + ' : ' + it.name}}"
-                        				value="${networkRunTaskInstance?.network?.id}"
+                        				value="${instance?.network?.id}"
     									noSelection= "['': 'Select One...']"
     									onchange="updateTopologySize();"/>
                         		</ui:fieldInput>
@@ -185,11 +189,11 @@
                         		</ui:field>
                         	</div>
             		    	<ui:field bean="instance" name="runTime"/>
-							<ui:field label="One-Zero Probability" name="oneZeroRatio" value="0.5"/>
+							<ui:field label="One-Zero Probability" name="oneZeroRatio" value="${oneZeroRatio}"/>
 							<hr>
 							<ui:field label="Format">
 								<ui:fieldInput>
-									<g:select class="span1" name="format" from="${["gif", "png", "jpg", "svg"]}"/>
+									<g:select class="span1" name="format" from="${["gif", "png", "jpg", "svg"]}" value="${format}"/>
 								</ui:fieldInput>
 							</ui:field>
        						<ui:actions>
@@ -205,7 +209,7 @@
         			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Network Chart</a>
     			</div>
     			<div id="collapseTwo" class="accordion-body collapse">
-      				<div id="networkRunChartDiv" class="accordion-inner" style="height:250px">
+      				<div id="networkRunChartDiv" class="accordion-inner" style="height:320px">
       					<div class="span7 pagination-centered">
       						<div class="row-fluid" style="margin: 20px 0px 10px 0px;">
       					  		<div class="span1 offset5">

@@ -17,14 +17,12 @@
     			$('#simulationConfigId').selectpicker({
 					dropupAuto: false
 				});
-   				$('#actionSeriesId').selectpicker({
+   				$('#interactionSeriesId').selectpicker({
 					dropupAuto: false
 				});
 	   			$('#translationSeriesId').selectpicker({
 					dropupAuto: false
 				});
-
-				updateCombos();
 
 				$("#toggleSidebar").on('click', function () {
 					$("#chart1").chart("redraw");
@@ -40,6 +38,19 @@
 				$("#chart2Panel").hide()
 
 				$('#compartmentId').focus();
+
+                $.getJSON('${createLink(action: "getCompartmentDependentData")}?id=' + $("#compartmentId").val(),
+                    function(data) {
+                        updateCombosWithData(data);
+                        console.log(${instance.interactionSeries?.id})
+					    $("#interactionSeriesId").val(${instance.interactionSeries?.id})
+				        $("#translationSeriesId").val(${translationSeriesId})
+				        $('#interactionSeriesId').selectpicker('refresh');
+						$('#translationSeriesId').selectpicker('refresh');
+					    if (${runnow}) {
+				    		$("#runSimulationForm").submit();
+			    		}
+                    });
 			});
 
 			var chartToken;
@@ -74,7 +85,7 @@
 					$("#chart1Label").html('Concentration Chart');				
 					$("#chart1").chart( {
 		            	fileNameFun : function() {
-							return 'co_' + $('#compartmentId').val() + '_as_' + $('#actionSeriesId').val() + '_t_' + $('#runTime').val() + '.csv'
+							return 'co_' + $('#compartmentId').val() + '_as_' + $('#interactionSeriesId').val() + '_t_' + $('#runTime').val() + '.csv'
 		            	}
 					});
 					$("#chart1DrawAll").prop('checked', false);
@@ -84,7 +95,7 @@
 					$("#chart2Label").html('Translation Chart');
 					$("#chart2").chart( {
 						fileNameFun : function() {
-							return 'co_' + $('#compartmentId').val() + '_as_' + $('#actionSeriesId').val() + '_t_' + $('#runTime').val() + '_ts_' + $('#translationSeriesId').val() + '.csv'
+							return 'co_' + $('#compartmentId').val() + '_as_' + $('#interactionSeriesId').val() + '_t_' + $('#runTime').val() + '_ts_' + $('#translationSeriesId').val() + '.csv'
 				        }
 					});
 					$("#chart2DrawAll").prop('checked', true);
@@ -94,7 +105,7 @@
 					$("#chart1Label").html('Translation Chart');
 					$("#chart1").chart( {
 						fileNameFun : function() {
-							return 'co_' + $('#compartmentId').val() + '_as_' + $('#actionSeriesId').val() + '_t_' + $('#runTime').val() + '_ts_' + $('#translationSeriesId').val() + '.csv'
+							return 'co_' + $('#compartmentId').val() + '_as_' + $('#interactionSeriesId').val() + '_t_' + $('#runTime').val() + '_ts_' + $('#translationSeriesId').val() + '.csv'
 				        }
 					});
 					$("#chart1DrawAll").prop('checked', true);
@@ -125,18 +136,19 @@
       		};
 
   			function updateCombos() {
-				$.getJSON('${createLink(action: "getCompartmentDependentData")}?id=' + $("#compartmentId").val(),
-					function(data) {
-						$("#actionSeriesId").populateAndSortKeyValues(data.actionSeries, false, true);
-						$("#translationSeriesId").populateAndSortKeyValues(data.translationSeries, true, true);
-						$('#actionSeriesId').selectpicker('refresh');
-						$('#translationSeriesId').selectpicker('refresh');
-                        if (Object.keys(data.actionSeries).length == 0) {
-					        $('#add-interaction-series-modal').find("#speciesSet\\.id").val(data.speciesSetId);
-					        $('#add-interaction-series-modal').modal({ keyboard: true });
-					    }
-				});
+				$.getJSON('${createLink(action: "getCompartmentDependentData")}?id=' + $("#compartmentId").val(), updateCombosWithData);
   			};
+
+            function updateCombosWithData(data) {
+				$("#interactionSeriesId").populateAndSortKeyValues(data.actionSeries, false, true);
+				$("#translationSeriesId").populateAndSortKeyValues(data.translationSeries, true, true);
+				$('#interactionSeriesId').selectpicker('refresh');
+				$('#translationSeriesId').selectpicker('refresh');
+                if (Object.keys(data.actionSeries).length == 0) {
+				    $('#add-interaction-series-modal').find("#speciesSet\\.id").val(data.speciesSetId);
+					$('#add-interaction-series-modal').modal({ keyboard: true });
+			    }
+            }
 
 			function showCompartment() {
 				if ($("#compartmentId").val())
@@ -149,8 +161,8 @@
 			}
 
 			function showInteractionSeries() {
-				if ($("#actionSeriesId").val())
-					window.open('${createLink(controller: "acInteractionSeries", action: "show")}?id=' + $("#actionSeriesId").val())
+				if ($("#interactionSeriesId").val())
+					window.open('${createLink(controller: "acInteractionSeries", action: "show")}?id=' + $("#interactionSeriesId").val())
 			}
 
 			function showTranslationSeries() {
@@ -200,7 +212,7 @@
 	            					<ui:fieldInput>
 	            						<g:select name="compartmentId" class="span6" from="${compartments}" optionKey="id"
 	            							optionValue="${{it.id + ' : ' + it.label}}"
-	            							value="${instance.compartment}"
+	            							value="${instance.compartment?.id}"
 	            							data-header="Select One"
 	            							data-live-search="true"
 	            							onchange="updateCombos();"/>
@@ -211,10 +223,9 @@
                         		</ui:field>
                         		<ui:field label="Interaction Series">
                         			<ui:fieldInput>
-        	    	    				<g:select name="actionSeriesId" class="span6" from=""
+        	    	    				<g:select name="interactionSeriesId" class="span6" from=""
         	    	    					optionValue="${{it.id + ' : ' + it.name}}"
-        	    	    					data-live-search="true"
-        	    	    					value="${instance.actionSeries}"/>
+        	    	    					data-live-search="true"/>
 	            						<a href="javascript:void(0);" onclick="showInteractionSeries();">
 	            							<i class="icon-eye-open"></i>
 	            						</a>
@@ -240,8 +251,8 @@
             		    		<ui:field label="Translation Series">
                         			<ui:fieldInput>
         	    	    				<g:select name="translationSeriesId" class="span6" from=""
-        	    	    					data-live-search="true"
         	    	    					optionValue="${{it.id + ' : ' + it.name}}"
+											data-live-search="true"
         	    	    					onchange="translationSeriesUpdated();"/>
 	            						<a href="javascript:void(0);" onclick="showTranslationSeries();">
 	            							<i class="icon-eye-open"></i>

@@ -23,6 +23,13 @@ class AcRunController extends BaseController {
 	def ChemistryCommonService chemistryCommonService
 
 	def index = {
+		def instance = new AcRunTask()
+		instance.properties = params
+		if (!instance.runTime)
+			instance.runTime = 1000
+        if (!instance.simulationConfig)
+			instance.simulationConfig =  AcSimulationConfig.get(defaultSimConfig)
+
 		if (!isAdmin())
 			params.createdBy = getCurrentUserOrError()
 
@@ -31,21 +38,13 @@ class AcRunController extends BaseController {
 		params.order = 'desc'
 
 		def compartments = AcCompartment.listWithParamsAndProjections(params)
-		params.projections = ['id','name']
-		def translationSeries = AcTranslationSeries.listWithParamsAndProjections(params)
-
-		def instance = new AcRunTask()
-		instance.properties = params
-		if (!instance.runTime)
-			instance.runTime = 1000
+		def simulationConfigs = AcSimulationConfig.listWithProjections(['id', 'name'])
 
 		if (compartments.isEmpty()) {
 			flash.message = "No compartments found. You must first define one."
 		}
 
-		def simulationConfigs = AcSimulationConfig.listWithProjections(['id', 'name'])
-		instance.simulationConfig =  AcSimulationConfig.get(defaultSimConfig)
-		[instance: instance, compartments : compartments, simulationConfigs : simulationConfigs, translationSeries : translationSeries]
+		[instance: instance, compartments : compartments, translationSeriesId : params.long("translationSeries.id"), simulationConfigs : simulationConfigs, runnow : params.runnow != null]
 	}
 
 	def getCompartmentDependentData(Long id) {
@@ -61,14 +60,8 @@ class AcRunController extends BaseController {
 			acDependentRunData.actionSeries = [ : ]
 			acDependentRunData.translationSeries = [ : ]
 
-//			acDependentRunData.actionSeries = new LinkedHashMap()
-//			acDependentRunData.translationSeries = new LinkedHashMap()
-
 			actionSeries.each{ acDependentRunData.actionSeries.putAt(it.id, it.id + " : " + it.name) }
 			translationSeries.each{  acDependentRunData.translationSeries.putAt(it.id, it.id + " : " + it.name) }
-
-//			acDependentRunData.actionSeries = acDependentRunData.actionSeries.sort { -it.key }
-//			acDependentRunData.translationSeries = acDependentRunData.translationSeries.sort { -it.key }
 
 			render acDependentRunData as JSON
 		}
@@ -91,9 +84,9 @@ class AcRunController extends BaseController {
 			def message = message(code: 'default.null.message', args: ['Run Time', 'AC Run Task'])
 			acRunTask.errors.rejectValue("runTime",null,message)
 		}
-		if (!acRunTask.actionSeries?.id) {
+		if (!acRunTask.interactionSeries?.id) {
 			def message = message(code: 'default.null.message', args: ['Interaction Series', 'AC Run Task'])
-			acRunTask.errors.rejectValue("actionSeries",null,message)
+			acRunTask.errors.rejectValue("interactionSeries",null,message)
 		}
 
 		if (acRunTask.hasErrors()) {

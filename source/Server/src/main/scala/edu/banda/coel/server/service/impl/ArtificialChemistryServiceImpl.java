@@ -56,7 +56,6 @@ import com.banda.chemistry.domain.ArtificialChemistry;
 import com.banda.chemistry.domain.ArtificialChemistrySpec;
 import com.banda.core.Pair;
 import com.banda.core.domain.ComponentRunTrace;
-import com.banda.core.domain.DomainObject.DomainObjectKeyComparator;
 import com.banda.core.domain.um.User;
 import com.banda.core.reflection.GenericReflectionProvider;
 import com.banda.core.util.ObjectUtil;
@@ -207,7 +206,7 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 	@Override
 	@Transactional(readOnly = true)
 	public Collection<ComponentRunTrace<Double, Pair<AcCompartment, AcSpecies>>> runSimulation(AcRunTask task) {
-		log.info("Simulation for AC compartment '" + task.getCompartmentId() + "', AC interaction series '" + task.getActionSeriesId() + "' is about to be executed.");
+		log.info("Simulation for AC compartment '" + task.getCompartmentId() + "', AC interaction series '" + task.getInteractionSeriesId() + "' is about to be executed.");
 
 		// Initialize task definition
 		initCompartmentIfNeeded(task);
@@ -228,7 +227,7 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 		} catch (Exception exception) {
 			handleAndWrapSqlException(exception, "Problem occured in ArtificialChemistryService.runSimulation method.");
 		}
-		log.info("Simulation for AC compartment '" + task.getCompartmentId() + "', AC interaction series '" + task.getActionSeriesId() + "' finished.");
+		log.info("Simulation for AC compartment '" + task.getCompartmentId() + "', AC interaction series '" + task.getInteractionSeriesId() + "' finished.");
 		return runTraces;
 	}
 
@@ -716,7 +715,7 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 		AcRunTask acRunTask = new AcRunTask();
 		acRunTask.setCompartment(task.getCompartment());
 		acRunTask.setSimulationConfig(task.getSimulationConfig());
-		acRunTask.setActionSeries(actionSeries);
+		acRunTask.setInteractionSeries(actionSeries);
 		acRunTask.setRunTime(task.getRunTime());
 		acRunTask.setRepetitions(task.getRepetitions());
 
@@ -746,7 +745,7 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 		AcRunTask acRunTask = new AcRunTask();
 		acRunTask.setCompartment(task.getCompartment());
 		acRunTask.setSimulationConfig(task.getSimulationConfig());
-		acRunTask.setActionSeries(actionSeries);
+		acRunTask.setInteractionSeries(actionSeries);
 		acRunTask.setRunTime(task.getRunTime());
 		acRunTask.setRepetitions(task.getRepetitions());
 
@@ -1143,14 +1142,14 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 
 	@Transactional
 	private void initActionSeriesIfNeeded(AcInteractionSeriesHolder holder) {
-		if (holder.isActionSeriesDefined()) {
-			AcInteractionSeries actionSeries = holder.getActionSeries();
-			if (!holder.isActionSeriesComplete()) {
+		if (holder.isInteractionSeriesDefined()) {
+			AcInteractionSeries actionSeries = holder.getInteractionSeries();
+			if (!holder.isInteractionSeriesComplete()) {
 				actionSeries = acInteractionSeriesDAO.get(actionSeries.getId());
 				// lazy loading
 				initActionSeriesRecursively(actionSeries);
 			}
-			holder.setActionSeries(copyWithoutHibernate(actionSeries));
+			holder.setInteractionSeries(copyWithoutHibernate(actionSeries));
 		}
 	}
 

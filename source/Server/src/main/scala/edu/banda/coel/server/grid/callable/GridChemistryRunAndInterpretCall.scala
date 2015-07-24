@@ -37,12 +37,12 @@ class GridChemistryRunAndInterpretCall(
 
 		val chemistryRunnableWithPublishers = if (task.isStoreRunTrace) { 
 		    val chemistryRunnableTraceHolderWithPublishers = chemistryRunnableFactory.createInteractiveWithTraceAndPublishers(
-				skinCompartment, runTask.getSimulationConfig, runTask.getActionSeries, Some(setting))
+				skinCompartment, runTask.getSimulationConfig, runTask.getInteractionSeries, Some(setting))
 			runTraceHolder = Some(chemistryRunnableTraceHolderWithPublishers._1)
 			chemistryRunnableTraceHolderWithPublishers
 		} else 
 		    chemistryRunnableFactory.createInteractiveWithPublishers(
-				skinCompartment, runTask.getSimulationConfig, runTask.getActionSeries, Some(setting))
+				skinCompartment, runTask.getSimulationConfig, runTask.getInteractionSeries, Some(setting))
 
 		val chemistryRunnable = chemistryRunnableWithPublishers._1
 		val skinCompartmentPublisher = chemistryRunnableWithPublishers._2.find(_._1 == skinCompartment).get._2

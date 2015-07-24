@@ -55,6 +55,16 @@
                             <br/>
                             Reference:
                             <i>P. Banda. Anonymous Leader Election in One- and Two-Dimensional Cellular Automata. Dissertation, Comenius University, 2014</i>
+                            <hr/>
+                        </li>
+                        <li>
+                            <b>Asynchronous Leader Election Targeting 19^2 (ALE 19^2)</b>
+                            <ul class="inline spacedTop">
+                                <li><gui:actionLink action="exportNetworkFunction" id="1058" icon="icon-download" onclick="showExportDialogTransitionTableDialog(1058); return false;" text="ALE 19^2"/>
+                            </ul>
+                            <br/>
+                            Reference:
+                            <i>P. Banda. Anonymous Leader Election in One- and Two-Dimensional Cellular Automata. Dissertation, Comenius University, 2014</i>
                         </li>
                     </ul>
                 </div>

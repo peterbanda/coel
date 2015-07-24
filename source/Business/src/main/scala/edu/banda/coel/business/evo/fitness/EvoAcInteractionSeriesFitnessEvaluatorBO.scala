@@ -33,7 +33,7 @@ class EvoAcInteractionSeriesFitnessEvaluatorBO(
         // since we need to modify the original interaction series for thread safety we have to make a copy
         val newInteractionSeriesMap = interactionSeriesChromosomeConverter.toClone(originalInteractionSeries, chromosome.getCode)
         // replace the task's interaction series 
-        task.getRunTaskDefinition().setActionSeries(newInteractionSeriesMap.get(originalInteractionSeries))
+        task.getRunTaskDefinition().setInteractionSeries(newInteractionSeriesMap.get(originalInteractionSeries))
 	}
 }
 

@@ -66,7 +66,7 @@ public class AcAsymmetricComparison extends CoelTest {
 		AcRunTask acTask = new AcRunTask();
 		acTask.setCompartmentId(new Long(AC_COMPARTMENT_ID));
 		acTask.setSimulationConfigId(new Long(AC_SIMULATION_CONFIG_ID));
-		acTask.setActionSeries(actionSeries);
+		acTask.setInteractionSeries(actionSeries);
 		acTask.setRunTime(RUN_TIME);
 		acTask.setRepetitions(1);
 		return acTask;

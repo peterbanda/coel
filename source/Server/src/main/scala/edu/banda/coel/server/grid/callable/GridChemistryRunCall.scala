@@ -32,7 +32,7 @@ class GridChemistryRunCall(chemistryRunnableFactory : ChemistryRunnableFactory) 
 		}
 
 		val chemistryRunnable = chemistryRunnableFactory.createInteractiveWithTrace(
-				task.getCompartment, task.getSimulationConfig, task.getActionSeries, Some(setting))
+				task.getCompartment, task.getSimulationConfig, task.getInteractionSeries, Some(setting))
 		chemistryRunnable.runFor(task.getRunTime.doubleValue)
 
 		convertTupleToPair(chemistryRunnable.getRunTrace)

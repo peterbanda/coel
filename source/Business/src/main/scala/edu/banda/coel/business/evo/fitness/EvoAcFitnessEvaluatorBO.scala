@@ -61,7 +61,7 @@ abstract class EvoAcFitnessEvaluatorBO[H <: Chromosome[_]](
     // Prepare task definition
     val task = createTask
     val runTask = task.getRunTaskDefinition
-    runTask.setActionSeries(actionSeries)
+    runTask.setInteractionSeries(actionSeries)
     adaptTask(task, chromosome)
 
     val setting = new ChemistryRunSetting {
@@ -72,7 +72,7 @@ abstract class EvoAcFitnessEvaluatorBO[H <: Chromosome[_]](
     val skinCompartment = runTask.getCompartment
 
     val chemistryRunnableWithPublishers = chemistryRunnableFactory.createInteractiveWithPublishers(
-      skinCompartment, runTask.getSimulationConfig, runTask.getActionSeries, Some(setting))
+      skinCompartment, runTask.getSimulationConfig, runTask.getInteractionSeries, Some(setting))
     val chemistryRunnable = chemistryRunnableWithPublishers._1
 
     val skinCompartmentPublisher = chemistryRunnableWithPublishers._2.find(_._1 == skinCompartment).get._2

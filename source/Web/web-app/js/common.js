@@ -134,13 +134,15 @@ function hideMessages() {
 
 function showErrors(errors) {
 	if (errors.length > 0) {
-		var closeX = $('<a class="close" data-dismiss="alert" href="#">x</a>');
+		var closeX = '<a class="close" data-dismiss="alert" href="#">x</a>'
 		$('#errorDiv').hide();
-		var ul = $('<ul class="errors" role="alert">');
+		$('#errorDiv').html("");
 		$.each(errors, function(index, error) {
-			ul.append($('<div class="alert alert-block alert-error"></div>').text(closeX.html() + error.message));	
+			var innerDiv = $('<div class="alert alert-block alert-error">');
+			innerDiv.append(closeX);
+			innerDiv.append(error.message);
+			$('#errorDiv').append(innerDiv);
 		});
-		$('#errorDiv').html(ul);
 		$('#errorDiv').fadeIn('2000');
 	}
 }

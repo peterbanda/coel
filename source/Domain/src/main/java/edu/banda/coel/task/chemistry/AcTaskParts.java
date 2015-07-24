@@ -54,13 +54,13 @@ public interface AcTaskParts {
     }
 
     public interface AcInteractionSeriesHolder {
-        public AcInteractionSeries getActionSeries();
+        public AcInteractionSeries getInteractionSeries();
 
-        public void setActionSeries(AcInteractionSeries actionSeries);
+        public void setInteractionSeries(AcInteractionSeries actionSeries);
 
-        public boolean isActionSeriesDefined();
+        public boolean isInteractionSeriesDefined();
 
-        public boolean isActionSeriesComplete();
+        public boolean isInteractionSeriesComplete();
     }
 
     public interface AcEvaluatedActionSeriesHolder {

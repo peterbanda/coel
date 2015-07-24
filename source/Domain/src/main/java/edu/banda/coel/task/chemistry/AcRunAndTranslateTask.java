@@ -65,11 +65,11 @@ public class AcRunAndTranslateTask extends Task implements AcTranslationSeriesHo
     }
 
     public AcInteractionSeries getActionSeries() {
-        return runTaskDefinition.getActionSeries();
+        return runTaskDefinition.getInteractionSeries();
     }
 
     public Long getActionSeriesId() {
-        return runTaskDefinition.getActionSeriesId();
+        return runTaskDefinition.getInteractionSeriesId();
     }
 
     public boolean isStoreRunTrace() {

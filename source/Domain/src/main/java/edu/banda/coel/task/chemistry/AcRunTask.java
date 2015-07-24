@@ -17,7 +17,7 @@ public class AcRunTask extends Task implements AcCompartmentHolder, AcSimulation
 
     private AcCompartment compartment;
     private AcSimulationConfig simulationConfig;
-    private AcInteractionSeries actionSeries;
+    private AcInteractionSeries interactionSeries;
 
     private Integer runTime;
     private Integer repetitions = 1;
@@ -88,36 +88,36 @@ public class AcRunTask extends Task implements AcCompartmentHolder, AcSimulation
     }
 
     @Override
-    public AcInteractionSeries getActionSeries() {
-        return actionSeries;
+    public AcInteractionSeries getInteractionSeries() {
+        return interactionSeries;
     }
 
     @Override
-    public void setActionSeries(AcInteractionSeries actionSeries) {
-        this.actionSeries = actionSeries;
+    public void setInteractionSeries(AcInteractionSeries interactionSeries) {
+        this.interactionSeries = interactionSeries;
     }
 
     @Override
-    public boolean isActionSeriesDefined() {
-        return actionSeries != null;
+    public boolean isInteractionSeriesDefined() {
+        return interactionSeries != null;
     }
 
     @Override
-    public boolean isActionSeriesComplete() {
-        return isActionSeriesDefined() && !actionSeries.getActions().isEmpty();
+    public boolean isInteractionSeriesComplete() {
+        return isInteractionSeriesDefined() && !interactionSeries.getActions().isEmpty();
     }
 
-    public void setActionSeriesId(Long actionSeriesId) {
-        if (actionSeries != null) {
+    public void setInteractionSeriesId(Long interactionSeriesId) {
+        if (interactionSeries != null) {
             throw new BndChemistryException("AC interaction series already set for AC run task.");
         }
-        actionSeries = new AcInteractionSeries();
-        actionSeries.setId(actionSeriesId);
+        interactionSeries = new AcInteractionSeries();
+        interactionSeries.setId(interactionSeriesId);
     }
 
-    public Long getActionSeriesId() {
-        if (isActionSeriesDefined()) {
-            return actionSeries.getId();
+    public Long getInteractionSeriesId() {
+        if (isInteractionSeriesDefined()) {
+            return interactionSeries.getId();
         }
         return null;
     }
@@ -181,7 +181,7 @@ public class AcRunTask extends Task implements AcCompartmentHolder, AcSimulation
         setRunOnGrid(runTask.isRunOnGrid());
         setCompartment(runTask.getCompartment());
         setSimulationConfig(runTask.getSimulationConfig());
-        setActionSeries(runTask.getActionSeries());
+        setInteractionSeries(runTask.getInteractionSeries());
         setRunTime(runTask.getRunTime());
         setRepetitions(runTask.getRepetitions());
         setUpperThresholdViolationHandling(runTask.getUpperThresholdViolationHandling());

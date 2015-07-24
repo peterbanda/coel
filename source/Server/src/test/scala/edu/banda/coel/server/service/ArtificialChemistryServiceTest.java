@@ -67,7 +67,7 @@ public class ArtificialChemistryServiceTest extends CoelTest {
 		AcRunTask acTask = new AcRunTask();
 		acTask.setCompartmentId(3484l);
 		acTask.setSimulationConfigId(1010l);
-		acTask.setActionSeriesId(1406l);
+		acTask.setInteractionSeriesId(1406l);
 		acTask.setRunTime(10);
 
 		Collection<ComponentRunTrace<Double, Pair<AcCompartment, AcSpecies>>> acRuns = artificialChemistryService.runSimulation(acTask);
@@ -205,7 +205,7 @@ public class ArtificialChemistryServiceTest extends CoelTest {
 		AcRunTask acTask = new AcRunTask();
 		acTask.setCompartment(ac.getSkinCompartment());
 		acTask.setSimulationConfig(ac.getSimulationConfig());
-		acTask.setActionSeries(actionSeries);
+		acTask.setInteractionSeries(actionSeries);
 		acTask.setRunTime(3);
 
 		artificialChemistryService.runSimulation(acTask);
@@ -218,7 +218,7 @@ public class ArtificialChemistryServiceTest extends CoelTest {
 		AcRunTask acTask = new AcRunTask();
 		acTask.setCompartmentId(new Long(1022));
 		acTask.setSimulationConfigId(1010l);
-		acTask.setActionSeriesId(new Long(1015));
+		acTask.setInteractionSeriesId(new Long(1015));
 		acTask.setRunTime(10000);
 
 		artificialChemistryService.runSimulation(acTask);
@@ -242,7 +242,7 @@ public class ArtificialChemistryServiceTest extends CoelTest {
 
 		acRunTask.setCompartmentId(new Long(1016));
 		acRunTask.setSimulationConfigId(1010l);
-		acRunTask.setActionSeriesId(new Long(1006));
+		acRunTask.setInteractionSeriesId(new Long(1006));
 		acRunTask.setRunTime(500100);
 		acRunTask.setRepetitions(1);
 
@@ -266,7 +266,7 @@ public class ArtificialChemistryServiceTest extends CoelTest {
 
 		acRunTask.setCompartmentId(new Long(1015));
 		acRunTask.setSimulationConfigId(1010l);
-		acRunTask.setActionSeriesId(new Long(1002));
+		acRunTask.setInteractionSeriesId(new Long(1002));
 		acRunTask.setRunTime(20100);
 		acRunTask.setRepetitions(4);
 

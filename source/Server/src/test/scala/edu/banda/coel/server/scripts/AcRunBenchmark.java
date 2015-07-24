@@ -106,7 +106,7 @@ public class AcRunBenchmark extends CoelTest {
 		AcRunTask acTask = new AcRunTask();
 		acTask.setCompartmentId(new Long(AC_COMPARTMENT_ID));
 		acTask.setSimulationConfigId(new Long(AC_SIMULATION_CONFIG_ID));
-		acTask.setActionSeriesId(new Long(ACTION_SERIES_ID));
+		acTask.setInteractionSeriesId(new Long(ACTION_SERIES_ID));
 		acTask.setRunTime(STEPS);
 		acTask.setRepetitions(1);
 		return acTask;
