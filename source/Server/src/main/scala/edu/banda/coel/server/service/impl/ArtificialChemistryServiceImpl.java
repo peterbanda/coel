@@ -372,7 +372,7 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 	@Transactional(readOnly = false)
     public void saveSbmlModelAsArtificialChemistry(String sbmlString, String acName) {
 		SBMLConverter sbmlConverter = SBMLConverter.getInstance();
-		ArtificialChemistry ac = sbmlConverter.convertSBMLStringToAlChemistry(sbmlString);
+		ArtificialChemistry ac = sbmlConverter.stringToArtificialChemistry(sbmlString);
 
 		User user = userDAO.get(new Long(1));
 		saveCompartmentWithAllData(ac.getSkinCompartment(), user);

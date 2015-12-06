@@ -34,7 +34,7 @@ public class CoelConsoleClient extends ConsoleClient {
 
 	private static final String APP_NAME = "COEL Console client";
 	private static final String JAR_NAME = "coel-consoleclient.jar";
-	private static final String VERSION = "0.8.1";
+	private static final String VERSION = "0.8.2";
 
 	private static final String PERTURBATION_EVAL_FILE_NAME_PREFIX = "ac_perturb_eval_";
 	private static final int CORRECT_RATE_LABEL_LENGTH = AcEvaluationItemState.Correct.toString().length();

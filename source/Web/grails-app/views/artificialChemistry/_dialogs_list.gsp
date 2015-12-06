@@ -59,8 +59,8 @@
 					<tr class="prop">
 						<td valign="top" class="name">
 							<label for="artificialChemistrySpecId"><g:message code="generateACsDialog.artificialChemistrySpec.label" default="Spec" /></label>
-						</td>					
-						<td valign="top" class="value"">
+						</td>
+						<td valign="top" class="value">
 							<g:select name="artificialChemistrySpecId" from="${com.banda.chemistry.domain.ArtificialChemistrySpec.list(sort: 'id')}"
 								optionKey="id"
 								optionValue="${{it.id + ' : ' + it.name}}"
@@ -72,7 +72,7 @@
 						<td valign="top" class="name">
 							<label for="acSimulationConfigId"><g:message code="generateACsDialog.acSimulationConfig.label" default="Config" /></label>
 						</td>					
-						<td valign="top" class="value"">
+						<td valign="top" class="value">
 							<g:select name="acSimulationConfigId" from="${com.banda.chemistry.domain.AcSimulationConfig.list(sort: 'id')}"
 								optionKey="id"
 								optionValue="${{it.id + ' : ' + it.name}}"

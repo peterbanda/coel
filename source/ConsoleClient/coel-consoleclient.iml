@@ -46,7 +46,7 @@
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
     <orderEntry type="library" name="Maven: jfree:jfreechart:1.0.13" level="project" />
     <orderEntry type="library" name="Maven: jfree:jcommon:1.0.15" level="project" />
-    <orderEntry type="library" name="Maven: libsbml:libsbmlj:3.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml:jsbml:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.efficient-java-matrix-library:ejml:0.18" level="project" />
     <orderEntry type="library" name="Maven: batik:batik-svggen:1.6-1" level="project" />
     <orderEntry type="library" name="Maven: batik:batik-gvt:1.6-1" level="project" />

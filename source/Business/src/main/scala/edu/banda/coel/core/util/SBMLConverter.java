@@ -1,10 +1,11 @@
 package edu.banda.coel.core.util;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.Date;
 
-import org.sbml.libsbml.*;
+import org.sbml.jsbml.*;
 
 import com.banda.chemistry.domain.*;
 import com.banda.core.EntryKeyLengthDescComparator;
@@ -15,6 +16,8 @@ import com.banda.function.domain.FunctionHolder;
 import com.banda.function.domain.ODESolverType;
 
 import edu.banda.coel.CoelRuntimeException;
+
+import javax.xml.stream.XMLStreamException;
 
 /**
  * @author © Peter Banda
@@ -30,8 +33,7 @@ public class SBMLConverter {
 	private final FunctionUtility functionUtility = new FunctionUtility();
 
 	private SBMLConverter() {
-		// empty constructor
-		checkRequiredLibs();
+//		checkRequiredLibs();
 	}
 
 	public static SBMLConverter getInstance() {
@@ -50,50 +52,57 @@ public class SBMLConverter {
 
 	private SBMLDocument getSBMLDocumentFromFile(String fileName) {
 		SBMLReader reader = new SBMLReader();
-		SBMLDocument document = reader.readSBML(fileName);
-
-		if (document.getNumErrors() > 0) {
-			document.printErrors();
+		try {
+			SBMLDocument document = reader.readSBML(fileName);
+			if (document.getNumErrors() > 0) {
+				throw new CoelRuntimeException("Errors found in SBML model " + fileName);
+			}
+			return document;
+		} catch (XMLStreamException e) {
+			throw new CoelRuntimeException("Errors found in SBML model " + fileName);
+		} catch (IOException e) {
 			throw new CoelRuntimeException("Errors found in SBML model " + fileName);
 		}
-		return document;
 	}
 
 	private SBMLDocument getSBMLDocumentFromString(String content) {
 		SBMLReader reader = new SBMLReader();
-		SBMLDocument document = reader.readSBMLFromString(content);
+		try {
+			SBMLDocument document = reader.readSBMLFromString(content);
 
-		if (document.getNumErrors() > 0) {
-			document.printErrors();
+			if (document.getNumErrors() > 0) {
+				throw new CoelRuntimeException("Errors found in SBML model " + content);
+			}
+			return document;
+		} catch (XMLStreamException e) {
 			throw new CoelRuntimeException("Errors found in SBML model " + content);
 		}
-		return document;
 	}
 
-	public String convertSBMLFileToString(String fileName) {
-		SBMLDocument sbmlDocument = getSBMLDocumentFromFile(fileName);
-		return sbmlDocument.toSBML();
-	}
+//	public String convertSBMLFileToString(String fileName) {
+//		SBMLDocument sbmlDocument = getSBMLDocumentFromFile(fileName);
+//		return sbmlDocument.toSBML();
+//	}
 
-	public ArtificialChemistry convertSBMLStringToAlChemistry(String sbmlString) {
+	public ArtificialChemistry stringToArtificialChemistry(String sbmlString) {
 		SBMLDocument sbmlDocument = getSBMLDocumentFromString(sbmlString);
-		return convertSBMLToAlChemistry(sbmlDocument);
+		return toArtificialChemistry(sbmlDocument);
 	}
 
-	public ArtificialChemistry convertSBMLFileToAlChemistry(String fileName) {
+	public ArtificialChemistry fileToArtificialChemistry(String fileName) {
 		SBMLDocument sbmlDocument = getSBMLDocumentFromFile(fileName);
-		return convertSBMLToAlChemistry(sbmlDocument);
+		return toArtificialChemistry(sbmlDocument);
 	}
 
-	private ArtificialChemistry convertSBMLToAlChemistry(SBMLDocument sbmlDocument) {
+	private ArtificialChemistry toArtificialChemistry(SBMLDocument sbmlDocument) {
 		Model sbmlModel = sbmlDocument.getModel();
 
-		ListOfCompartments compartments = sbmlModel.getListOfCompartments();
-		ListOfSpecies species = sbmlModel.getListOfSpecies();
-		ListOfReactions reactions = sbmlModel.getListOfReactions();
-		ListOfParameters parameters = sbmlModel.getListOfParameters();
-		ListOfRules rules = sbmlModel.getListOfRules();
-		int speciesNum = (int) species.size();
+		ListOf<Compartment> compartments = sbmlModel.getListOfCompartments();
+		ListOf<Species> species = sbmlModel.getListOfSpecies();
+		ListOf<Reaction> reactions = sbmlModel.getListOfReactions();
+		ListOf<Parameter> parameters = sbmlModel.getListOfParameters();
+		ListOf<Rule> rules = sbmlModel.getListOfRules();
+		int speciesNum = species.size();
 
 		ArtificialChemistry alChemistry = new ArtificialChemistry();
 		alChemistry.setName("SBML Model " + new Date().getTime());
@@ -107,6 +116,7 @@ public class SBMLConverter {
 		AcCompartment skinCompartment = null;
 		for (int compartmentId = 0; compartmentId < compartments.size(); compartmentId++) {
 			Compartment compartment = compartments.get(compartmentId);
+
 			AcCompartment acCompartment = new AcCompartment();
 			acCompartment.setLabel(compartment.getId());
 			AcReactionSet reactionSet = new AcReactionSet();
@@ -117,7 +127,7 @@ public class SBMLConverter {
 			parameterSet.setSpeciesSet(speciesSet);
 
 			reactionSet.setSpeciesSet(speciesSet);
-			reactionSet.setLabel("SBML Imported" + new Date().getTime());
+			reactionSet.setLabel(compartment.getId());
 			acCompartment.setReactionSet(reactionSet);
 
 			labelCompartmentMap.put(acCompartment.getLabel(), acCompartment);
@@ -163,11 +173,13 @@ public class SBMLConverter {
 			acReaction.setLabel(reaction.getId());
 			acReaction.setSortOrder(reactionIndex);
 
-			Set<AcSpeciesReactionAssociation> reactants = getSpeciesAssociations(speciesNum, reaction.getListOfReactants(), labelSpeciesStructureMap);
-			Set<AcSpeciesReactionAssociation> products = getSpeciesAssociations(speciesNum, reaction.getListOfProducts(), labelSpeciesStructureMap);
+			Set<AcSpeciesReactionAssociation> reactants = getSpeciesAssociations(reaction.getListOfReactants(), labelSpeciesStructureMap);
+			Set<AcSpeciesReactionAssociation> products = getSpeciesAssociations(reaction.getListOfProducts(), labelSpeciesStructureMap);
+            Set<AcSpeciesReactionAssociation> modifiers = getCatalystsAssociations(reaction.getListOfModifiers(), labelSpeciesStructureMap);
 
 			acReaction.addSpeciesAssociations(reactants, AcSpeciesAssociationType.Reactant);
 			acReaction.addSpeciesAssociations(products, AcSpeciesAssociationType.Product);
+			acReaction.addSpeciesAssociations(modifiers, AcSpeciesAssociationType.Catalyst);
 
 			KineticLaw kinetricLaw = reaction.getKineticLaw();
 			ASTNode astNode = kinetricLaw.getMath();
@@ -178,16 +190,19 @@ public class SBMLConverter {
 
 		for (int ruleId = 0; ruleId < rules.size(); ruleId++) {
 			Rule rule = rules.get(ruleId);
-			AcParameter acParameter = labelParameterMap.get(rule.getVariable());
-			ASTNode astNode = rule.getMath();
-			setFunction(acParameter, astNode, labelMagnitudeMap);
+            if (rule.isAssignment()) {
+                String variable = ((AssignmentRule) rule).getVariable();
+                AcParameter acParameter = labelParameterMap.get(variable);
+                ASTNode astNode = rule.getMath();
+                setFunction(acParameter, astNode, labelMagnitudeMap);
+            }
 		}
 		return alChemistry;
 	}
 
 	private Double[] getStoichiometricVector(
 		int speciesNum,
-		ListOfSpeciesReferences speciesReferences,
+		ListOf<SpeciesReference> speciesReferences,
 		Map<String, AcSpecies> labelSpeciesMap
 	) {
 		Double[] stoichiometricVector = new Double[speciesNum];
@@ -207,19 +222,31 @@ public class SBMLConverter {
 	}
 
 	private Set<AcSpeciesReactionAssociation> getSpeciesAssociations(
-		int speciesNum,
-		ListOfSpeciesReferences speciesReferences,
+		ListOf<SpeciesReference> speciesReferences,
 		Map<String, AcSpecies> labelSpeciesMap
 	) {
 		Set<AcSpeciesReactionAssociation> speciesAssociations = new HashSet<AcSpeciesReactionAssociation>();
-		for (int reactantId = 0; reactantId < speciesReferences.size(); reactantId++) {
-			SimpleSpeciesReference reactantReference = speciesReferences.get(reactantId);
-			AcSpecies acSpecies = labelSpeciesMap.get(reactantReference.getSpecies());
+		for (int speciesRefIndex = 0; speciesRefIndex < speciesReferences.size(); speciesRefIndex++) {
+			SimpleSpeciesReference speciesReference = speciesReferences.get(speciesRefIndex);
+			AcSpecies acSpecies = labelSpeciesMap.get(speciesReference.getSpecies());
 			double stoichiometry = 1.0;
-			if (reactantReference instanceof SpeciesReference) {
-				stoichiometry = ((SpeciesReference) reactantReference).getStoichiometry();
+			if (speciesReference instanceof SpeciesReference) {
+				stoichiometry = ((SpeciesReference) speciesReference).getStoichiometry();
 			}
 			speciesAssociations.add(new AcSpeciesReactionAssociation(acSpecies, stoichiometry));
+		}
+		return speciesAssociations;
+	}
+
+	private Set<AcSpeciesReactionAssociation> getCatalystsAssociations(
+		ListOf<ModifierSpeciesReference> speciesReferences,
+		Map<String, AcSpecies> labelSpeciesMap
+	) {
+		Set<AcSpeciesReactionAssociation> speciesAssociations = new HashSet<AcSpeciesReactionAssociation>();
+		for (int speciesRefIndex = 0; speciesRefIndex < speciesReferences.size(); speciesRefIndex++) {
+			ModifierSpeciesReference speciesReference = speciesReferences.get(speciesRefIndex);
+			AcSpecies acSpecies = labelSpeciesMap.get(speciesReference.getSpecies());
+			speciesAssociations.add(new AcSpeciesReactionAssociation(acSpecies, (Double) null));
 		}
 		return speciesAssociations;
 	}
@@ -236,7 +263,7 @@ public class SBMLConverter {
 		ASTNode astNode,
 		Map<String, AcVariable> labelMagnitudeMap
 	) {
-		String formula = libsbml.formulaToString(astNode);
+		String formula = astNode.toFormula();
 
 		formula = replaceVariables(formula, labelMagnitudeMap);
 		formula = replaceBinaryFunctionByOperator("pow", "^", formula);
@@ -337,7 +364,7 @@ public class SBMLConverter {
 
 	public static void main(String args[]) {
 		SBMLConverter sbmlConverter = SBMLConverter.getInstance();
-		ArtificialChemistry alChemistry = sbmlConverter.convertSBMLFileToAlChemistry("perceptron_v06.xml");
+		ArtificialChemistry alChemistry = sbmlConverter.fileToArtificialChemistry("perceptron_v06.xml");
 		System.out.println(alChemistry);
 	}
 }

@@ -14,9 +14,9 @@
     <orderEntry type="library" name="Maven: com.banda.chemistry:banda-chemistry-domain:0.5.1" level="project" />
     <orderEntry type="library" name="Maven: com.banda.math:banda-math-domain:0.5.1" level="project" />
     <orderEntry type="library" name="Maven: com.banda.network:banda-network-domain:0.5.1" level="project" />
-    <orderEntry type="library" name="Maven: com.banda.function:banda-function-business:0.5.0" level="project" />
-    <orderEntry type="library" name="Maven: com.banda:banda-core-scala:0.5.0" level="project" />
-    <orderEntry type="library" name="Maven: com.banda:banda-core:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.banda.function:banda-function-business:0.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.banda:banda-core-scala:0.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.banda:banda-core:0.5.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:3.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:3.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.2.0.RELEASE" level="project" />
@@ -31,18 +31,18 @@
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.10.2" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-reflect:2.10.2" level="project" />
     <orderEntry type="library" name="Maven: com.panayotis:javaplot:0.4.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.banda.function:banda-function-domain:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.banda.function:banda-function-domain:0.5.1" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.5" level="project" />
     <orderEntry type="library" name="Maven: jep:jep:2.24" level="project" />
     <orderEntry type="library" name="Maven: org.jblas:jblas:1.2.3" level="project" />
-    <orderEntry type="library" name="Maven: com.banda.chemistry:banda-chemistry-business:0.5.0" level="project" />
-    <orderEntry type="library" name="Maven: com.banda.network:banda-network-business:0.5.0" level="project" />
-    <orderEntry type="library" name="Maven: com.banda.math:banda-math-business:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.banda.chemistry:banda-chemistry-business:0.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.banda.network:banda-network-business:0.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.banda.math:banda-math-business:0.5.1" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
     <orderEntry type="library" name="Maven: jfree:jfreechart:1.0.13" level="project" />
     <orderEntry type="library" name="Maven: jfree:jcommon:1.0.15" level="project" />
-    <orderEntry type="library" name="Maven: libsbml:libsbmlj:3.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.sbml:jsbml:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.efficient-java-matrix-library:ejml:0.18" level="project" />
     <orderEntry type="library" name="Maven: batik:batik-svggen:1.6-1" level="project" />
     <orderEntry type="library" name="Maven: batik:batik-gvt:1.6-1" level="project" />
