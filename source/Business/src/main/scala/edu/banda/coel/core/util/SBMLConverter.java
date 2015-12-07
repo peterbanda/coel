@@ -84,121 +84,141 @@ public class SBMLConverter {
 //		return sbmlDocument.toSBML();
 //	}
 
-	public ArtificialChemistry stringToArtificialChemistry(String sbmlString) {
+	public ArtificialChemistry stringToArtificialChemistry(String sbmlString, String compartmentLabel) {
 		SBMLDocument sbmlDocument = getSBMLDocumentFromString(sbmlString);
-		return toArtificialChemistry(sbmlDocument);
+		return toArtificialChemistry(sbmlDocument.getModel(), compartmentLabel);
 	}
 
-	public ArtificialChemistry fileToArtificialChemistry(String fileName) {
+	public ArtificialChemistry fileToArtificialChemistry(String fileName, String compartmentLabel) {
 		SBMLDocument sbmlDocument = getSBMLDocumentFromFile(fileName);
-		return toArtificialChemistry(sbmlDocument);
+		return toArtificialChemistry(sbmlDocument.getModel(), compartmentLabel);
 	}
 
-	private ArtificialChemistry toArtificialChemistry(SBMLDocument sbmlDocument) {
-		Model sbmlModel = sbmlDocument.getModel();
+    public AcCompartment stringToCompartment(String sbmlString, String compartmentLabel) {
+        SBMLDocument sbmlDocument = getSBMLDocumentFromString(sbmlString);
+        return toCompartment(sbmlDocument.getModel(), compartmentLabel);
+    }
 
-		ListOf<Compartment> compartments = sbmlModel.getListOfCompartments();
-		ListOf<Species> species = sbmlModel.getListOfSpecies();
-		ListOf<Reaction> reactions = sbmlModel.getListOfReactions();
-		ListOf<Parameter> parameters = sbmlModel.getListOfParameters();
-		ListOf<Rule> rules = sbmlModel.getListOfRules();
-		int speciesNum = species.size();
+//	public SBMLDocument compartmentToSBML(AcCompartment compartment) {
+//        SBMLDocument smbl = new SBMLDocument();
+//		return null;
+//	}
 
-		ArtificialChemistry alChemistry = new ArtificialChemistry();
-		alChemistry.setName("SBML Model " + new Date().getTime());
-		alChemistry.setCreateTime(new Date());
+    private ArtificialChemistry toArtificialChemistry(Model sbmlModel, String compartmentLabel) {
+        final AcCompartment skinCompartment = toCompartment(sbmlModel, compartmentLabel);
 
-		AcSimulationConfig simConfig = new AcSimulationConfig();
-		simConfig.setOdeSolverType(ODESolverType.RungeKutta4);
-		alChemistry.setSimulationConfig(simConfig);
+        ArtificialChemistry alChemistry = new ArtificialChemistry();
+        alChemistry.setName("SBML Model " + new Date().getTime());
+        alChemistry.setCreateTime(new Date());
 
-		Map<String, AcCompartment> labelCompartmentMap = new HashMap<String, AcCompartment>();
-		AcCompartment skinCompartment = null;
-		for (int compartmentId = 0; compartmentId < compartments.size(); compartmentId++) {
-			Compartment compartment = compartments.get(compartmentId);
+        AcSimulationConfig simConfig = new AcSimulationConfig();
+        simConfig.setOdeSolverType(ODESolverType.RungeKutta4);
+        alChemistry.setSimulationConfig(simConfig);
+        alChemistry.setSkinCompartment(skinCompartment);
 
-			AcCompartment acCompartment = new AcCompartment();
-			acCompartment.setLabel(compartment.getId());
-			AcReactionSet reactionSet = new AcReactionSet();
+        return alChemistry;
+    }
 
-			AcSpeciesSet speciesSet = new AcSpeciesSet();
-			AcParameterSet parameterSet = new AcParameterSet();
-			speciesSet.setParameterSet(parameterSet);
-			parameterSet.setSpeciesSet(speciesSet);
+    private AcCompartment toCompartment(Model sbmlModel, String compartmentLabel) {
+        ListOf<Compartment> compartments = sbmlModel.getListOfCompartments();
+        ListOf<Species> species = sbmlModel.getListOfSpecies();
+        ListOf<Reaction> reactions = sbmlModel.getListOfReactions();
+        ListOf<Parameter> parameters = sbmlModel.getListOfParameters();
+        ListOf<Rule> rules = sbmlModel.getListOfRules();
+        int speciesNum = species.size();
 
-			reactionSet.setSpeciesSet(speciesSet);
-			reactionSet.setLabel(compartment.getId());
-			acCompartment.setReactionSet(reactionSet);
+        Map<String, AcCompartment> labelCompartmentMap = new HashMap<String, AcCompartment>();
+        AcCompartment skinCompartment = null;
+        for (int compartmentId = 0; compartmentId < compartments.size(); compartmentId++) {
+            Compartment compartment = compartments.get(compartmentId);
 
-			labelCompartmentMap.put(acCompartment.getLabel(), acCompartment);
-			// TODO - support hierarchical compartments
-			skinCompartment = acCompartment;
-		}
-		alChemistry.setSkinCompartment(skinCompartment);
+            AcCompartment acCompartment = new AcCompartment();
+            acCompartment.setLabel(compartment.getId());
+            AcReactionSet reactionSet = new AcReactionSet();
 
-		Map<String, AcSpecies> labelSpeciesStructureMap = new HashMap<String, AcSpecies>();
-		for (int speciesIndex = 0; speciesIndex < speciesNum; speciesIndex++) {
-			Species oneSpecies = species.get(speciesIndex);
+            AcSpeciesSet speciesSet = new AcSpeciesSet();
+            AcParameterSet parameterSet = new AcParameterSet();
+            speciesSet.setParameterSet(parameterSet);
+            parameterSet.setSpeciesSet(speciesSet);
 
-			AcSpecies acSpecies = new AcSpecies();
-			acSpecies.setVariableIndex(speciesIndex);
-			acSpecies.setLabel(oneSpecies.getId());
-			acSpecies.setSortOrder(speciesIndex);
+            reactionSet.setSpeciesSet(speciesSet);
+            reactionSet.setLabel(compartment.getId());
+            acCompartment.setReactionSet(reactionSet);
 
-			AcCompartment associatedCompartment = labelCompartmentMap.get(oneSpecies.getCompartment());
-			associatedCompartment.getReactionSet().getSpeciesSet().addVariable(acSpecies);
-			labelSpeciesStructureMap.put(acSpecies.getLabel(), acSpecies);
-		}
+            labelCompartmentMap.put(acCompartment.getLabel(), acCompartment);
+            // TODO - support hierarchical compartments
+            skinCompartment = acCompartment;
+        }
 
-		Map<String, AcParameter> labelParameterMap = new HashMap<String, AcParameter>();
-		for (int parameterIndex = 0; parameterIndex < parameters.size(); parameterIndex++) {
-			Parameter parameter = parameters.get(parameterIndex);
-			AcParameter acParameter = new AcParameter();
-			acParameter.setVariableIndex(speciesNum + parameterIndex);
-			acParameter.setLabel(parameter.getId());
-			acParameter.setSortOrder(parameterIndex);
-			acParameter.setEvolFunction(Expression.Double(String.valueOf(parameter.getValue())));
-			labelParameterMap.put(acParameter.getLabel(), acParameter);
-			skinCompartment.getReactionSet().getParameterSet().addVariable(acParameter);
-		}
+        Map<String, AcSpecies> labelSpeciesStructureMap = new HashMap<String, AcSpecies>();
+        for (int speciesIndex = 0; speciesIndex < speciesNum; speciesIndex++) {
+            Species oneSpecies = species.get(speciesIndex);
 
-		Map<String, AcVariable> labelMagnitudeMap = new HashMap<String, AcVariable>();
-		labelMagnitudeMap.putAll(labelSpeciesStructureMap);
-		labelMagnitudeMap.putAll(labelParameterMap);
+            AcSpecies acSpecies = new AcSpecies();
+            acSpecies.setVariableIndex(speciesIndex);
+            acSpecies.setLabel(oneSpecies.getId());
+            acSpecies.setSortOrder(speciesIndex);
 
-		for (int reactionIndex = 0; reactionIndex < reactions.size(); reactionIndex++) {
-			Reaction reaction = reactions.get(reactionIndex);
-			AcReaction acReaction = new AcReaction();
-			acReaction.setIndex(reactionIndex); // not needed?
-			acReaction.setLabel(reaction.getId());
-			acReaction.setSortOrder(reactionIndex);
+            AcCompartment associatedCompartment = labelCompartmentMap.get(oneSpecies.getCompartment());
+            associatedCompartment.getReactionSet().getSpeciesSet().addVariable(acSpecies);
+            labelSpeciesStructureMap.put(acSpecies.getLabel(), acSpecies);
+        }
 
-			Set<AcSpeciesReactionAssociation> reactants = getSpeciesAssociations(reaction.getListOfReactants(), labelSpeciesStructureMap);
-			Set<AcSpeciesReactionAssociation> products = getSpeciesAssociations(reaction.getListOfProducts(), labelSpeciesStructureMap);
+        Map<String, AcParameter> labelParameterMap = new HashMap<String, AcParameter>();
+        for (int parameterIndex = 0; parameterIndex < parameters.size(); parameterIndex++) {
+            Parameter parameter = parameters.get(parameterIndex);
+            AcParameter acParameter = new AcParameter();
+            acParameter.setVariableIndex(speciesNum + parameterIndex);
+            acParameter.setLabel(parameter.getId());
+            acParameter.setSortOrder(parameterIndex);
+            acParameter.setEvolFunction(Expression.Double(String.valueOf(parameter.getValue())));
+            labelParameterMap.put(acParameter.getLabel(), acParameter);
+            skinCompartment.getReactionSet().getParameterSet().addVariable(acParameter);
+        }
+
+        Map<String, AcVariable> labelMagnitudeMap = new HashMap<String, AcVariable>();
+        labelMagnitudeMap.putAll(labelSpeciesStructureMap);
+        labelMagnitudeMap.putAll(labelParameterMap);
+
+        for (int reactionIndex = 0; reactionIndex < reactions.size(); reactionIndex++) {
+            Reaction reaction = reactions.get(reactionIndex);
+            AcReaction acReaction = new AcReaction();
+            acReaction.setIndex(reactionIndex); // not needed?
+            acReaction.setLabel(reaction.getId());
+            acReaction.setSortOrder(reactionIndex);
+
+            Set<AcSpeciesReactionAssociation> reactants = getSpeciesAssociations(reaction.getListOfReactants(), labelSpeciesStructureMap);
+            Set<AcSpeciesReactionAssociation> products = getSpeciesAssociations(reaction.getListOfProducts(), labelSpeciesStructureMap);
             Set<AcSpeciesReactionAssociation> modifiers = getCatalystsAssociations(reaction.getListOfModifiers(), labelSpeciesStructureMap);
 
-			acReaction.addSpeciesAssociations(reactants, AcSpeciesAssociationType.Reactant);
-			acReaction.addSpeciesAssociations(products, AcSpeciesAssociationType.Product);
-			acReaction.addSpeciesAssociations(modifiers, AcSpeciesAssociationType.Catalyst);
+            acReaction.addSpeciesAssociations(reactants, AcSpeciesAssociationType.Reactant);
+            acReaction.addSpeciesAssociations(products, AcSpeciesAssociationType.Product);
+            acReaction.addSpeciesAssociations(modifiers, AcSpeciesAssociationType.Catalyst);
 
-			KineticLaw kinetricLaw = reaction.getKineticLaw();
-			ASTNode astNode = kinetricLaw.getMath();
-			setFunction(acReaction, astNode, labelMagnitudeMap);
+            KineticLaw kinetricLaw = reaction.getKineticLaw();
+            ASTNode astNode = kinetricLaw.getMath();
+            setFunction(acReaction, astNode, labelMagnitudeMap);
 
-			skinCompartment.getReactionSet().addReaction(acReaction);
-		}
+            skinCompartment.getReactionSet().addReaction(acReaction);
+        }
 
-		for (int ruleId = 0; ruleId < rules.size(); ruleId++) {
-			Rule rule = rules.get(ruleId);
+        for (int ruleId = 0; ruleId < rules.size(); ruleId++) {
+            Rule rule = rules.get(ruleId);
             if (rule.isAssignment()) {
                 String variable = ((AssignmentRule) rule).getVariable();
                 AcParameter acParameter = labelParameterMap.get(variable);
                 ASTNode astNode = rule.getMath();
                 setFunction(acParameter, astNode, labelMagnitudeMap);
             }
-		}
-		return alChemistry;
-	}
+        }
+
+        skinCompartment.setLabel(compartmentLabel);
+        final AcReactionSet reactionSet = skinCompartment.getReactionSet();
+        reactionSet.setLabel(compartmentLabel);
+        reactionSet.getSpeciesSet().setName(compartmentLabel);
+        reactionSet.getParameterSet().setName(compartmentLabel);
+        return skinCompartment;
+    }
 
 	private Double[] getStoichiometricVector(
 		int speciesNum,
@@ -296,11 +316,11 @@ public class SBMLConverter {
 			} else {
 				int fistCommaIndex = token.indexOf(",");
 				int secondCommaIndex = token.indexOf(",", fistCommaIndex + 1);
-				int thridCommaIndex = token.indexOf(",", secondCommaIndex + 1);
-				int rightBracketIndex = token.indexOf(")", thridCommaIndex + 1);
+		//		int thridCommaIndex = token.indexOf(",", secondCommaIndex + 1);
+				int rightBracketIndex = token.indexOf(")", secondCommaIndex + 1);
 				String firstValue = token.substring(0, fistCommaIndex).trim();
-				String condition = token.substring(fistCommaIndex + 1, thridCommaIndex).trim();
-				String secondValue = token.substring(thridCommaIndex + 1, rightBracketIndex).trim();
+				String condition = token.substring(fistCommaIndex + 1, secondCommaIndex).trim();
+				String secondValue = token.substring(secondCommaIndex + 1, rightBracketIndex).trim();
 				String rest = "";
 				if (rightBracketIndex < token.length() - 1) {
 					rest = token.substring(rightBracketIndex + 1);
@@ -364,7 +384,7 @@ public class SBMLConverter {
 
 	public static void main(String args[]) {
 		SBMLConverter sbmlConverter = SBMLConverter.getInstance();
-		ArtificialChemistry alChemistry = sbmlConverter.fileToArtificialChemistry("perceptron_v06.xml");
+		ArtificialChemistry alChemistry = sbmlConverter.fileToArtificialChemistry("perceptron_v06.xml", "Perceptron");
 		System.out.println(alChemistry);
 	}
 }

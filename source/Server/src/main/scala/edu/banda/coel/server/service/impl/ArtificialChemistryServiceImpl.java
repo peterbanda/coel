@@ -372,7 +372,7 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 	@Transactional(readOnly = false)
     public void saveSbmlModelAsArtificialChemistry(String sbmlString, String acName) {
 		SBMLConverter sbmlConverter = SBMLConverter.getInstance();
-		ArtificialChemistry ac = sbmlConverter.stringToArtificialChemistry(sbmlString);
+		ArtificialChemistry ac = sbmlConverter.stringToArtificialChemistry(sbmlString, acName);
 
 		User user = userDAO.get(new Long(1));
 		saveCompartmentWithAllData(ac.getSkinCompartment(), user);
@@ -386,6 +386,18 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 //		}
     }
 
+	/**
+	 * @see edu.banda.coel.domain.service.ArtificialChemistryService#saveSbmlModelAsCompartment(String, String)
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public void saveSbmlModelAsCompartment(String sbmlString, String compartmentName) {
+		SBMLConverter sbmlConverter = SBMLConverter.getInstance();
+		AcCompartment compartment = sbmlConverter.stringToCompartment(sbmlString, compartmentName);
+
+		User user = userDAO.get(new Long(1));
+		saveCompartmentWithAllData(compartment, user);
+	}
 
 	private Double[] getOverallAveragedEvaluatedRun(Collection<AcEvaluatedRun> acEvaluatedRuns) {
 		final int evaluatedRunsNum = acEvaluatedRuns.size();

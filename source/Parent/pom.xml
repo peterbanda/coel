@@ -15,7 +15,7 @@
 		<module>../ConsoleClient</module>
 		<module>../Web</module>
 	</modules>
- 
+
 	<properties>
 		<spring.version>3.1.2.RELEASE</spring.version>
 		<banda-lib.version>0.5.1</banda-lib.version>

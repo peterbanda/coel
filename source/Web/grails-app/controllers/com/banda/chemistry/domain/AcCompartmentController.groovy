@@ -4,9 +4,11 @@ import com.banda.chemistry.business.AcRateConstantUtil
 import com.banda.chemistry.business.AcReplicator
 import com.banda.chemistry.domain.AcReaction.ReactionDirection
 import edu.banda.coel.web.BaseDomainController
+import edu.banda.coel.domain.service.ArtificialChemistryService
 
 class AcCompartmentController extends BaseDomainController {
 
+    def ArtificialChemistryService artificialChemistryService
 	def acRateUtil = AcRateConstantUtil.instance
 	def replicator = AcReplicator.instance
 
@@ -178,6 +180,20 @@ class AcCompartmentController extends BaseDomainController {
 			flash.message = "${message(code: 'default.updated.message', args: [doClazzMessageLabel, acCompartmentInstance.id])}"
 		}
 		redirect(action: "show", id: acCompartmentInstance.id)
+	}
+
+	def importSbml = {
+		def sbmlFile = request.getFile('sbmlFile')
+		if (!sbmlFile.empty) {
+			def sbmlFileContent = sbmlFile.inputStream.text
+			def fileName = sbmlFile.originalFilename
+			artificialChemistryService.saveSbmlModelAsCompartment(sbmlFileContent, fileName[0..-5])
+			flash.message = 'SBML model has been imported.'
+		}
+		else {
+			flash.message = 'Filename cannot be empty.'
+		}
+		redirect(action: "list")
 	}
 
 	def addSubCompartment(Long id, Long subCompartmentId) {

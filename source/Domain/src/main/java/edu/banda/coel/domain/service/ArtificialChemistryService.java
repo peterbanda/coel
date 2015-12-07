@@ -116,6 +116,13 @@ public interface ArtificialChemistryService {
     void saveSbmlModelAsArtificialChemistry(String sbmlString, String acName);
 
     /**
+     * Saves SBML model represented as XML String to database as compartment.
+     *
+     * @param sbmlString The SBML model represented as String
+     */
+    void saveSbmlModelAsCompartment(String sbmlString, String compartmentName);
+
+    /**
      * Analyzes dynamics of given artificial chemistry
      *
      * @param task

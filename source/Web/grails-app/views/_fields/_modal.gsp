@@ -18,7 +18,7 @@
         					</h4>
       					</div>
       					<g:if test="${attrs.controller}">
-      						<ui:form controller="${attrs.controller}" action="${attrs.action}" class="form-dense">
+      						<ui:form controller="${attrs.controller}" action="${attrs.action}" class="form-dense" enctype="${attrs.enctype != null ? attrs.enctype : ""}">
       							<div class="modal-body">
     	  							${text}
 	      						</div>
@@ -29,7 +29,7 @@
                 			</ui:form>
                 		</g:if>
                 		<g:elseif test="${attrs.action}">
-      						<ui:form action="${attrs.action}" class="form-dense">
+      						<ui:form action="${attrs.action}" class="form-dense" enctype="${attrs.enctype != null ? attrs.enctype : ""}">
       							<div class="modal-body">
     	  							${text}
 	      						</div>

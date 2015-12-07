@@ -76,6 +76,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.codehaus.woodstox</groupId>
+			<artifactId>woodstox-core-lgpl</artifactId>
+			<version>4.0.9</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.w3c.jigsaw</groupId>
+            <artifactId>jigsaw</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+
+		<dependency>
 			<groupId>com.googlecode.efficient-java-matrix-library</groupId>
 			<artifactId>ejml</artifactId>
 			<version>0.18</version>
