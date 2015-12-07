@@ -3,13 +3,16 @@
   <component name="FacetManager">
     <facet type="hibernate" name="Hibernate">
       <configuration>
-        <datasource-map>
-          <unit-entry name="Gorm" />
-          <unit-entry name="sessionFactory" value="dataSource" />
-          <unit-entry name="src:templates:artifacts:hibernate.cfg.xml" />
-        </datasource-map>
+        <datasource-map />
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/templates/artifacts/hibernate.cfg.xml" />
+      </configuration>
+    </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/web-app/WEB-INF/applicationContext.xml</file>
+        </fileset>
       </configuration>
     </facet>
     <facet type="web" name="Web">
@@ -20,115 +23,17 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/templates/war" relative="/WEB-INF" />
         </webroots>
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/src/main/java" />
-        </sourceRoots>
-      </configuration>
-    </facet>
-    <facet type="Spring" name="Spring">
-      <configuration>
-        <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/web-app/WEB-INF/applicationContext.xml</file>
-        </fileset>
-      </configuration>
-    </facet>
-    <facet type="web" name="GrailsWeb">
-      <configuration>
-        <webroots>
-          <root url="file://$MODULE_DIR$/web-app" relative="/" />
-          <root url="file://$MODULE_DIR$/grails-app/views" relative="/" />
-        </webroots>
-        <sourceRoots />
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/grails-app/controllers" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/grails-app/domain" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/grails-app/i18n" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/grails-app/services" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/grails-app/taglib" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/grails-app/utils" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/groovy" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/test/unit" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/test/integration" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library name="Grails User Library (coel-web)">
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/lib" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-juli/7.0.30/tomcat-juli-7.0.30.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-api/7.0.30/tomcat-api-7.0.30.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/jline/jline/1.0/jline-1.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-annotations-api/7.0.30/tomcat-annotations-api-7.0.30.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/taglibs/standard/1.1.2/standard-1.1.2.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/groovy/groovy-all/1.7.8/groovy-all-1.7.8.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/bouncycastle/bcprov-jdk15/1.45/bcprov-jdk15-1.45.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/jul-to-slf4j/1.5.8/jul-to-slf4j-1.5.8.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/xalan/serializer/2.7.1/serializer-2.7.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-servlet-api/7.0.30/tomcat-servlet-api-7.0.30.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/fusesource/jansi/jansi/1.2.1/jansi-1.2.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/aspectj/aspectjweaver/1.6.10/aspectjweaver-1.6.10.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-junit/1.8.2/ant-junit-1.8.2.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/2.4.1/protobuf-java-2.4.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.2/commons-cli-1.2.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-catalina/7.0.30/tomcat-catalina-7.0.30.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-trax/1.7.1/ant-trax-1.7.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-launcher/1.8.2/ant-launcher-1.8.2.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-coyote/7.0.30/tomcat-coyote-7.0.30.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/gant/gant_groovy1.8/1.9.6/gant_groovy1.8-1.9.6.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-util/7.0.30/tomcat-util-7.0.30.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/bouncycastle/bcpg-jdk15/1.45/bcpg-jdk15-1.45.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.8.2/ant-1.8.2.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-tx/3.0.5.RELEASE/spring-tx-3.0.5.RELEASE.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/net/java/dev/jna/jna/3.2.3/jna-3.2.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module" module-name="coel-web-grailsPlugins" />
-    <orderEntry type="library" name="Maven: org.grails:grails-bootstrap:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-launcher:1.0.5" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-core:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-web:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.1.2" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-spring:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet:jsp-api:2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-scripts:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-controllers:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-testing:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-datastore-simple:1.1.0.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-datastore-gorm:1.1.0.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-test:1.3.7" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-converters:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-gsp:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-codecs:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-filters:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-datastore-core:1.1.0.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-servlets:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-mimetypes:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-domain-class:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-logging:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-crud:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-resources:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-plugin-tomcat:2.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.grails:grails-maven-archetype:2.1.1" level="project" />
   </component>
 </module>
