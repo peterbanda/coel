@@ -85,6 +85,9 @@
 		<ui:h3 text="Try It"/>
 		<p>We provide a free account for selected research teams. If you wish to collaborate in the areas of (bio)chemical computing, reservoir computing, or neural networks, please contact us or <a href="/user/register">register</a>.</p>
 		<p>We are also looking for beta testers and web designers to help us preparing the next 0.9.0 release. For bug reporting, request a Jira account <a href="http://linth.ece.pdx.edu:8090">here</a>. Your feedback is valuable for us!</p>
+		<div class="alert alert-info" role="alert">
+			<p>If you want to play with COEL and don't wish to register you can log in using a guest account <code>guest</code> / <code>welcome123</code>.<br/> Note that this account is meant only for evaluation purposes and therefore the provided functionality is quite limited.</p>
+		</div>
 	</theme:zone>
 
 	<theme:zone name="panel2">

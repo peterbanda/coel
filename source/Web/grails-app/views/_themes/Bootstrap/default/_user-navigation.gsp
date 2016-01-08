@@ -26,17 +26,19 @@
                             </span>
                         </div>
                     </a><ul class="dropdown-menu">
-                    <li>
-						<gui:actionLink controller="user" action="editLoggedUser" icon="icon-user">
-							<span>Edit Profile</span>
-						</gui:actionLink>
-                    </li>
-                    <li>
-						<gui:actionLink controller="user" action="changePasswordLoggedUser" icon="icon-wrench">
-							<span>Update Password</span>
-						</gui:actionLink>
-                    </li>
-                    <li class="divider"></li>
+					<sec:ifNotGranted roles="ROLE_GUEST">
+                    	<li>
+							<gui:actionLink controller="user" action="editLoggedUser" icon="icon-user">
+								<span>Edit Profile</span>
+							</gui:actionLink>
+        	            </li>
+            	        <li>
+							<gui:actionLink controller="user" action="changePasswordLoggedUser" icon="icon-wrench">
+								<span>Update Password</span>
+							</gui:actionLink>
+                    	</li>
+                        <li class="divider"></li>
+					</sec:ifNotGranted>
                     <li>
                         <a href="/logout">
                         	<i class="glyphicon glyphicon-log-out"></i>

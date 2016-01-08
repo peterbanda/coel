@@ -5,7 +5,7 @@
 	<artifactId>coel-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>Parent</name>
-	<version>0.8.2</version>
+	<version>0.8.3</version>
 	<url>http://peterbanda.net</url>
 
 	<modules>
