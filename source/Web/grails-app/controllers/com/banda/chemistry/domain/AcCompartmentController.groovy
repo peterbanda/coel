@@ -5,12 +5,14 @@ import com.banda.chemistry.business.AcReplicator
 import com.banda.chemistry.domain.AcReaction.ReactionDirection
 import edu.banda.coel.web.BaseDomainController
 import edu.banda.coel.domain.service.ArtificialChemistryService
+import edu.banda.coel.web.ChemistryCommonService
 
 class AcCompartmentController extends BaseDomainController {
 
     def ArtificialChemistryService artificialChemistryService
 	def acRateUtil = AcRateConstantUtil.instance
 	def replicator = AcReplicator.instance
+	def ChemistryCommonService chemistryCommonService
 
 	def index() {
 		redirect(action: "list", params: params)
@@ -206,19 +208,7 @@ class AcCompartmentController extends BaseDomainController {
 	}
 
 	protected def deleteInstance(instance) {
-		AcCompartment.withTransaction{ status ->
-			// remove sub associations
-			def subAssocs = []
-			subAssocs.addAll(instance.subCompartmentAssociations)
-			subAssocs.each{ removeCompartmentAssociation(it)}
-
-			// remove parent associations
-			def parentAssocs = []
-			parentAssocs.addAll(instance.parentCompartmentAssociations)
-			parentAssocs.each{ removeCompartmentAssociation(it)}
-
-			instance.delete(flush: true)
-		}
+		chemistryCommonService.deleteCompartment(instance)
 	}
 
 	protected def copyInstance(instance) {
@@ -235,20 +225,10 @@ class AcCompartmentController extends BaseDomainController {
 		def parentCompartment = compartmentAssociation.parentCompartment
 		def subCompartment = compartmentAssociation.subCompartment
 
-		removeCompartmentAssociation(compartmentAssociation)
+		chemistryCommonService.removeCompartmentAssociation(compartmentAssociation)
 
 		flash.message = message(code: 'default.disassociated.message', args: [doClazzMessageLabel, subCompartment.id])
 		redirect(action: "show", id: parentCompartment.id)
-	}
-
-	private def removeCompartmentAssociation(compartmentAssociation) {
-		def parentCompartment = compartmentAssociation.parentCompartment
-		def subCompartment = compartmentAssociation.subCompartment
-
-		AcCompartmentAssociation.withTransaction{ status ->
-			parentCompartment.removeSubCompartmentAssociation(compartmentAssociation)
-			compartmentAssociation.delete(flush: true)
-		}
 	}
 
 	private def getReactionSets(AcCompartment compartment) {

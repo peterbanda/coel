@@ -122,16 +122,6 @@ class AcTranslationSeriesController extends BaseDomainController {
 	}
 
 	protected def deleteInstance(instance) {
-		AcTranslationSeries.withTransaction{ status ->
-			def rangeTranslations = []
-			instance.translations.each { it ->
-				rangeTranslations.add(it)
-			}
-			rangeTranslations.each { it ->
-				instance.removeTranslation(it)
-				it.delete(flush : true)
-			}
-			instance.delete(flush: true)
-		}
+		chemistryCommonService.deleteTranslationSeries(instance)
 	}
 }

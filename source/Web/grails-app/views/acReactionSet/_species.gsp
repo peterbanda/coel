@@ -29,6 +29,14 @@
 			}
 			$("#addSpeciesLink").data('popover').options.content = 'Add New';
 			$("#addSpeciesLink").data('popover').options.placement = 'bottom';
+
+			if (${instance?.reactions.isEmpty()}) {
+				$("#acReactionLink").data('popover').options.content = 'Continue here to add reactions';
+				$("#acReactionLink").data('popover').options.placement = 'right';
+				console.log($("#acReactionLink").data('popover').options);
+				$("#acReactionLink").popover('show');
+            }
+
 			$.each(data.acSpeciesInstances, function(index, acSpeciesInstance) {			
 				var newItem = $('<li><a href="#" id="label' + acSpeciesInstance.id + '" class="plain" data-type="textdeletable" data-pk="' + + acSpeciesInstance.id + '" data-mode="inline" data-url="/acSpecies/updatePropertyAjax" data-title="Enter Label">' + acSpeciesInstance.label + '</a></li>')
 				$("#speciesLabels").append(newItem);
@@ -103,7 +111,7 @@
 					    <gui:actionLink icon="icon-plus" onclick="addSpeciesLabelTextField();" elementId="addSpeciesLink" hint="Add New"/>
                     </g:if>
                     <g:else>
-                        <gui:actionLink icon="icon-plus" onclick="addSpeciesLabelTextField();" elementId="addSpeciesLink" hint="Start here to add new species" hint-placement="top" hint-show="true"/>
+                        <gui:actionLink icon="icon-plus" onclick="addSpeciesLabelTextField();" elementId="addSpeciesLink" hint="Start here to add species" hint-placement="top" hint-show="true"/>
                     </g:else>
 					<g:textField name="labels" placeholder="Enter species label(s)"/>
 				</li>

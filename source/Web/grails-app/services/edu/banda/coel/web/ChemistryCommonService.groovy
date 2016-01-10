@@ -1,15 +1,11 @@
 package edu.banda.coel.web
 
 import com.banda.chemistry.business.ArtificialChemistryUtil
-import com.banda.chemistry.domain.AcInteractionSeries
-import com.banda.chemistry.domain.AcInteractionVariableAssignment
-import com.banda.chemistry.domain.AcReaction
-import com.banda.chemistry.domain.AcReactionSet
-import com.banda.chemistry.domain.AcSpeciesAssociationType
-import com.banda.chemistry.domain.AcSpeciesSet
+import com.banda.chemistry.domain.*
 import edu.banda.coel.business.chempic.ChemistryPicGeneratorImpl
 import edu.banda.coel.domain.service.ChemistryPicGenerator
 import grails.converters.JSON
+import com.banda.core.domain.um.User
 
 /**
  * Created by peter on 6/9/15.
@@ -139,6 +135,134 @@ class ChemistryCommonService {
                 chemPicGenerator.createDNAReactionSVG(reactantStructures, productStructures, acReaction.hasReverseRateConstants())
         } else {
             null
+        }
+    }
+
+    def deleteAllGuestData(Long userId) {
+        def user = User.get(userId)
+        if (user.getRoles().size() != 1 || user.getRoles().first().name != "ROLE_GUEST") {
+            // not a guest )
+            return;
+        }
+
+        // delete compartments
+        AcCompartment.findAllByCreatedBy(user).each { instance -> deleteCompartment(instance) }
+
+        //delete reaction sets
+        AcReactionSet.findAllByCreatedBy(user).each { instance ->
+            AcReactionSet.withTransaction{ status ->
+                instance.delete(flush: true)
+            }
+        }
+
+        //delete interaction series
+        def interactionSeries = AcInteractionSeries.findAllByCreatedBy(user)
+        while (!interactionSeries.isEmpty()) {
+            def leafInteractionSeries = findLeafInteractionSeries(interactionSeries)
+            leafInteractionSeries.each { instance ->
+                instance.parent.removeSubActionSeries(instance)
+                deleteInteractionSeries(instance)
+            }
+            interactionSeries.removeAll(leafInteractionSeries)
+        }
+
+        //delete translation series
+        AcTranslationSeries.findAllByCreatedBy(user).each { instance -> deleteTranslationSeries(instance) }
+
+        //delete species sets
+        def speciesSets = AcSpeciesSet.findAllByCreatedBy(user)
+        while (!speciesSets.isEmpty()) {
+            def leafSpeciesSets = findLeafSpeciesSets(speciesSets)
+            leafSpeciesSets.each { instance ->
+                AcSpeciesSet.withTransaction { status ->
+                    instance.delete(flush: true)
+                }
+            }
+            speciesSets.removeAll(leafSpeciesSets)
+        }
+
+        //delete simulation configs
+        AcSimulationConfig.findAllByCreatedBy(user).each { instance ->
+            AcSimulationConfig.withTransaction{ status ->
+                instance.delete(flush: true)
+            }
+        }
+    }
+
+    private def findLeafSpeciesSets(speciesSets) {
+        def parentSpeciesSets = speciesSets.collect{ speciesSet -> speciesSet.parentSpeciesSet }
+        def leafSpeciesSets = new HashSet(speciesSets)
+        leafSpeciesSets.removeAll(parentSpeciesSets)
+        leafSpeciesSets
+    }
+
+    private def findLeafInteractionSeries(interactionSeries) {
+        def parentInteractionSeries = interactionSeries.collect{ singleInteractionSeries -> singleInteractionSeries.parent }
+        def leafInteractionSeries = new HashSet(interactionSeries)
+        leafInteractionSeries.removeAll(parentInteractionSeries)
+        leafInteractionSeries
+    }
+
+    private def deleteInteractionSeries(instance) {
+        instance.actions.each { action ->
+            def speciesActions = new HashSet(action.speciesActions)
+            speciesActions.each { speciesInteraction ->
+                AcSpeciesInteraction.withTransaction { status ->
+                    action.removeFromSpeciesActions(speciesInteraction)
+                    speciesInteraction.delete(flush: true)
+                }
+            }
+            def variableAssignments = new HashSet(action.variableAssignments)
+            variableAssignments.each { variableAssignment ->
+                AcInteractionVariableAssignment.withTransaction { status ->
+                    action.removeVariableAssignment(variableAssignment)
+                    variableAssignment.delete(flush: true)
+                }
+            }
+        }
+
+        AcInteractionSeries.withTransaction{ status ->
+            instance.delete(flush: true)
+        }
+    }
+
+    def deleteCompartment(instance) {
+        AcCompartment.withTransaction{ status ->
+            // remove sub associations
+            def subAssocs = []
+            subAssocs.addAll(instance.subCompartmentAssociations)
+            subAssocs.each{ removeCompartmentAssociation(it)}
+
+            // remove parent associations
+            def parentAssocs = []
+            parentAssocs.addAll(instance.parentCompartmentAssociations)
+            parentAssocs.each{ removeCompartmentAssociation(it)}
+
+            instance.delete(flush: true)
+        }
+    }
+
+    def deleteTranslationSeries(instance) {
+        AcTranslationSeries.withTransaction{ status ->
+            def rangeTranslations = []
+            instance.translations.each { it ->
+                rangeTranslations.add(it)
+            }
+            rangeTranslations.each { it ->
+                instance.removeTranslation(it)
+                it.delete(flush : true)
+            }
+            instance.delete(flush: true)
+        }
+    }
+
+    def removeCompartmentAssociation(compartmentAssociation) {
+        def parentCompartment = compartmentAssociation.parentCompartment
+        def subCompartment = compartmentAssociation.subCompartment
+
+        AcCompartmentAssociation.withTransaction{ status ->
+            parentCompartment.removeSubCompartmentAssociation(compartmentAssociation)
+            compartmentAssociation.delete(flush: true)
         }
     }
 }

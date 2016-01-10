@@ -168,6 +168,8 @@ grails.plugins.springsecurity.authority.nameField = 'name'
 //grails.plugin.springsecurity.secureChannel.insecureHeaderValue = 'https'
 
 grails.plugins.springsecurity.auth.loginFormUrl = '/login/auth'
+//grails.plugins.springsecurity.successHandler.defaultTargetUrl= '/login/authsuccess'
+//grails.plugins.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugins.springsecurity.failureHandler.defaultFailureUrl = '/login/authfail'
 grails.plugins.springsecurity.errors.login.expired = 'Your account has expired. Contact your administrator.'
 grails.plugins.springsecurity.errors.login.passwordExpired = 'Your password has expired. Contact your administrator.'
@@ -216,9 +218,11 @@ grails.plugins.springsecurity.interceptUrlMap = [
 	'/acInteraction/**':                      ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
 	'/acSpeciesInteraction/**':               ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
 	'/acInteractionVariableAssignment/**':    ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
+	'/acInteractionVariable/**':              ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
 	'/acTranslationSeries/**':                ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
 	'/acTranslation/**':                      ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
 	'/acTranslationItem/**':                  ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
+    '/acTranslationVariable/**':              ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
 	'/acSimulationConfig/**':                 ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
 	'/acRun/**':                              ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
 	'/chemPic/**':                            ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],

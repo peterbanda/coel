@@ -16,12 +16,20 @@
 
     			<div class="row-fluid">
     				<div class="spacedTop spacedLeft">
-    					<gui:actionLink controller="acReaction" action="create" elementId="acReactionLink" params="['reactionSet.id':instance.id]" hint="Add New" onclick="return checkIfSpeciesExist();"/>
 						<g:if test="${!instance?.reactions.isEmpty()}">
+							<gui:actionLink controller="acReaction" action="create" elementId="acReactionLink" params="['reactionSet.id':instance.id]" onclick="return checkIfSpeciesExist();" hint="Add New"/>
 							<gui:modal id="confirm-reaction-delete-modal" title="Delete" onclick="doTableSelectionAction('acReactionTable','deleteMultiple')" text="Are you sure?"/>
 							<gui:actionLink icon="icon-trash" onclick="openModal('confirm-reaction-delete-modal')" hint="Delete"/>
 							<gui:actionLink icon="icon-plus-sign" onclick="doTableSelectionAction('acReactionTable','copyMultiple')" hint="Copy"/>
 						</g:if>
+						<g:else>
+							<g:if test="${!instance.speciesSet.getOwnAndInheritedVariables().isEmpty()}">
+								<gui:actionLink controller="acReaction" action="create" elementId="acReactionLink" params="['reactionSet.id':instance.id]" hint="Continue here to add reactions" hint-placement="right" hint-show="true"/>
+							</g:if>
+							<g:else>
+								<gui:actionLink controller="acReaction" action="create" elementId="acReactionLink" params="['reactionSet.id':instance.id]" onclick="return checkIfSpeciesExist();" hint="Add New"/>
+							</g:else>
+						</g:else>
     			    </div>
             		<gui:table list="${instance?.reactions}" showEnabled="true" editEnabled="true" checkEnabled="true">
         				<gui:column property="label" editableUrl="/acReaction/updateLabelAjax"/>
