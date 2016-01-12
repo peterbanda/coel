@@ -121,6 +121,11 @@ class LoginController {
 		}
 	}
 
+    def authGuestInUsedFail = {
+        flash.error_message = "Guest is already logged in. The guest account does not allow concurrent access."
+        redirect action: auth, params: params
+    }
+
 	/**
 	 * The Ajax success redirect url.
 	 */
