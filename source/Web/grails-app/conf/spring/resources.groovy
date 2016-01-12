@@ -5,9 +5,13 @@ import edu.banda.coel.web.GrailsBeanResolver;
 import edu.banda.coel.web.GrailsExpressionHandler;
 import edu.banda.coel.web.GuestAwareSuccessHandler;
 
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.codehaus.groovy.grails.plugins.springsecurity.AjaxAwareAuthenticationSuccessHandler;
+import edu.banda.coel.web.SessionListener
+
+import org.springframework.security.core.session.SessionRegistryImpl
+import org.springframework.security.web.session.ConcurrentSessionFilter
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy
+import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy
 
 // Place your Spring DSL code here
 beans = {
@@ -46,6 +50,23 @@ beans = {
 		grailsApplication = ref('grailsApplication')
 	}
 
+    sessionListener(SessionListener)
+
+//    sessionRegistry(SessionRegistryImpl)
+//
+//    concurrencyFilter(ConcurrentSessionFilter) {
+//        sessionRegistry = sessionRegistry
+//        logoutHandlers = [ref("rememberMeServices"), ref("securityContextLogoutHandler")]
+//        expiredUrl='/login/concurrentSession'
+//    }
+
+//    sessionAuthenticationStrategy(NullAuthenticatedSessionStrategy)
+
+//    sessionAuthenticationStrategy(ConcurrentSessionControlStrategy, sessionRegistry) {
+//        alwaysCreateSession = true
+//        maximumSessions = -1
+//    }
+
     authenticationSuccessHandler(GuestAwareSuccessHandler) {
         def conf = SpringSecurityUtils.securityConfig
         requestCache = ref('requestCache')
@@ -56,6 +77,8 @@ beans = {
         useReferer = conf.successHandler.useReferer // false
         redirectStrategy = ref('redirectStrategy')
         chemistryCommonService = ref('chemistryCommonService')
+//		sessionRegistry = sessionRegistry
+        sessionListener = sessionListener
     }
 
 //    authenticationSuccessHandler(GuestAwareSuccessHandler) {

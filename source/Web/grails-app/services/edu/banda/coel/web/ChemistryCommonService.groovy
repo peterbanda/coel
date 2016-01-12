@@ -155,15 +155,20 @@ class ChemistryCommonService {
             }
         }
 
-        //delete interaction series
-        def interactionSeries = AcInteractionSeries.findAllByCreatedBy(user)
-        while (!interactionSeries.isEmpty()) {
-            def leafInteractionSeries = findLeafInteractionSeries(interactionSeries)
-            leafInteractionSeries.each { instance ->
-                instance.parent.removeSubActionSeries(instance)
-                deleteInteractionSeries(instance)
+        try {
+            //delete interaction series
+            def interactionSeries = AcInteractionSeries.findAllByCreatedBy(user)
+            while (!interactionSeries.isEmpty()) {
+                def leafInteractionSeries = findLeafInteractionSeries(interactionSeries)
+                leafInteractionSeries.each { instance ->
+                    if (instance.parent)
+                        instance.parent.removeSubActionSeries(instance)
+                    deleteInteractionSeries(instance)
+                }
+                interactionSeries.removeAll(leafInteractionSeries)
             }
-            interactionSeries.removeAll(leafInteractionSeries)
+        } catch (Exception e) {
+            e.printStackTrace()
         }
 
         //delete translation series

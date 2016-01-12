@@ -176,6 +176,7 @@ grails.plugins.springsecurity.errors.login.passwordExpired = 'Your password has 
 grails.plugins.springsecurity.errors.login.disabled = 'Your account has not been activated yet or has been disabled. Wait for the registration to complete or contact your administrator.'
 grails.plugins.springsecurity.errors.login.locked = 'Your account has been locked. Contact your administrator.'
 grails.plugins.springsecurity.errors.login.fail = 'The username or password you entered is incorrect. Try again.'
+grails.plugins.springsecurity.useHttpSessionEventPublisher = true
 
 grails.plugins.springsecurity.adh.errorPage = null
 

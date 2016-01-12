@@ -87,7 +87,7 @@
 		<p>We are also looking for beta testers and web designers to help us preparing the next 0.9.0 release. For bug reporting, request a Jira account <a href="http://linth.ece.pdx.edu:8090">here</a>. Your feedback is valuable for us!</p>
 		<div class="alert alert-info" role="alert">
 			<p>If you want to play with COEL and don't wish to register you can log in using a guest account <code>guest</code> / <code>welcome123</code>.<br/> Note that this account is meant only for evaluation purposes and therefore the provided functionality is quite limited.
-			Also all the data created during a session will be deleted.</p>
+			Also all the data created during a session will be deleted and only a single logged user is allowed.</p>
 		</div>
 	</theme:zone>
 
