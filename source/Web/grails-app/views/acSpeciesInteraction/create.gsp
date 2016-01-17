@@ -10,10 +10,15 @@
 			$("#species").focus()			
 		});
 
+		function showExpressionHelp() {
+			$('#jep-help-modal').modal();
+		}
+
 	</r:script>
 </head>
 <body>
     <theme:zone name="details">
+		<g:render template="/ac/jep_help"/>
         <g:hiddenField name="action.id" value="${instance.action.id}" />
     	<f:with bean="instance">
     		<f:ref property="action.actionSeries" textProperty="name"/>
@@ -25,6 +30,7 @@
 				<g:select name="species.id" from="${species}" optionKey="id" optionValue="label" value="${instance.species?.id}"/>
 					&larr;
 				<g:textArea class="input-xxlarge" rows="4" name="settingFunction.formula" value="${render(template:'displaySettingFunction', bean:instance)}" />
+				<gui:actionButton hint="Help" onclick="showExpressionHelp(); return false;" text="?"/>
 			</ui:fieldInput>
         </ui:field>
     </theme:zone>

@@ -5,6 +5,10 @@
     <theme:layout name="edit"/>
     <r:script>
     	$("#translationFunction\\.formula").focus();
+
+		function showExpressionHelp() {
+			$('#jep-help-modal').modal();
+		}
     </r:script>
 </head>
 <body>
@@ -15,6 +19,7 @@
 	</theme:zone>
 
     <theme:zone name="details">
+		<g:render template="/ac/jep_help"/>
 		<f:with bean="instance">
 			<f:ref property="translation">
 				<g:if test="${it.toTime}">
@@ -31,6 +36,7 @@
 				<g:textField name="variableLabel" value="${instance.variable.label}" />
 				&larr;
 				<g:textArea class="input-xxlarge" rows="4" name="translationFunction.formula" value="${render(template:'displayTranslationFunction', bean:instance)}" />
+				<gui:actionButton hint="Help" onclick="showExpressionHelp(); return false;" text="?"/>
 			</ui:fieldInput>
         </ui:field>
     </theme:zone>

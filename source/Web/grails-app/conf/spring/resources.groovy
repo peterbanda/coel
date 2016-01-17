@@ -57,17 +57,4 @@ beans = {
         redirectStrategy = ref('redirectStrategy')
         chemistryCommonService = ref('chemistryCommonService')
     }
-
-//    authenticationSuccessHandler(GuestAwareSuccessHandler) {
-//		def conf = SpringSecurityUtils.securityConfig
-//		requestCache = ref('requestCache')
-//		defaultTargetUrl = conf.successHandler.defaultTargetUrl
-//		alwaysUseDefaultTargetUrl = conf.successHandler.alwaysUseDefault
-//		targetUrlParameter = conf.successHandler.targetUrlParameter
-//		useReferer = conf.successHandler.useReferer
-//		redirectStrategy = ref('redirectStrategy')
-//	}
-//	secureDAO(SecureDAO)
-//		clazz = ArtificialChemistry.class
-//	}
 }

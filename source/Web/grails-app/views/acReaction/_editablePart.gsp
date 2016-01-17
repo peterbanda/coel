@@ -134,6 +134,7 @@
 			<ui:field bean="instance" name="forwardRateFunction">
 				<ui:fieldInput>
 					<g:textField name="forwardRateFunction.formula" value="${render(template:'displayForwardRateFunction', bean:instance)}" />
+                    <gui:actionButton hint="Help" onclick="showExpressionHelp(); return false;" text="?"/>
 				</ui:fieldInput>
 			</ui:field>
 		</div>
@@ -150,6 +151,7 @@
 			<ui:field bean="instance" name="reverseRateFunction">
 				<ui:fieldInput>
 					<g:textField name="reverseRateFunction.formula" value="${render(template:'displayReverseRateFunction', bean:instance)}" />
+                    <gui:actionButton hint="Help" onclick="showExpressionHelp(); return false;" text="?"/>
 				</ui:fieldInput>
 			</ui:field>
 		</div>

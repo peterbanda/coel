@@ -9,6 +9,9 @@
 			$("#settingFunction\\.formula").focus()			
 		});
 
+		function showExpressionHelp() {
+			$('#jep-help-modal').modal();
+		}
 	</r:script>
 </head>
 <body>
@@ -18,7 +21,8 @@
     	<gui:actionButton action="showNext" id="${instance?.id}"/>
 	</theme:zone>
 
-    <theme:zone name="details">    
+    <theme:zone name="details">
+		<g:render template="/ac/jep_help"/>
     	<f:with bean="instance">
     		<f:ref property="action.actionSeries" textProperty="name"/>
 			<f:ref property="action" textProperty="startTime"/>
@@ -29,6 +33,7 @@
 				<g:select name="variable.id" from="${interactionVariables}" optionKey="id" optionValue="label" value="${instance.variable.id}"/>
 					&larr;
 				<g:textArea class="input-xxlarge" rows="4" name="settingFunction.formula" value="${render(template:'displaySettingFunction', bean:instance)}" />
+				<gui:actionButton hint="Help" onclick="showExpressionHelp(); return false;" text="?"/>
 			</ui:fieldInput>
         </ui:field>
     </theme:zone>
