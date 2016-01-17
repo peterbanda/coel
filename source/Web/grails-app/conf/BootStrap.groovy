@@ -2,12 +2,24 @@ import com.banda.core.domain.um.User
 
 import org.hibernate.transform.Transformers
 import org.hibernate.criterion.Projections
+import org.codehaus.groovy.grails.plugins.springsecurity.SecurityFilterPosition
+import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import edu.banda.coel.web.SessionListener
 
 class BootStrap {
 
 	def grailsApplication
+	def SessionListener sessionListener
+//	def authenticationManager
+//	def authenticationProcessingFilter
+//	def concurrentSessionControlStrategy
+//	def securityContextPersistenceFilter
 
      def init = { servletContext ->
+		 servletContext.addListener(sessionListener)
+//		 authenticationProcessingFilter.sessionAuthenticationStrategy = concurrentSessionControlStrategy
+//		 SpringSecurityUtils.clientRegisterFilter('concurrencyFilter', SecurityFilterPosition.CONCURRENT_SESSION_FILTER)
+
 		 def doClasses = grailsApplication.getArtefacts("Domain")*.clazz
 		 doClasses.each { doClazz -> registerDynamicMethods(doClazz)}
      }

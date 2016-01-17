@@ -71,8 +71,8 @@
     </servlet-mapping>
 
     <session-config>
-        <!-- 30 minutes -->
-        <session-timeout>30</session-timeout>
+        <!-- 5 minutes -->
+        <session-timeout>5</session-timeout>
     </session-config>
 
     <welcome-file-list>

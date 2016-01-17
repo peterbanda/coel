@@ -33,8 +33,8 @@
 			if (${instance?.reactions.isEmpty()}) {
 				$("#acReactionLink").data('popover').options.content = 'Continue here to add reactions';
 				$("#acReactionLink").data('popover').options.placement = 'right';
-				console.log($("#acReactionLink").data('popover').options);
 				$("#acReactionLink").popover('show');
+				$("#acReactionLink").focus();
             }
 
 			$.each(data.acSpeciesInstances, function(index, acSpeciesInstance) {			

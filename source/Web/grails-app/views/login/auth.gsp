@@ -15,7 +15,7 @@
     	    <ui:field name="j_password" type="password" label="Password"/>
     	    <ui:actions>
             	<ui:button mode="primary">Login</ui:button>
-               	<ui:button mode="cancel">Cancel</ui:button>
+				<a class="btn btn-cancel" href="${g.createLink(uri:'/')}">${message(code: 'default.button.cancel.label', default: 'Cancel')}</a>
             </ui:actions>
         </ui:form>
 
