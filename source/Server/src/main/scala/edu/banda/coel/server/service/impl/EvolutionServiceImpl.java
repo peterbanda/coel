@@ -67,9 +67,6 @@ class EvolutionServiceImpl extends AbstractService implements EvolutionService {
 	@Autowired
 	private GeneticAlgorithmBOFactory geneticAlgorithmBOFactory;
 
-	private Integer defaultMaxJobsInParallelNum;
-	private Integer defaultJobsInSequenceNum;
-
 	//////////////
 	// SERVICES //
 	//////////////
@@ -201,8 +198,8 @@ class EvolutionServiceImpl extends AbstractService implements EvolutionService {
 				new EvoFitnessGridEnabledEvaluatorBO<H, T>(
 						computationalGrid,
 						evoTaskBO.getFitnessEvaluator(),
-						task.getMaxJobsInParallelNum() != null ? task.getMaxJobsInParallelNum() : defaultMaxJobsInParallelNum,
-						task.getJobsInSequenceNum() != null ? task.getJobsInSequenceNum() : defaultJobsInSequenceNum),
+						task.getMaxJobsInParallelNum(),
+						task.getJobsInSequenceNum()),
 				evoTaskBO.getTestSampleGenerator());
 	}
 
@@ -371,21 +368,5 @@ class EvolutionServiceImpl extends AbstractService implements EvolutionService {
 
 	public void setGeneticAlgorithmBOAutoSaveHandler(GeneticAlgorithmBOAutoSaveHandler geneticAlgorithmBOAutoSaveHandler) {
 		this.geneticAlgorithmBOAutoSaveHandler = geneticAlgorithmBOAutoSaveHandler;
-	}
-
-	public Integer getDefaultMaxJobsInParallelNum() {
-		return defaultMaxJobsInParallelNum;
-	}
-
-	public void setDefaultMaxJobsInParallelNum(Integer defaultMaxJobsInParallelNum) {
-		this.defaultMaxJobsInParallelNum = defaultMaxJobsInParallelNum;
-	}
-
-	public Integer getDefaultJobsInSequenceNum() {
-		return defaultJobsInSequenceNum;
-	}
-
-	public void setDefaultJobsInSequenceNum(Integer defaultJobsInSequenceNum) {
-		this.defaultJobsInSequenceNum = defaultJobsInSequenceNum;
 	}
 }

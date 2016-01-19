@@ -34,7 +34,7 @@
         <property name="gridName" value="tlabGrid"/>
 
         <property name="marshaller">
-            <bean class="${grid.marshaller.class}"/>
+            <bean class="org.gridgain.grid.marshaller.optimized.GridOptimizedMarshaller"/>
         </property>
 
 		<property name="discoverySpi">

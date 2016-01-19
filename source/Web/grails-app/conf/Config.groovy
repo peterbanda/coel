@@ -65,6 +65,8 @@ grails.spring.bean.packages = ['edu.banda.coel.web']
 grails.app.context="/"
 grails.validateable.classes = [edu.banda.coel.task.chemistry.AcRunTask]
 
+grails.dbconsole.enabled = false
+
 /*
 // set per-environment serverURL stem for creating absolute links
 environments {

@@ -39,8 +39,6 @@
         <property name="evoTaskDAO" ref="evoTaskDAO" />
         <property name="evoRunDAO" ref="evoRunDAO" />
         <property name="geneticAlgorithmBOAutoSaveHandler" ref="geneticAlgorithmBOAutoSaveHandler" />
-        <property name="defaultMaxJobsInParallelNum" value="${grid.evolution_service.max_parallel_job_num}" />
-        <property name="defaultJobsInSequenceNum" value="${grid.evolution_service.jobs_in_sequence_num}" />
     </bean>
 
 	<bean id="geneticAlgorithmBOAutoSaveHandler" class="edu.banda.coel.server.service.impl.GeneticAlgorithmBOAutoSaveDAOHandler">

@@ -52,21 +52,6 @@ beans = {
 
     sessionListener(SessionListener)
 
-//    sessionRegistry(SessionRegistryImpl)
-//
-//    concurrencyFilter(ConcurrentSessionFilter) {
-//        sessionRegistry = sessionRegistry
-//        logoutHandlers = [ref("rememberMeServices"), ref("securityContextLogoutHandler")]
-//        expiredUrl='/login/concurrentSession'
-//    }
-
-//    sessionAuthenticationStrategy(NullAuthenticatedSessionStrategy)
-
-//    sessionAuthenticationStrategy(ConcurrentSessionControlStrategy, sessionRegistry) {
-//        alwaysCreateSession = true
-//        maximumSessions = -1
-//    }
-
     authenticationSuccessHandler(GuestAwareSuccessHandler) {
         def conf = SpringSecurityUtils.securityConfig
         requestCache = ref('requestCache')
@@ -77,7 +62,6 @@ beans = {
         useReferer = conf.successHandler.useReferer // false
         redirectStrategy = ref('redirectStrategy')
         chemistryCommonService = ref('chemistryCommonService')
-//		sessionRegistry = sessionRegistry
         sessionListener = sessionListener
     }
 }
