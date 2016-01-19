@@ -202,6 +202,17 @@ CREATE TABLE NET_DERRIDA (
 	result_stats_seq_id int8 NOT NULL
 );
 
+CREATE TABLE NET_DAMAGE_SPREADING (
+	id int8 NOT NULL,
+	ol_version int8 NOT NULL,
+	time_created timestamp NOT NULL,
+	created_by int8 NOT NULL,
+	repetitions int4 NOT NULL,
+	run_time int4 NOT NULL,
+	network_id int8 NOT NULL,
+	result_stats_seq_id int8 NOT NULL
+);
+
 -- ARTIFICIAL CHEMISTRY
 
 CREATE TABLE AC_ARTIFICIAL_CHEMISTRY (
@@ -221,7 +232,7 @@ CREATE TABLE AC_SPECIES (
 	variable_index int4 NOT NULL,
 	label varchar(30) NOT NULL,
 	sort_order int4 NOT NULL,
-	structure varchar(30),
+	structure varchar(100),
 	species_set_id int8 NOT NULL
 );
 
@@ -276,7 +287,8 @@ CREATE TABLE AC_SPECIES_REACTION_ASSOCIATION (
 	species_id int8 NOT NULL,
 	stoichiometric_factor float8,
 	reaction_id int8 NOT NULL,
-	assoc_type int2 NOT NULL    -- 0 - reactant, 1 - product, 2 - catalyst, 3 - inhibitor
+	assoc_type int2 NOT NULL,   -- 0 - reactant, 1 - product, 2 - catalyst, 3 - inhibitor
+        pos int4
 );
 
 CREATE TABLE AC_REACTION_SET (
@@ -457,9 +469,10 @@ CREATE TABLE AC_TRANSLATION_SERIES (
 	repetitions int4,
 	periodicity int4,
 	repeat_from int4,
-	var_sequence_num int4 NOT NULL,
 	create_time timestamp NOT NULL,
-	created_by int8
+	created_by int8,
+	var_sequence_num int4 NOT NULL,
+        variables_referenced_flag bool NOT NULL
 );
 
 CREATE TABLE AC_TRANSLATED_RUN (
@@ -523,7 +536,7 @@ CREATE TABLE AC_EVALUATED_PERFORMANCE (
 	compartment_id int8 NOT NULL,        -- ADDED
 	simulation_config_id int8 NOT NULL,  -- ADDED
 	evaluation_id int8 NOT NULL,
-	averaged_correct_rates float8[] NOT NULL
+	averaged_correct_rates float8[] NOT NULL,
 	length int4 NOT NULL
 );
 
@@ -672,7 +685,6 @@ CREATE TABLE UM_ROLE (
 );
 
 CREATE TABLE UM_USER_ROLE_MAPPING (
-	id int8 NOT NULL,
 	user_id int8 NOT NULL,
 	role_id int8 NOT NULL
 );
@@ -725,7 +737,6 @@ CREATE TABLE EVO_AC_TASK (
 	fixed_point_detection_periodicity float8
 );
 
--- ADDED
 CREATE TABLE EVO_AC_SPECIES_ASSIGNMENT_BOUND (
 	id int8 NOT NULL,
 	ol_version int8 NOT NULL,
@@ -734,7 +745,6 @@ CREATE TABLE EVO_AC_SPECIES_ASSIGNMENT_BOUND (
 	upper_bound float8 NOT NULL
 );
 
--- ADDED
 CREATE TABLE EVO_AC_INTERACTION_VARIABLE_ASSIGNMENT_BOUND (
 	id int8 NOT NULL,
 	ol_version int8 NOT NULL,
@@ -748,13 +758,11 @@ CREATE TABLE EVO_AC_TASK_RATE_CONSTANT_TYPE_BOUND_MAPPING (
     rate_constant_type_bound_id int8 NOT NULL
 );
 
--- ADDED
 CREATE TABLE EVO_AC_SPECIES_ASSIGNMENT_MAPPING (
     evo_ac_species_bound_id int8 NOT NULL,
     species_assignment_id int8 NOT NULL    
 );
 
--- ADDED
 CREATE TABLE EVO_AC_INTERACTION_VARIABLE_ASSIGNMENT_MAPPING (
     evo_ac_variable_bound_id int8 NOT NULL,
     variable_assignment_id int8 NOT NULL    
