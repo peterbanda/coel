@@ -1,4 +1,4 @@
-![Alt text](/source/Web/web-app/images/coel_gradient-01.png "COEL rocks!")
+![COEL rocks!](/source/Web/web-app/images/coel_gradient-01.png "COEL rocks!")
 Cloud Chemistry Simulation Framework
 
 The framework is accessible at [coel-sim.org](http://coel-sim.org).
@@ -16,5 +16,45 @@ COEL framework is built on Grails, Spring, Hibernate, and GridGain technology st
 
 A paper summarizing COEL's functionality and architecture can be found [here](http://arxiv.org/abs/1407.4027).
 
-This project has been developed and maintained by <a href="http://peterbanda.net">Peter Banda</a>.</br>
+This project has been developed and maintained by [Peter Banda](http://peterbanda.net).</br>
 If you wish to collaborate in the develepment of this project contact me at `banda@pdx.edu`.
+
+---
+
+# Deployment Guide
+
+Here we provide a step-by-step guide showing how COEL can be deployed locally to Linux-based OS such as Ubuntu and partially to Mac OS (not tested). For Windows you can still use this guide but you need to adjust os-specific parts such as settings of environmental variables.
+
+### Set up the evironmental variables
+
+<ul>
+  <li>
+    Download the file or copy paste the following:
+    `export COEL_DBUSER=coeladmin`
+    `export COEL_DBPASSWORD=CHANGE_ME`
+    `export COEL_DB=coel`
+    `export COEL_DBHOST=localhost`
+    `export COEL_DBPORT=5432`
+
+    `export COEL_GRIDMASTER=localhost`
+    `export COEL_GRID_METRICS_TEMPFOLDER=`
+    `export COEL_GRID_FS_DISCOVERY_ENABLED=true`
+    `export COEL_GRID_STEALING_ENABLED=true`
+    `export COEL_AC_DYNAMICS_ANALYSIS_PARALLEL_TASKS=20`
+
+    `export COEL_EMAIL_HOST=CHANGE_ME`
+    `export COEL_EMAIL_PORT=465`
+    `export COEL_EMAIL_USERNAME=CHANGE_ME`
+    `export COEL_EMAIL_PASSWORD=CHANGE_ME`
+
+    `# uncomment and adapt the path if you installed gridgain`
+    `# export GRIDGAIN_HOME=/opt/gridgain-fabric-os-6.5.0`
+  </li>
+  <li>
+    Override the variable values, especially those marked with `CHANGE_ME`.
+  </li>
+  <li>
+    Copy the settings to the central init script such as `/etc/environment` (recommended), `.bashrc`, and `.bash_profile`.
+    Note that to load these variables, a new login or restart might be required.
+  </li> 
+</ul>
