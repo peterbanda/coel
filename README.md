@@ -17,15 +17,15 @@ COEL framework is built on Grails, Spring, Hibernate, and GridGain technology st
 A paper summarizing COEL's functionality and architecture can be found [here](http://arxiv.org/abs/1407.4027).
 
 This project has been developed and maintained by [Peter Banda](http://peterbanda.net).</br>
-If you wish to collaborate in the develepment of this project contact me at `banda@pdx.edu`.
+If you wish to collaborate in the development of this project contact me at `banda@pdx.edu`.
 
 ---
 
 # Deployment Guide
 
-Here we provide a step-by-step guide showing how COEL can be deployed locally to Linux-based OS such as Ubuntu and partially to Mac OS (not tested). For Windows you can still use this guide but you need to adjust os-specific parts such as settings of environmental variables.
+Here we provide a step-by-step guide showing how COEL can be deployed locally to Linux-based OS such as Ubuntu and partially to Mac OS (not tested). For Windows you can still use this guide but you need to adjust the os-specific parts such as settings of environmental variables. This guide applies to the most recent COEL release - 0.8.3.
 
-#### 1. Set up the evironmental variables
+#### 1. Set up the environmental variables
 
 * Download the file or copy paste the following:
 ```
@@ -50,14 +50,50 @@ export COEL_EMAIL_PASSWORD=CHANGE_ME
 # export GRIDGAIN_HOME=/opt/gridgain-fabric-os-6.5.0
 ```
 * Override the variable values, especially those marked with `CHANGE_ME`.
-* Copy the settings to the central init script such as `/etc/environment` (recommended), `.bashrc`, and `.bash_profile`.
+
+* Copy the settings to the central init script such as `/etc/environment` (recommended), `.bashrc`, or `.bash_profile`.
   Note that to load these variables, a new login or restart might be required.
 
-#### 2. Set up COEL database
+#### 2. Set up database
 
-* Download PostgreSQL db server from [here](http://www.postgresql.org/download/) or install it using Ubuntu package manager as `sudo apt-get install postgresql-9.4`. We use the version 9.3 but any 9.x version should work.
+* Download and install PostgreSQL db server from [here](http://www.postgresql.org/download/) or using Ubuntu package manager as:</br>
+`sudo apt-get install postgresql-9.4`
+
+ Note that we use the version 9.3 but any 9.x version should work.
+ 
 * Download a zip containing COEL db init scripts and dump from [here](http://peterbanda.net) and unpack it.
-* Open `create_db_and_user.sql` and set the password of the COEL db user. This must match the environemntal settings from the step 1. Run `create_db_and_user.sh`.
+
+* Open `create_db_and_user.sql` and set the password of the COEL db user. This must match the environmental settings from the step 1. Run `create_db_and_user.sh`.
+
 * Run `restore_init_dump.sh`.
  
-#### 3. Set up COEL application server (Tomcat)
+#### 3. Set up application server (Tomcat)
+There are two options how to prepare Tomcat's app server hosting COEL app:
+
+* All-in-one:
+  * Download a preconfigured Tomcat **including** the COEL prebuilt war from [here](https://peterbanda.net).
+
+* Tomcat and war separately:
+  * Download Tomcat 7.x.x version from [here](https://tomcat.apache.org/download-70.cgi).
+
+  * Download a prebuilt COEL app war from [here](https://peterbanda.net).
+
+  * Move/copy the war to apache-tomcat-7.x.x/webapps and rename it to `ROOT.war`.
+
+#### 4. Set up GridGain computational fabric (optional)
+
+The COEL app already comes with the GridGain lib and the technology is well integrated, however, if you want to spread the grid to several other nodes it is required to configure a standalone GridGain instance per each node.
+
+* Download a preconfigured GridGain app and unzip. Note that we use the version 6.5.0 (community edition), which is freely available.
+* Uncomment the GridGain environmental setting (step 1) and adjust the path accordingly
+```
+# uncomment and adapt the path if you installed gridgain
+# export GRIDGAIN_HOME=/opt/gridgain-fabric-os-6.5.0
+```
+* Once the server hosting the master node is up (step 5) you can launch a new computational node by running
+```
+/gridgain-fabric-os-6.5.0/bin/start.sh
+```
+#### 5. Launch the application
+
+* Go to the Tomcat's bin folder such as `apache-tomcat-7.0.56/bin` and launch `startup.sh`. To stop the app run `startup.sh`.
