@@ -23,11 +23,11 @@ If you wish to collaborate in the development of this project contact me at `ban
 
 # Deployment Guide
 
-Here we provide a step-by-step guide showing how COEL can be deployed locally to Linux-based OS such as Ubuntu and partially to Mac OS (not tested). For Windows you can still use this guide but you need to adjust the os-specific parts such as settings of environmental variables. This guide applies to the most recent COEL release - 0.8.3.
+Here we provide a step-by-step guide demonstrating how COEL can be deployed locally to a Linux-based OS such as Ubuntu, and to Mac OS (not tested). For Windows you can still use this guide but you need to adjust the os-specific parts, e.g., the settings of environmental variables. These instructions apply to the most recent COEL release 0.8.3.
 
 #### 1. Install Java 1.7
 
-* Install OpenJDK or Oracle JDK version 1.7 manually or by using the package manager:
+* Install OpenJDK or Oracle JDK version 1.7 manually or by using the Ubuntu package manager:
 ```
 sudo apt-get install openjdk-7-jdk
 ```
@@ -73,19 +73,20 @@ export COEL_EMAIL_PASSWORD=CHANGE_ME
 
 #### 3. Set up database
 
-* Download and install PostgreSQL db server from [here](http://www.postgresql.org/download/) or using Ubuntu package manager as:</br>
+* Download and install PostgreSQL db server from [here](http://www.postgresql.org/download/) or using the Ubuntu package manager as:
+
 `sudo apt-get install postgresql-9.4`
 
- Note that we use the version 9.3 but any 9.x version should work.
+ Note that in production we are using the version 9.3 but any 9.x version should work.
  
 * Download a zip containing COEL db init scripts and dump from [here](http://peterbanda.net/coel/0.8.3/db_init_scripts.zip) and unpack it.
 
-* Open `create_db_and_user.sql` and set the password of the COEL db user. This must match the environmental settings from the step 2. Run `create_db_and_user.sh`.
+* Open `create_db_and_user.sql` and set the password of the COEL db user. This must match the environmental setting from the step 2. Run `create_db_and_user.sh`.
 
 * Run `restore_init_dump.sh`.
  
 #### 4. Set up application server (Tomcat)
-There are two options how to prepare Tomcat's app server hosting COEL app:
+There are two options how to prepare Tomcat's app server hosting COEL:
 
 * All-in-one:
   * Download a preconfigured Tomcat **including** the COEL prebuilt war from [here](https://peterbanda.net/coel/0.8.3/apache-tomcat-7.0.56_with_coel_0.8.3.zip).
@@ -99,17 +100,28 @@ There are two options how to prepare Tomcat's app server hosting COEL app:
 
 #### 5. Set up GridGain computational fabric (optional)
 
-The COEL app already comes with the GridGain lib and the technology is well integrated, however, if you want to spread the grid over several other nodes it is required to configure a standalone GridGain instance per each node.
+COEL already comes with the GridGain lib and this technology is well integrated. However, if you want to spread the grid over several nodes it is required to configure a standalone GridGain instance per each node.
 
-* Download a preconfigured GridGain app and unzip. Note that we use the version 6.5.0 (community edition), which is freely available.
+* Download a preconfigured GridGain fabric app with COEL libs from [here](https://peterbanda.net/coel/0.8.3/gridgain-fabric-os-6.5.0_with_coel_0.8.3.zip) and unzip it. Note that we use the version 6.5.0 (community edition), which is freely available.
+
 * Uncomment the GridGain environmental setting (step 2) and adjust the path accordingly
 ```
 # uncomment and adapt the path if you installed gridgain
 # export GRIDGAIN_HOME=/opt/gridgain-fabric-os-6.5.0
 ```
+* Override the variables in `gridgain-fabric-os-6.5.0/bin/launch/set_env.sh` if needed, especially the grid master url (ip address):
+``` 
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+export GRIDGAIN_HOME=/opt/gridgain-fabric-os-6.5.0
+export GG_HOSTNAME=`hostname -f`
+export COEL_GRIDMASTER=CHANGE_ME
+```
+
 * Once the server hosting the master node is up (step 6) you can launch a new computational node by running
 ```
-/gridgain-fabric-os-6.5.0/bin/start.sh
+cd /gridgain-fabric-os-6.5.0/bin/launch
+source set_env.sh
+./start.sh
 ```
 #### 6. Launch the application
 
