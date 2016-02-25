@@ -23,7 +23,7 @@ If you wish to collaborate in the development of this project contact me at `ban
 
 # Deployment Guide
 
-Here we provide a step-by-step guide demonstrating how COEL can be deployed locally to a Linux-based OS such as Ubuntu, and to Mac OS (not tested). For Windows you can still use this guide but you need to adjust the os-specific parts, e.g., the settings of environmental variables. These instructions apply to the most recent COEL release 0.8.3.
+Here we provide a step-by-step guide demonstrating how COEL can be deployed locally to a Linux-based OS such as Ubuntu, and to Mac OS (not tested). For Windows you can still use this guide but you need to adjust the os-specific parts, e.g., the settings of environmental variables. These instructions apply to the most recent COEL release 0.8.4.
 
 #### 1. Install Java 1.7
 
