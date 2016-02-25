@@ -2,8 +2,11 @@ package com.banda.chemistry.domain
 
 import com.banda.chemistry.business.ArtificialChemistryUtil
 import edu.banda.coel.web.BaseDomainController
+import com.banda.function.BndFunctionException
 
 class AcParameterController extends BaseDomainController {
+
+    def acUtil = ArtificialChemistryUtil.instance
 
 	def create() {
 		def instance =  new AcParameter(params)
@@ -28,10 +31,15 @@ class AcParameterController extends BaseDomainController {
 		parameterSet.addVariable(acParameterInstance)
 		// TODO: Is sort order needed?
 		acParameterInstance.sortOrder = acParameterInstance.variableIndex
-		// Evolution Function
-		acUtil.setEvolFunctionFromString(params.evolFunction.formula, acParameterInstance)
 
-		if (!acParameterInstance.save(flush: true)) {
+        try {
+            // Setting Function
+            acUtil.setEvolFunctionFromString(params.evolFunction.formula, acParameterInstance)
+        } catch (BndFunctionException e) {
+            acParameterInstance.errors.rejectValue("evolFunction", "Evolution function '" + params.evolFunction.formula + "' is invalid. " + e.getMessage())
+        }
+
+		if (acParameterInstance.hasErrors() || !acParameterInstance.save(flush: true)) {
 			render(view: "create", model: [instance: acParameterInstance])
 			return
 		}
@@ -62,14 +70,17 @@ class AcParameterController extends BaseDomainController {
 //			newParameterSet.addVariable(acParameterInstance)
 //		}
 
-		// Setting Function
-		def acUtil = ArtificialChemistryUtil.instance
-		acUtil.setEvolFunctionFromString(params.evolFunction.formula, acParameterInstance)
-
 		acParameterInstance.properties = params
+
+        try {
+		    // Setting Function
+		    acUtil.setEvolFunctionFromString(params.evolFunction.formula, acParameterInstance)
+        } catch (BndFunctionException e) {
+            acParameterInstance.errors.rejectValue("evolFunction", "Evolution function '" + params.evolFunction.formula + "' is invalid. " + e.getMessage())
+        }
 	
-		if (!acParameterInstance.save(flush: true)) {
-			render(view: "edit", model: [acParameterInstance: acParameterInstance])
+		if (acParameterInstance.hasErrors() || !acParameterInstance.save(flush: true)) {
+			render(view: "edit", model: [instance: acParameterInstance])
 			return
 		}
 	

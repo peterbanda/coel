@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.Date;
 
+import com.banda.chemistry.business.ArtificialChemistryUtil;
 import org.sbml.jsbml.*;
 
 import com.banda.chemistry.domain.*;
@@ -25,29 +26,16 @@ import javax.xml.stream.XMLStreamException;
  */
 public class SBMLConverter {
 
-	private static SBMLConverter instance = new SBMLConverter();
-
 	final static String[] VAR_PRECEDING_STRING = new String[] {" ", ",", "\\(","\\*","-","/","\\^"};
 	final static String[] VAR_NEXT_STRING = new String[] {" ", ",", "\\)","\\*","-","/","\\^"};
 	final static String[] FUN_OPER_PART = new String[] {"(", ")", "+","*","-","/","^"};
 	private final FunctionUtility functionUtility = new FunctionUtility();
+    private final ArtificialChemistryUtil acUtil = ArtificialChemistryUtil.getInstance();
 
-	private SBMLConverter() {
-//		checkRequiredLibs();
-	}
+    private final boolean ignoreErrorsQuietly;
 
-	public static SBMLConverter getInstance() {
-		return instance;
-	}
-
-	private void checkRequiredLibs() {
-		try {
-			System.loadLibrary("sbmlj");
-			/* Extra check to be sure we have access to libSBML: */
-			Class.forName("org.sbml.libsbml.libsbml");
-		} catch (Exception e) {
-			throw new CoelRuntimeException("Error: could not load the libSBML library", e);
-		}
+	public SBMLConverter(boolean ignoreErrorsQuietly) {
+        this.ignoreErrorsQuietly = ignoreErrorsQuietly;
 	}
 
 	private SBMLDocument getSBMLDocumentFromFile(String fileName) {
@@ -55,13 +43,13 @@ public class SBMLConverter {
 		try {
 			SBMLDocument document = reader.readSBML(fileName);
 			if (document.getNumErrors() > 0) {
-				throw new CoelRuntimeException("Errors found in SBML model " + fileName);
+                throw new CoelRuntimeException("Errors found in SBML model: " + errorToString(document.getListOfErrors()));
 			}
 			return document;
 		} catch (XMLStreamException e) {
-			throw new CoelRuntimeException("Errors found in SBML model " + fileName);
+			throw new CoelRuntimeException("SBML model is not a valid XML.");
 		} catch (IOException e) {
-			throw new CoelRuntimeException("Errors found in SBML model " + fileName);
+			throw new CoelRuntimeException("Error loading an SBML file " + fileName);
 		}
 	}
 
@@ -71,31 +59,34 @@ public class SBMLConverter {
 			SBMLDocument document = reader.readSBMLFromString(content);
 
 			if (document.getNumErrors() > 0) {
-				throw new CoelRuntimeException("Errors found in SBML model " + content);
+				throw new CoelRuntimeException("Errors found in SBML model: " + errorToString(document.getListOfErrors()));
 			}
 			return document;
 		} catch (XMLStreamException e) {
-			throw new CoelRuntimeException("Errors found in SBML model " + content);
+			throw new CoelRuntimeException("SBML model is not a valid XML.");
 		}
 	}
+
+    private String errorToString(SBMLErrorLog errorLog) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < errorLog.getErrorCount(); i++) {
+           sb.append(errorLog.getError(i).getMessage());
+        }
+        return sb.toString();
+    }
 
 //	public String convertSBMLFileToString(String fileName) {
 //		SBMLDocument sbmlDocument = getSBMLDocumentFromFile(fileName);
 //		return sbmlDocument.toSBML();
 //	}
 
-	public ArtificialChemistry stringToArtificialChemistry(String sbmlString, String compartmentLabel) {
-		SBMLDocument sbmlDocument = getSBMLDocumentFromString(sbmlString);
-		return toArtificialChemistry(sbmlDocument.getModel(), compartmentLabel);
-	}
-
-	public ArtificialChemistry fileToArtificialChemistry(String fileName, String compartmentLabel) {
-		SBMLDocument sbmlDocument = getSBMLDocumentFromFile(fileName);
-		return toArtificialChemistry(sbmlDocument.getModel(), compartmentLabel);
-	}
-
     public AcCompartment stringToCompartment(String sbmlString, String compartmentLabel) {
         SBMLDocument sbmlDocument = getSBMLDocumentFromString(sbmlString);
+        return toCompartment(sbmlDocument.getModel(), compartmentLabel);
+    }
+
+    public AcCompartment fileToCompartment(String fileName, String compartmentLabel) {
+        SBMLDocument sbmlDocument = getSBMLDocumentFromFile(fileName);
         return toCompartment(sbmlDocument.getModel(), compartmentLabel);
     }
 
@@ -103,21 +94,6 @@ public class SBMLConverter {
 //        SBMLDocument smbl = new SBMLDocument();
 //		return null;
 //	}
-
-    private ArtificialChemistry toArtificialChemistry(Model sbmlModel, String compartmentLabel) {
-        final AcCompartment skinCompartment = toCompartment(sbmlModel, compartmentLabel);
-
-        ArtificialChemistry alChemistry = new ArtificialChemistry();
-        alChemistry.setName("SBML Model " + new Date().getTime());
-        alChemistry.setCreateTime(new Date());
-
-        AcSimulationConfig simConfig = new AcSimulationConfig();
-        simConfig.setOdeSolverType(ODESolverType.RungeKutta4);
-        alChemistry.setSimulationConfig(simConfig);
-        alChemistry.setSkinCompartment(skinCompartment);
-
-        return alChemistry;
-    }
 
     private AcCompartment toCompartment(Model sbmlModel, String compartmentLabel) {
         ListOf<Compartment> compartments = sbmlModel.getListOfCompartments();
@@ -137,7 +113,11 @@ public class SBMLConverter {
             AcReactionSet reactionSet = new AcReactionSet();
 
             AcSpeciesSet speciesSet = new AcSpeciesSet();
+            speciesSet.initVarSequenceNum();
+
             AcParameterSet parameterSet = new AcParameterSet();
+            parameterSet.setCreateTime(speciesSet.getCreateTime());
+
             speciesSet.setParameterSet(parameterSet);
             parameterSet.setSpeciesSet(speciesSet);
 
@@ -146,38 +126,46 @@ public class SBMLConverter {
             acCompartment.setReactionSet(reactionSet);
 
             labelCompartmentMap.put(acCompartment.getLabel(), acCompartment);
-            // TODO - support hierarchical compartments
-            skinCompartment = acCompartment;
+			if (compartmentId == 0) {
+				// TODO - support hierarchical compartments
+				skinCompartment = acCompartment;
+			}
         }
 
-        Map<String, AcSpecies> labelSpeciesStructureMap = new HashMap<String, AcSpecies>();
+        AcReactionSet skinReactionSet = skinCompartment.getReactionSet();
+        AcSpeciesSet skinSpeciesSet = skinReactionSet.getSpeciesSet();
+        AcParameterSet skinParameterSet = skinSpeciesSet.getParameterSet();
+        skinCompartment.setLabel(compartmentLabel);
+        skinReactionSet.setLabel(compartmentLabel);
+        skinSpeciesSet.setName(compartmentLabel);
+        skinParameterSet.setName(compartmentLabel);
+
+        Map<String, AcSpecies> labelSpeciesMap = new HashMap<String, AcSpecies>();
         for (int speciesIndex = 0; speciesIndex < speciesNum; speciesIndex++) {
             Species oneSpecies = species.get(speciesIndex);
 
             AcSpecies acSpecies = new AcSpecies();
-            acSpecies.setVariableIndex(speciesIndex);
             acSpecies.setLabel(oneSpecies.getId());
-            acSpecies.setSortOrder(speciesIndex);
 
-            AcCompartment associatedCompartment = labelCompartmentMap.get(oneSpecies.getCompartment());
-            associatedCompartment.getReactionSet().getSpeciesSet().addVariable(acSpecies);
-            labelSpeciesStructureMap.put(acSpecies.getLabel(), acSpecies);
+//            AcCompartment associatedCompartment = labelCompartmentMap.get(oneSpecies.getCompartment());
+//            associatedCompartment.getReactionSet().getSpeciesSet().addVariable(acSpecies);
+            skinSpeciesSet.addVariable(acSpecies);
+            labelSpeciesMap.put(acSpecies.getLabel(), acSpecies);
         }
 
         Map<String, AcParameter> labelParameterMap = new HashMap<String, AcParameter>();
         for (int parameterIndex = 0; parameterIndex < parameters.size(); parameterIndex++) {
             Parameter parameter = parameters.get(parameterIndex);
             AcParameter acParameter = new AcParameter();
-            acParameter.setVariableIndex(speciesNum + parameterIndex);
             acParameter.setLabel(parameter.getId());
-            acParameter.setSortOrder(parameterIndex);
             acParameter.setEvolFunction(Expression.Double(String.valueOf(parameter.getValue())));
+
+            skinParameterSet.addVariable(acParameter);
             labelParameterMap.put(acParameter.getLabel(), acParameter);
-            skinCompartment.getReactionSet().getParameterSet().addVariable(acParameter);
         }
 
         Map<String, AcVariable> labelMagnitudeMap = new HashMap<String, AcVariable>();
-        labelMagnitudeMap.putAll(labelSpeciesStructureMap);
+        labelMagnitudeMap.putAll(labelSpeciesMap);
         labelMagnitudeMap.putAll(labelParameterMap);
 
         for (int reactionIndex = 0; reactionIndex < reactions.size(); reactionIndex++) {
@@ -187,9 +175,9 @@ public class SBMLConverter {
             acReaction.setLabel(reaction.getId());
             acReaction.setSortOrder(reactionIndex);
 
-            Set<AcSpeciesReactionAssociation> reactants = getSpeciesAssociations(reaction.getListOfReactants(), labelSpeciesStructureMap);
-            Set<AcSpeciesReactionAssociation> products = getSpeciesAssociations(reaction.getListOfProducts(), labelSpeciesStructureMap);
-            Set<AcSpeciesReactionAssociation> modifiers = getCatalystsAssociations(reaction.getListOfModifiers(), labelSpeciesStructureMap);
+            Set<AcSpeciesReactionAssociation> reactants = getSpeciesAssociations(reaction.getListOfReactants(), labelSpeciesMap);
+            Set<AcSpeciesReactionAssociation> products = getSpeciesAssociations(reaction.getListOfProducts(), labelSpeciesMap);
+            Set<AcSpeciesReactionAssociation> modifiers = getCatalystsAssociations(reaction.getListOfModifiers(), labelSpeciesMap);
 
             acReaction.addSpeciesAssociations(reactants, AcSpeciesAssociationType.Reactant);
             acReaction.addSpeciesAssociations(products, AcSpeciesAssociationType.Product);
@@ -197,26 +185,52 @@ public class SBMLConverter {
 
             KineticLaw kinetricLaw = reaction.getKineticLaw();
             ASTNode astNode = kinetricLaw.getMath();
-            setFunction(acReaction, astNode, labelMagnitudeMap);
+            setFunction(acReaction, astNode, skinSpeciesSet);
 
-            skinCompartment.getReactionSet().addReaction(acReaction);
+            skinReactionSet.addReaction(acReaction);
         }
+
+        Set<AcSpecies> reactionRefSpecies = acUtil.getReferencedSpecies(skinReactionSet);
 
         for (int ruleId = 0; ruleId < rules.size(); ruleId++) {
             Rule rule = rules.get(ruleId);
+            ASTNode astNode = rule.getMath();
             if (rule.isAssignment()) {
-                String variable = ((AssignmentRule) rule).getVariable();
-                AcParameter acParameter = labelParameterMap.get(variable);
-                ASTNode astNode = rule.getMath();
-                setFunction(acParameter, astNode, labelMagnitudeMap);
+                String variableLabel = ((AssignmentRule) rule).getVariable();
+                AcParameter acParameter = labelParameterMap.get(variableLabel);
+
+				if (acParameter == null) {
+
+                    AcSpecies acSpecies = labelSpeciesMap.get(variableLabel);
+                    if (acSpecies == null) {
+                        if (!ignoreErrorsQuietly)
+                            throw new CoelRuntimeException("Undefined parameter '" + variableLabel + "' is used in an assignment rule.");
+                    } else {
+                        if (ignoreErrorsQuietly) {
+                            if (!reactionRefSpecies.contains(acSpecies)) {
+                                // species is not used in any reaction, let's rebrand it as a parameter
+                                skinSpeciesSet.removeVariable(acSpecies);
+
+                                acParameter = new AcParameter();
+                                acParameter.setVariableIndex(acSpecies.getVariableIndex());
+                                acParameter.setLabel(variableLabel);
+                                skinParameterSet.addVariable(acParameter);
+
+                                labelSpeciesMap.remove(variableLabel);
+                                labelParameterMap.put(variableLabel, acParameter);
+
+                                setFunction(acParameter, astNode, skinSpeciesSet);
+                            }
+                        } else
+                            throw new CoelRuntimeException("Parameter '" + variableLabel + "' is used in an assignment rule but is defined as species.");
+                    }
+
+				} else {
+                    setFunction(acParameter, astNode, skinSpeciesSet);
+                }
             }
         }
 
-        skinCompartment.setLabel(compartmentLabel);
-        final AcReactionSet reactionSet = skinCompartment.getReactionSet();
-        reactionSet.setLabel(compartmentLabel);
-        reactionSet.getSpeciesSet().setName(compartmentLabel);
-        reactionSet.getParameterSet().setName(compartmentLabel);
         return skinCompartment;
     }
 
@@ -249,11 +263,16 @@ public class SBMLConverter {
 		for (int speciesRefIndex = 0; speciesRefIndex < speciesReferences.size(); speciesRefIndex++) {
 			SimpleSpeciesReference speciesReference = speciesReferences.get(speciesRefIndex);
 			AcSpecies acSpecies = labelSpeciesMap.get(speciesReference.getSpecies());
-			double stoichiometry = 1.0;
-			if (speciesReference instanceof SpeciesReference) {
-				stoichiometry = ((SpeciesReference) speciesReference).getStoichiometry();
-			}
-			speciesAssociations.add(new AcSpeciesReactionAssociation(acSpecies, stoichiometry));
+            if (acSpecies == null) {
+                if (!ignoreErrorsQuietly)
+                    throw new CoelRuntimeException("Undefined species '" + speciesReference.getSpecies() + "' used in a reaction.");
+            } else {
+                double stoichiometry = 1.0;
+                if (speciesReference instanceof SpeciesReference) {
+                    stoichiometry = ((SpeciesReference) speciesReference).getStoichiometry();
+                }
+                speciesAssociations.add(new AcSpeciesReactionAssociation(acSpecies, stoichiometry));
+            }
 		}
 		return speciesAssociations;
 	}
@@ -274,35 +293,22 @@ public class SBMLConverter {
 	private void setFunction(
 		FunctionHolder<Double, Double> functionHolder,
 		ASTNode astNode,
-		Map<String, AcVariable> labelMagnitudeMap
+		AcSpeciesSet speciesSet
 	) {
-		functionHolder.setFunction(getExpression(astNode, labelMagnitudeMap));
+		functionHolder.setFunction(getExpression(astNode, speciesSet));
 	}
 
 	private Function<Double, Double> getExpression(
 		ASTNode astNode,
-		Map<String, AcVariable> labelMagnitudeMap
+		AcSpeciesSet speciesSet
 	) {
 		String formula = astNode.toFormula();
 
-		formula = replaceVariables(formula, labelMagnitudeMap);
+        formula = acUtil.replaceSpeciesAndParamaterLabelsWithIndexPlaceholders(formula, speciesSet);
 		formula = replaceBinaryFunctionByOperator("pow", "^", formula);
 		formula = replacePiecewise(formula);
 
 		return Expression.Double(formula);
-	}
-
-	private String replaceVariables(String formula, Map<String, AcVariable> labelMagnitudeMap) {
-		List<Entry<String, AcVariable>> sortedEntries = new ArrayList<Entry<String, AcVariable>>();
-		sortedEntries.addAll(labelMagnitudeMap.entrySet());
-		Collections.sort(sortedEntries, new EntryKeyLengthDescComparator<AcVariable>());
-
-		for (Entry<String, AcVariable> entry : sortedEntries) {
-//			String stringToReplace = precedingChar + entry.getKey() + nextChar;
-//			String replacementString = precedingChar + "x" + entry.getValue().getVariableIndex() + nextChar;
-			formula = formula.replaceAll(entry.getKey(), functionUtility.getVariablePlaceHolder(entry.getValue().getVariableIndex()));				
-		}
-		return formula;
 	}
 
 	private String replacePiecewise(String formula) {
@@ -314,28 +320,26 @@ public class SBMLConverter {
 				first = false;
 				sb.append(token);
 			} else {
-				int fistCommaIndex = token.indexOf(",");
-				int secondCommaIndex = token.indexOf(",", fistCommaIndex + 1);
-		//		int thridCommaIndex = token.indexOf(",", secondCommaIndex + 1);
-				int rightBracketIndex = token.indexOf(")", secondCommaIndex + 1);
-				String firstValue = token.substring(0, fistCommaIndex).trim();
-				String condition = token.substring(fistCommaIndex + 1, secondCommaIndex).trim();
-				String secondValue = token.substring(secondCommaIndex + 1, rightBracketIndex).trim();
-				String rest = "";
-				if (rightBracketIndex < token.length() - 1) {
-					rest = token.substring(rightBracketIndex + 1);
-				}
-				sb.append("if(");
-				condition = replaceBinaryFunctionByOperator("lt", " < ", condition);
-				condition = replaceBinaryFunctionByOperator("gt", " > ", condition);
-				condition = replaceBinaryFunctionByOperator("eq", " = ", condition);
-				sb.append(condition);
-				sb.append(",");
-				sb.append(firstValue);
-				sb.append(",");
-				sb.append(secondValue);
-				sb.append(")");
-				sb.append(rest);
+				final String[] parts = token.split(",");
+                for (int i = 0; i < parts.length - 1; i += 2) {
+                    String value = parts[i].trim();
+
+                    String condition = parts[i + 1].trim();
+                    condition = replaceBinaryFunctionByOperator("lt", " < ", condition);
+                    condition = replaceBinaryFunctionByOperator("gt", " > ", condition);
+                    condition = replaceBinaryFunctionByOperator("eq", " = ", condition);
+
+                    sb.append("if(");
+                    sb.append(condition);
+                    sb.append(",");
+                    sb.append(value);
+                    sb.append(",");
+                }
+
+                sb.append(parts[parts.length - 1]);
+                for (int i = 0; i < (parts.length / 2) - 1; i++) {
+                    sb.append(")");
+                }
 			}
 		}
 		return sb.toString();
@@ -383,8 +387,9 @@ public class SBMLConverter {
 	}
 
 	public static void main(String args[]) {
-		SBMLConverter sbmlConverter = SBMLConverter.getInstance();
-		ArtificialChemistry alChemistry = sbmlConverter.fileToArtificialChemistry("perceptron_v06.xml", "Perceptron");
-		System.out.println(alChemistry);
+		SBMLConverter sbmlConverter = new SBMLConverter(false);
+		AcCompartment compartment = sbmlConverter.fileToCompartment("perceptron_v06.xml", "Perceptron");
+//        AcCompartment compartment = sbmlConverter.fileToCompartment("BIOMD0000000399_SBML-L3V1.xml", "Perceptron");
+		System.out.println(compartment);
 	}
 }

@@ -365,17 +365,14 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 		return evaluatedRunsMap;
 	}
 
-	/**
-	 * @see edu.banda.coel.domain.service.ArtificialChemistryService#saveSbmlModelAsArtificialChemistry(String, String)
-	 */
-	@Override
+    @Deprecated
 	@Transactional(readOnly = false)
     public void saveSbmlModelAsArtificialChemistry(String sbmlString, String acName) {
-		SBMLConverter sbmlConverter = SBMLConverter.getInstance();
-		ArtificialChemistry ac = sbmlConverter.stringToArtificialChemistry(sbmlString, acName);
-
-		User user = userDAO.get(new Long(1));
-		saveCompartmentWithAllData(ac.getSkinCompartment(), user);
+//		SBMLConverter sbmlConverter = SBMLConverter.getInstance();
+//		ArtificialChemistry ac = sbmlConverter.stringToArtificialChemistry(sbmlString, acName);
+//
+//        User user = userDAO.get(new Long(1));
+//		saveCompartmentWithAllData(ac.getSkinCompartment(), user);
 
 //		for (AcReaction reaction : reactionSet.getReactions()) {
 //			reaction.setForwardRateFunction((Function<Double, Double>) functionDAO.save(reaction.getForwardRateFunction()));
@@ -387,15 +384,14 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
     }
 
 	/**
-	 * @see edu.banda.coel.domain.service.ArtificialChemistryService#saveSbmlModelAsCompartment(String, String)
+	 * @see edu.banda.coel.domain.service.ArtificialChemistryService#saveSbmlModelAsCompartment(String, String, User, boolean)
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public void saveSbmlModelAsCompartment(String sbmlString, String compartmentName) {
-		SBMLConverter sbmlConverter = SBMLConverter.getInstance();
+	public void saveSbmlModelAsCompartment(String sbmlString, String compartmentName, User user, boolean ignoreErrorsQuietly) {
+		SBMLConverter sbmlConverter = new SBMLConverter(ignoreErrorsQuietly);
 		AcCompartment compartment = sbmlConverter.stringToCompartment(sbmlString, compartmentName);
 
-		User user = userDAO.get(new Long(1));
 		saveCompartmentWithAllData(compartment, user);
 	}
 
@@ -1023,8 +1019,10 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 
 		speciesSet.setCreatedBy(user);
 		parameterSet.setCreatedBy(user);
-		speciesSet.setName(acName + " SS");
-		parameterSet.setName(acName + " PS");
+		skinCompartment.setCreatedBy(user);
+
+		speciesSet.setName(acName);
+		parameterSet.setName(acName);
 
 		if (speciesSet instanceof AcDNAStrandSpeciesSet) {
 			AcSpeciesSet newSpeciesSet = new AcSpeciesSet();
@@ -1051,7 +1049,6 @@ class ArtificialChemistryServiceImpl extends AbstractService implements Artifici
 		reactionSet.setCreatedBy(user);	
 		reactionSet.setLabel(acName);
 
-		skinCompartment.setCreatedBy(user);
 		skinCompartment.setReactionSet(acReactionSetDAO.save(reactionSet));
 
 		acCompartmentDAO.save(skinCompartment);

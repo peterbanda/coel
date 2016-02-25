@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>edu.banda.coel</groupId>
 		<artifactId>coel-parent</artifactId>
-		<version>0.8.3</version>
+		<version>0.8.4</version>
 	</parent>
 
 	<dependencies>

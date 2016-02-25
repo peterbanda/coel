@@ -84,6 +84,9 @@
     			<div class="span5">
 					<f:display property="label"/>
 					<f:ref property="speciesSet" textProperty="name"/>
+                    <g:if test="${!instance?.speciesSet.parameterSet.variables.isEmpty()}">
+					    <f:ref property="speciesSet.parameterSet" textProperty="name"/>
+                    </g:if>
 					<f:display label="Reaction #" property="id">
 						${instance.reactions.size()}
 					</f:display>

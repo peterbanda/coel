@@ -13,8 +13,7 @@
 
     <theme:zone name="details">    
 		<f:with bean="instance">
-        	<f:display property="id"/>
-        	<f:display property="variableIndex"/>
+        	<f:display property="variableIndex" label="Index"/>
 			<f:ref controller="acParameterSet" property="parentSet">${it.name + '/' + it.variables.size()}</f:ref>
 			<hr>                                        
         	<ui:field bean="instance" name="label"/>

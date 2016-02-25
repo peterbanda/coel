@@ -186,14 +186,21 @@ class AcCompartmentController extends BaseDomainController {
 
 	def importSbml = {
 		def sbmlFile = request.getFile('sbmlFile')
+        def ignoreErrorsQuietly = params.ignoreErrorsQuietly != null
+
 		if (!sbmlFile.empty) {
-			def sbmlFileContent = sbmlFile.inputStream.text
-			def fileName = sbmlFile.originalFilename
-			artificialChemistryService.saveSbmlModelAsCompartment(sbmlFileContent, fileName[0..-5])
-			flash.message = 'SBML model has been imported.'
+            def sbmlFileContent = sbmlFile.inputStream.text
+            def fileName = sbmlFile.originalFilename
+            def name = fileName[0..-5]
+            try {
+                artificialChemistryService.saveSbmlModelAsCompartment(sbmlFileContent, name, getCurrentUserOrError(), ignoreErrorsQuietly)
+                flash.message = "SBML model $name has been successfully imported."
+            } catch (e) {
+                flash.error = "Failed to import the SBML file \'$fileName\' due to: $e.message"
+            }
 		}
 		else {
-			flash.message = 'Filename cannot be empty.'
+			flash.error = 'Filename cannot be empty.'
 		}
 		redirect(action: "list")
 	}

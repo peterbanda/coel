@@ -62,7 +62,14 @@
 						timer.stop();
 						drawChart(datas)
 					}
-				)
+				).fail(function(xhr) {
+				    if (xhr.status == 404) {
+				        // need to wait
+				    } else {
+				        timer.stop();
+				        showErrorMessage("Chemistry simulation failed due to: " + xhr.responseText);
+				    }
+  				})
 			});
 
       		function getToken(data) {

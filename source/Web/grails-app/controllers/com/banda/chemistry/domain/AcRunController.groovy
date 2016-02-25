@@ -115,7 +115,7 @@ class AcRunController extends BaseController {
 	def checkRunResponse() {
 		def token = params.token
 		if (!token) {
-			response.status = 404
+			response.status = 500
 			render "No token"
 			return
 		}
@@ -128,25 +128,31 @@ class AcRunController extends BaseController {
 		}
 
 		session["acRunResponse.$token"] = null
-		def runObject = ObjectUtil.getFirst(acRunResponse.get())
-		def chartDatas = []
+		try {
+			def runObject = ObjectUtil.getFirst(acRunResponse.get())
+			def chartDatas = []
 
-		if (runObject instanceof AcTranslatedRun) {
-			if (runObject.acRunTrace)
+			if (runObject instanceof AcTranslatedRun) {
+				if (runObject.acRunTrace)
+					chartDatas.add(
+							createAcRunChartData(runObject.acRunTrace))
+
 				chartDatas.add(
-					createAcRunChartData(runObject.acRunTrace))
- 
-			chartDatas.add(
-				createAcTranslatedRunChartData(runObject))			
-		} else
-			chartDatas.add(
-				createAcRunChartData(runObject))
+						createAcTranslatedRunChartData(runObject))
+			} else
+				chartDatas.add(
+					createAcRunChartData(runObject))
 
-		JSON.use("deep") {
-			def chartDatasJSON = chartDatas as JSON
-			println "AC run chart(s) sent to client as JSON"
-			response.status = 200
-			render chartDatasJSON
+			JSON.use("deep") {
+				def chartDatasJSON = chartDatas as JSON
+				println "AC run chart(s) sent to client as JSON"
+				response.status = 200
+				render chartDatasJSON
+			}
+		} catch (e) {
+			response.status = 500
+            def message = (e.cause) ? ((e.cause.cause)? e.cause.cause.message : e.cause.message) : e.message
+			render message
 		}
 	}
 

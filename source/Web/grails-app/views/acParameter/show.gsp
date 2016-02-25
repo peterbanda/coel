@@ -14,13 +14,11 @@
 
     <theme:zone name="details">
     	<f:with bean="instance">
-     		<f:display property="id"/>
-     		<f:display property="variableIndex"/>
+     		<f:display property="variableIndex" label="Index"/>
+			<f:ref controller="acParameterSet" property="parentSet">${it.name + '/' + it.variables.size()}</f:ref>
 			<hr>
-			<f:ref controller="acParameterSet" property="parentSet" textProperty="name"/>
 			<f:display property="label"/>
 			<f:display property="evolFunction">${render(template:'displayEvolFunction', bean:instance)}</f:display>
-			<f:display property="sortOrder"/>
 		</f:with>
     </theme:zone>
 </body>

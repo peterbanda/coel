@@ -40,6 +40,7 @@ import edu.banda.coel.task.chemistry.AcRandomRatePerformanceEvaluateTask;
 import edu.banda.coel.task.chemistry.AcRunAndTranslateTask;
 import edu.banda.coel.task.chemistry.AcRunTask;
 import edu.banda.coel.task.chemistry.AcRunTranslateAndEvaluateTask;
+import com.banda.core.domain.um.User;
 
 /**
  * @author Peter Banda
@@ -227,10 +228,12 @@ public class ArtificialChemistryServiceTest extends CoelTest {
 
 	@Test
 	@Ignore
-	public void testSaveSbmlModelAsArtificialChemistry() throws FileNotFoundException, IOException {
+	public void testSaveSbmlModelAsCompartment() throws FileNotFoundException, IOException {
 		String fileName = "perceptron_v06.xml";
 		String sbmlString = FileUtil.getInstance().readStringFromFile(fileName);
-		artificialChemistryService.saveSbmlModelAsArtificialChemistry(sbmlString, fileName.substring(0, fileName.indexOf('.')));
+		User user = new User();
+		user.setId(new Long(1));
+		artificialChemistryService.saveSbmlModelAsCompartment(sbmlString, fileName.substring(0, fileName.indexOf('.')), user, false);
 		assertTrue(true);
 	}
 

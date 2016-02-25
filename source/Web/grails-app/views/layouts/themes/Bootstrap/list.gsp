@@ -37,6 +37,9 @@
 						<g:eachError bean="${instance}" var="error">
 							<ui:message type="error"><g:message error="${error}"/></ui:message>
 						</g:eachError>
+						<g:if test="${flash.error}">
+							<ui:message type="error">${flash.error}</ui:message>
+						</g:if>
 					</div>
 
                     <ui:block>
