@@ -6,6 +6,7 @@ import com.banda.core.domain.ComponentRunTrace;
 import com.banda.math.domain.Stats;
 import com.banda.math.domain.StatsType;
 import com.banda.math.domain.dynamics.SingleRunAnalysisResultType;
+import com.banda.core.domain.um.User;
 import edu.banda.coel.task.chemistry.*;
 
 import java.util.Collection;
@@ -109,18 +110,11 @@ public interface ArtificialChemistryService {
     void runPerturbationPerformanceEvaluation(AcPerturbationPerformanceEvaluateTask task);
 
     /**
-     * Saves SBML model represented as XML String to database as Artificial Chemistry.
-     *
-     * @param sbmlString The SBML model represented as String
-     */
-    void saveSbmlModelAsArtificialChemistry(String sbmlString, String acName);
-
-    /**
      * Saves SBML model represented as XML String to database as compartment.
      *
      * @param sbmlString The SBML model represented as String
      */
-    void saveSbmlModelAsCompartment(String sbmlString, String compartmentName);
+    void saveSbmlModelAsCompartment(String sbmlString, String compartmentName, User user, boolean ignoreErrorsQuietly);
 
     /**
      * Analyzes dynamics of given artificial chemistry
