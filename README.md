@@ -44,7 +44,7 @@ JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 
 #### 2. Set up the environmental variables
 
-* Download the [file](http://peterbanda.net/coel/0.8.3/environmental_setting) or copy paste the following:
+* Download the [file](http://peterbanda.net/coel/0.8.4/environmental_setting) or copy paste the following:
 ```
 export COEL_DBUSER=coeladmin
 export COEL_DBPASSWORD=CHANGE_ME
@@ -79,7 +79,7 @@ export COEL_EMAIL_PASSWORD=CHANGE_ME
 
  Note that in production we are using the version 9.3 but any 9.x version should work.
  
-* Download a zip containing COEL db init scripts and dump from [here](http://peterbanda.net/coel/0.8.3/db_init_scripts.zip) and unpack it.
+* Download a zip containing COEL db init scripts and dump from [here](http://peterbanda.net/coel/0.8.4/db_init_scripts.zip) and unpack it.
 
 * Open `create_db_and_user.sql` and set the password of the COEL db user. This must match the environmental setting from the step 2. Run `create_db_and_user.sh`.
 
@@ -89,12 +89,12 @@ export COEL_EMAIL_PASSWORD=CHANGE_ME
 There are two options how to prepare Tomcat's app server hosting COEL:
 
 * All-in-one:
-  * Download a preconfigured Tomcat **including** the COEL prebuilt war from [here](https://peterbanda.net/coel/0.8.3/apache-tomcat-7.0.56_with_coel_0.8.3.zip).
+  * Download a preconfigured Tomcat **including** the COEL prebuilt war from [here](https://peterbanda.net/coel/0.8.4/apache-tomcat-7.0.56_with_coel_0.8.4.zip).
 
 * Tomcat and war separately:
   * Download Tomcat 7.x.x version from [here](https://tomcat.apache.org/download-70.cgi).
 
-  * Download a prebuilt COEL app war from [here](https://peterbanda.net/coel/0.8.3/coel-web-0.8.3.war).
+  * Download a prebuilt COEL app war from [here](https://peterbanda.net/coel/0.8.4/coel-web-0.8.4.war).
 
   * Move/copy the war to `apache-tomcat-7.x.x/webapps` and rename it to `ROOT.war`.
 
@@ -102,7 +102,7 @@ There are two options how to prepare Tomcat's app server hosting COEL:
 
 COEL already comes with the GridGain lib and this technology is well integrated. However, if you want to spread the grid over several nodes it is required to configure a standalone GridGain instance per each node.
 
-* Download a preconfigured GridGain fabric app with COEL libs from [here](https://peterbanda.net/coel/0.8.3/gridgain-fabric-os-6.5.0_with_coel_0.8.3.zip) and unzip it. Note that we use the version 6.5.0 (community edition), which is freely available.
+* Download a preconfigured GridGain fabric app with COEL libs from [here](https://peterbanda.net/coel/0.8.4/gridgain-fabric-os-6.5.0_with_coel_0.8.4.zip) and unzip it. Note that we use the version 6.5.0 (community edition), which is freely available.
 
 * Uncomment the GridGain environmental setting (step 2) and adjust the path accordingly
 ```
