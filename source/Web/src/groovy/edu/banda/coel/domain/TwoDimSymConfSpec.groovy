@@ -1,12 +1,11 @@
 package edu.banda.coel.domain
 
 class TwoDimSymConfSpec {
-    Integer size
+    Integer latticeSize
     Integer alphabetSize
-    Boolean binaryAlphabetSize
 
     static constraints = {
-        size nullable: false
-        alphabetSize nullable: false
+        latticeSize nullable: false, range: 1..1000
+        alphabetSize nullable: false, range: 2..10
     }
 }

@@ -1,11 +1,17 @@
 package edu.banda.coel.domain
 
-class TwoDimSymConfSpec {
+class TwoDimSymCARunSpec {
     Integer latticeSize
-    Integer alphabetSize
+    Integer symmetryShiftX
+    Integer symmetryShiftY
+    Integer runTime
+//    Integer neighborhoodRadius
 
     static constraints = {
-        latticeSize nullable: false, range: 1..1000
-        alphabetSize nullable: false, range: 2..10
+        latticeSize nullable: false, range: 2..100
+        symmetryShiftX nullable: false, range: 0..100
+        symmetryShiftY nullable: false, range: 0..100
+        runTime nullable: false, range: 1..500
+//        neighborhoodRadius nullable: false, range: 1..3
     }
 }

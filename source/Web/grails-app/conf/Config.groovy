@@ -63,7 +63,7 @@ grails.logging.jul.usebridge = true
 // packages to include in Spring bean scanning
 grails.spring.bean.packages = ['edu.banda.coel.web']
 grails.app.context="/"
-grails.validateable.classes = [edu.banda.coel.task.chemistry.AcRunTask]
+grails.validateable.classes = [edu.banda.coel.task.chemistry.AcRunTask, edu.banda.coel.domain.TwoDimSymConfSpec, edu.banda.coel.domain.TwoDimSymCARunSpec]
 
 grails.dbconsole.enabled = false
 
@@ -188,9 +188,11 @@ grails.plugins.springsecurity.interceptUrlMap = [
 	'/':                                      ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/content/**':                            ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/download':                              ['IS_AUTHENTICATED_ANONYMOUSLY'],
+    '/download/**':                           ['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/symmetry':                              ['IS_AUTHENTICATED_ANONYMOUSLY'],
+    '/symmetry/**':                           ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/login/**':                              ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/logout/**':                             ['IS_AUTHENTICATED_ANONYMOUSLY'],
-	'/download/**':                           ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/errors/**':                             ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/favicon.ico':                           ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/user/register':                         ['IS_AUTHENTICATED_ANONYMOUSLY'],

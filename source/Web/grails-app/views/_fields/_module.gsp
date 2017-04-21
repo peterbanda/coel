@@ -12,4 +12,7 @@
 	<g:if test="${module?.trim() == 'evolution'}">
 		<ui:image uri="/images/evo.png" width="100" title="Evolution" alt="Evolution"/>
 	</g:if>
+	<g:if test="${module?.trim() == 'symmetry'}">
+		<ui:image uri="/images/symmetric_2d_logo2.png" width="100" title="Symmetry" alt="Symmetry"/>
+	</g:if>
 </g:if>

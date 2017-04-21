@@ -157,7 +157,9 @@ public class AcHierarchicalSpeciesSetMigration extends CoelTest {
 		for (AcTranslationSeries oneTranslationSeries : translationSeries) {
 			Collection<AcTranslationItem<?>> speciesTranslations = new ArrayList<AcTranslationItem<?>>();
 			for (AcTranslation rangeTranslation : oneTranslationSeries.getTranslations()) {
-				speciesTranslations.addAll((Collection<? extends AcTranslationItem<?>>) rangeTranslation.getTranslationItems());
+                for (AcTranslationItem<?> translationItem : rangeTranslation.getTranslationItems()) {
+                    speciesTranslations.add(translationItem);
+                }
 			}
 			if (SPECIAL_SPECIES_SET_IDS.contains(oneTranslationSeries.getSpeciesSet().getId())) {
 				replaceIndexPlaceholders(speciesTranslations, SPECIAL_SPECIES_INDEX_MIGRATION_MAP);				

@@ -2,9 +2,7 @@ package edu.banda.coel.web;
 
 import com.banda.core.util.RandomUtil;
 
-import java.util.Arrays;
-
-public class NDimShiftSymmetricConfigurationGenerator {
+public class NDimShiftSymmetricConfiguration {
 
     public static boolean[] generate(int[] shift, int size) {
         int dim = shift.length;
@@ -14,11 +12,6 @@ public class NDimShiftSymmetricConfigurationGenerator {
         for (int i = 0; i < config.length; i++) {
             int innerIndex = i;
             int[] pos = getPosition(size, dim, innerIndex);
-            int indexx = getInnerIndex(size, dim, pos);
-
-            if (innerIndex != indexx) {
-                throw new IllegalStateException(innerIndex + " vs " + indexx + ", pos: " + Arrays.toString(pos));
-            }
 
             boolean state = RandomUtil.nextBoolean();
 

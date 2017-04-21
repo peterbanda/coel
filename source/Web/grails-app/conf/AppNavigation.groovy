@@ -85,6 +85,15 @@ navigation = {
             Network(action: 'network')
         }
 
+        symmetry(controller:'symmetry', action:'index', data:[icon:'dna']) {
+			SymmetryHome(titleText: "Shift-Symmetry", action:'index', data: [icon: 'icon-home'])
+			Calculation(data:[header:'true'])
+			Enumeration(action: 'enumeration')
+			Probability(action: 'probability')
+			Simulation(data:[header:'true'])
+			SimulationX(action: 'simulation', titleText:'Simulation')
+		}
+
 		// Items pointing to ContentController, using the specific action
 //		about(controller:'content')
 //		contact(controller:'content')

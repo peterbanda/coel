@@ -1,6 +1,6 @@
 <html>
 <head>
-	<theme:title>Run Network</theme:title>
+	<theme:title>CA Simulation on a Shift-Symmetric Configuration</theme:title>
 	<r:require module="jquery-ui"/>
 	<r:require module="timer"/>
 	<r:require module="jszip"/>
@@ -13,27 +13,17 @@
 
 		var imageIndex = 0;
 		var indexInc = 1;
-		var imageSize = 200;
+		var imageSize = 300;
 
 		$(document).ready(function(){
 			$('#networkId').focus();
 			$("#networkRunChartPanel").hide();
 			$('#forwardButton').hide();
 
-			$( "#networkRunLaunchSuccess-Dialog" ).dialog({
-				autoOpen: false,
-				modal: true,
-				buttons: {
-					OK: function() {
-						$( this ).dialog( "close" );
-					}
-				}
-			});
-
 	    	$("#sizeSlider").slider({
 				min: 100,
 				max: 500,
-	    	   	value: 200,
+	    	   	value: 300,
 	    	   	slide: function( event, ui ) {
 	    	   		timer.stop()
 	    	   		$("#size").val(ui.value)
@@ -61,12 +51,8 @@
 
 			timer.set({ time : 100, autostart : false });
 			$("#delay").val(100)
-			$("#size").val(200)
+			$("#size").val(300)
 			$("#topologySizesDiv").hide()
-
-			if (${runnow}) {
-				$("#runSimulationForm").submit();
-			}
 		});
 
 		var timer = $.timer(function() {
@@ -85,37 +71,30 @@
 			}
 		});
 
-  		function updateTopologySize() {
-			$.getJSON('${createLink(action: "getTopologySizes")}?id=' + $("#networkId").val(),
-				function(data) {
-					if (data) {
-						$("#topologySizes").val(data);
-						$("#topologySizesDiv").show();
-					} else {
-						$("#topologySizes").val("");
-						$("#topologySizesDiv").hide();
-					}
-			});
-  		};
-
       	function drawChart(data) {
-      		timer.stop()
-      		$("#networkRunChartPanel").show()
-			$("#collapseOne").collapse('hide')
-			$("#collapseTwo").collapse('show')
+            $("body").css("cursor", "default");
+            if (data.errors) {
+                showErrors(data.errors);
+            } else {
+      		    hideErrors();
+                $("#networkRunChartPanel").show()
+                $("#collapseOne").collapse('hide')
+                $("#collapseTwo").collapse('show')
 
-			imageIndex = 0
-			images = data.images
-			imageFormat = data.format
-			imageWidth = data.width
-			imageHeight = data.height
-			$("#exportFileButton").html('<i class="icon-file"></i>' + imageFormat)
-          	timer.play()
+                imageIndex = 0
+                images = data.images
+                imageFormat = data.format
+                imageWidth = data.width
+                imageHeight = data.height
+                $("#exportFileButton").html('<i class="icon-file"></i>' + imageFormat)
+                timer.play()
+            }
       	};
 
-		function showNetworkRunLaunchSuccessDialog() {
-			$('#launch-success-modal').modal({ keyboard: true });
-		}
+        function simStart() {
+            timer.stop();
+            $("body").css("cursor", "wait");
+        }
 
 		function changeToBackwardDirection() {
 			$('#backwardButton').hide();
@@ -139,7 +118,8 @@
 				img.file(i + "." + imageFormat, image, {base64: true});
 	      	});
 			var content = zip.generate();
-			saveAs('data:application/zip;base64,' + content, 'network_run_' + $('#networkId').val() + "_" + $('#runTime').val() + '.zip')
+			var latticeSize = $('#latticeSize').val()
+			saveAs('data:application/zip;base64,' + content, '2dca_run_' + latticeSize + "x" + latticeSize + "_" + $('#runTime').val() + '.zip')
 		}
 
 		function exportCurrent() {
@@ -154,14 +134,7 @@
 </head>
 <body>
 	<theme:zone name="body">
-		<gui:modal id="launch-success-modal" title="Network Launch Success">
-			<p>Network simulation has been successfully launched.</p>
-			<p>The result will appear in a while.</p>
-		</gui:modal>
-		<div id="errorDiv" >
-			<g:eachError bean="${instance}" var="error">
-				<ui:message type="error"><g:message error="${error}"/></ui:message>
-			</g:eachError>
+		<div id="errorDiv">
 		</div>
 		<div class="accordion" id="accordion">
 			<div class="accordion-group">
@@ -170,30 +143,15 @@
     			</div>
     			<div id="collapseOne" class="accordion-body collapse in">
       				<div class="accordion-inner">
-		            	<ui:form remote="true" name="runSimulationForm" url="[controller: 'networkRun', action: 'runSimulation']" before="showNetworkRunLaunchSuccessDialog();" onSuccess="drawChart(data);">
-	    	        		<ui:field label="Network">
-	        	    			<ui:fieldInput>
-									<g:select name="networkId" from="${networks}"
-										optionKey="id"
-                        	            optionValue="${{it.id + ' : ' + it.name}}"
-                        				value="${instance?.network?.id}"
-    									noSelection= "['': 'Select One...']"
-    									onchange="updateTopologySize();"/>
-                        		</ui:fieldInput>
-                        	</ui:field>
-                        	<div id="topologySizesDiv">
-                        		<ui:field label="Topology Sizes">
-                        			<ui:fieldInput>
-                        				<g:textField name="topologySizes" value=""/>
-                        			</ui:fieldInput>
-                        		</ui:field>
-                        	</div>
-            		    	<ui:field bean="instance" name="runTime"/>
-							<ui:field label="One-Zero Probability" name="oneZeroRatio" value="${oneZeroRatio}"/>
+		            	<ui:form remote="true" name="runSimulationForm" url="[action: 'runSimulation']" before="simStart();" onSuccess="drawChart(data);">
+							<ui:field label="Lattice Size (^2)" name="latticeSize" value="40"/>
+							<ui:field label="Symmetry Shift X" name="symmetryShiftX" value="10"/>
+                            <ui:field label="Symmetry Shift Y" name="symmetryShiftY" value="5"/>
+							<ui:field label="Run Time" name="runTime" value="100"/>
 							<hr>
 							<ui:field label="Format">
 								<ui:fieldInput>
-									<g:select class="span1" name="format" from="${["gif", "png", "jpg", "svg"]}" value="${format}"/>
+									<g:select class="span1" name="format" from="${["gif", "png", "jpg", "svg"]}" value="gif"/>
 								</ui:fieldInput>
 							</ui:field>
        						<ui:actions>
@@ -209,7 +167,7 @@
         			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Network Chart</a>
     			</div>
     			<div id="collapseTwo" class="accordion-body collapse">
-      				<div id="networkRunChartDiv" class="accordion-inner" style="height:320px">
+      				<div id="networkRunChartDiv" class="accordion-inner" style="height:375px">
       					<div class="span7 pagination-centered">
       						<div class="row-fluid" style="margin: 20px 0px 10px 0px;">
       					  		<div class="span1 offset5">
