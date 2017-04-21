@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
+    <facet type="web" name="GrailsWeb">
+      <configuration>
+        <webroots>
+          <root url="file://$MODULE_DIR$/plugins/fields-1.3/grails-app/views" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/google-visualization-0.5.3/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/google-visualization-0.5.3/grails-app/views" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/joda-time-1.4/grails-app/views" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/jquery-1.7.2/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/filterpane-2.3.3/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/filterpane-2.3.3/grails-app/views" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/database-migration-1.1/grails-app/views" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/platform-core-1.0.RC6/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/platform-core-1.0.RC6/grails-app/views" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/platform-ui-1.0.RC6/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/platform-ui-1.0.RC6/grails-app/views" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/jasper-1.5.3/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/mail-1.0.6/grails-app/views" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/twitter-bootstrap-2.3.2/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/navigation-1.3.2/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/jquery-ui-1.8.15/web-app" relative="/" />
+        </webroots>
+        <sourceRoots />
+      </configuration>
+    </facet>
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map>
+          <unit-entry name="sessionFactory" />
+        </datasource-map>
+        <naming-strategy-map />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/plugins/database-migration-1.1">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/database-migration-1.1/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/database-migration-1.1/grails-app/controllers" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/eclipse-scripts-1.0.6" />
+    <content url="file://$MODULE_DIR$/plugins/fields-1.3">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/fields-1.3/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/fields-1.3/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/fields-1.3/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/filterpane-2.3.3">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/filterpane-2.3.3/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/filterpane-2.3.3/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/filterpane-2.3.3/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/filterpane-2.3.3/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/google-visualization-0.5.3">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/google-visualization-0.5.3/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/google-visualization-0.5.3/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/google-visualization-0.5.3/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/hibernate-2.1.1">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/hibernate-2.1.1/grails-app/i18n" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/jasper-1.5.3">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jasper-1.5.3/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jasper-1.5.3/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jasper-1.5.3/grails-app/controllers" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jasper-1.5.3/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jasper-1.5.3/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/joda-time-1.4">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/joda-time-1.4/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/joda-time-1.4/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/jquery-1.7.2">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jquery-1.7.2/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jquery-1.7.2/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jquery-1.7.2/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jquery-1.7.2/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/jquery-ui-1.8.15">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jquery-ui-1.8.15/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jquery-ui-1.8.15/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/mail-1.0.6">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/mail-1.0.6/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/mail-1.0.6/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/mail-1.0.6/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/mail-1.0.6/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/navigation-1.3.2">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/navigation-1.3.2/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/navigation-1.3.2/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/navigation-1.3.2/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/platform-core-1.0.RC6">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/platform-core-1.0.RC6/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/platform-core-1.0.RC6/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/platform-core-1.0.RC6/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/platform-core-1.0.RC6/grails-app/controllers" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/platform-core-1.0.RC6/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/platform-ui-1.0.RC6">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/platform-ui-1.0.RC6/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/platform-ui-1.0.RC6/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/platform-ui-1.0.RC6/grails-app/controllers" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/platform-ui-1.0.RC6/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/resources-1.1.6">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/resources-1.1.6/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/resources-1.1.6/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/resources-1.1.6/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/resources-1.1.6/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/spring-security-acl-1.1.1">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-acl-1.1.1/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-acl-1.1.1/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-acl-1.1.1/grails-app/domain" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-acl-1.1.1/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-acl-1.1.1/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/spring-security-core-1.2.7.3">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-core-1.2.7.3/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-core-1.2.7.3/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-core-1.2.7.3/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-core-1.2.7.3/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/spring-security-core-1.2.7.3/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/tomcat-2.1.1" />
+    <content url="file://$MODULE_DIR$/plugins/twitter-bootstrap-2.3.2">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/twitter-bootstrap-2.3.2/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/twitter-bootstrap-2.3.2/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/plugins/webxml-1.4.1">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/webxml-1.4.1/src/groovy" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda.serverbase:banda-serverbase:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda:banda-core-scala:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.commons:commons-math3:3.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.commons:commons-exec:1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.panayotis:javaplot:0.4.0.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.hibernate:hibernate-entitymanager:3.6.10.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javassist:javassist:3.12.0.GA" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.beanlib:beanlib:5.0.2beta" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: xstream:xstream:1.1.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.beanlib:beanlib-hibernate:5.0.2beta" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.gridgain:gridgain-core:6.5.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.gridgain:gridgain-spring:6.5.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.commons:commons-compress:1.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.tukaani:xz:1.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-context:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-test:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-tx:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-orm:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-jms:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-aspects:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework.security:spring-security-core:3.0.7.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-aop:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-dbcp:commons-dbcp:1.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.aspectj:aspectjweaver:1.6.8" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:slf4j-log4j12:1.6.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:slf4j-api:1.6.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: cglib:cglib:2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.scala-lang:jline:2.10.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.fusesource.jansi:jansi:1.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.scala-lang:scala-compiler:2.10.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.scala-lang:scala-library:2.10.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.scala-lang:scala-reflect:2.10.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.scalaz:scalaz-core_2.10:7.0.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.activemq:activemq-all-wo-slf4j:5.6.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.xbean:xbean-spring:3.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda.chemistry:banda-chemistry-domain:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda.math:banda-math-domain:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda.network:banda-network-domain:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda.function:banda-function-business:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-lang:commons-lang:2.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: jep:jep:2.24" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jblas:jblas:1.2.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda.chemistry:banda-chemistry-business:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda.network:banda-network-business:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda.math:banda-math-business:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-codec:commons-codec:1.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: jfree:jfreechart:1.0.13" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: jfree:jcommon:1.0.15" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.sbml:jsbml:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.woodstox:woodstox-core-lgpl:4.0.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.woodstox:stax2-api:3.0.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.w3c.jigsaw:jigsaw:2.2.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.googlecode.efficient-java-matrix-library:ejml:0.18" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-svggen:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-gvt:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-awt-util:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-util:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-gui-util:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-ext:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-svg-dom:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-dom:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-css:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-xml:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-parser:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-swing:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-bridge:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: batik:batik-script:1.6-1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: rhino:js:1.5R4.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda.function:banda-function-domain:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.banda:banda-core:0.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-core:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-io:commons-io:2.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-bootstrap:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-crud:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-datastore-core:1.1.0.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-hibernate:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.validation:validation-api:1.0.0.GA" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.transaction:jta:1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-codecs:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-controllers:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-converters:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-datasource:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-domain-class:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-filters:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-gsp:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-i18n:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-logging:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-log4j:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-mimetypes:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-scaffolding:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-services:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-servlets:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-url-mappings:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-validation:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-resources:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-spring:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-web:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: opensymphony:sitemesh:2.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-webflow:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.groovy:groovy-all:1.8.8" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.aspectj:aspectjrt:1.6.10" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: asm:asm:3.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-fileupload:commons-fileupload:1.2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: oro:oro:2.0.8" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-beanutils:commons-beanutils:1.8.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-el:commons-el:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-pool:commons-pool:1.5.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-validator:commons-validator:1.3.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.2_jdk5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:jstl:1.1.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: xpp3:xpp3_min:1.1.4c" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.ehcache:ehcache-core:2.4.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: log4j:log4j:1.2.16" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:jcl-over-slf4j:1.6.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:jul-to-slf4j:1.6.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-core:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-asm:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-beans:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-context-support:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-expression:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-jdbc:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-webmvc:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-web:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.hibernate:hibernate-ehcache:3.6.10.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.hibernate:hibernate-validator:4.1.0.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.hibernate:hibernate-core:3.6.10.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.javassist:javassist:3.16.1-GA" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: dom4j:dom4j:1.6.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.hibernate:hibernate-commons-annotations:3.2.0.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: antlr:antlr:2.7.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat.embed:tomcat-embed-logging-log4j:7.0.30" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-tomcat:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt.core.compiler:ecj:3.7.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-catalina-ant:7.0.30" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat.embed:tomcat-embed-jasper:7.0.30" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat.embed:tomcat-embed-logging-juli:7.0.30" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:7.0.30" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-testing:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-datastore-simple:1.1.0.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-datastore-gorm:1.1.0.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-test:1.3.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.0.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.liquibase:liquibase-core:2.0.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework.security:spring-security-web:3.0.7.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework.security:spring-security-acl:3.0.7.RELEASE" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-async:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.mail:javax.mail:1.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.mail:javax.mail-api:1.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: postgresql:postgresql:8.3-603.jdbc4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.jasperreports:jasperreports:4.5.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-digester:commons-digester:2.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.lowagie:itext:2.1.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: bouncycastle:bcmail-jdk14:138" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: bouncycastle:bcprov-jdk14:138" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.bouncycastle:bctsp-jdk14:1.38" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.bouncycastle:bcprov-jdk14:1.38" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.bouncycastle:bcmail-jdk14:1.38" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: eclipse:jdtcore:3.1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.castor:castor:1.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.poi:poi-ooxml:3.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.poi:poi:3.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.poi:poi-ooxml-schemas:3.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.jackson:jackson-core-lgpl:1.7.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.jackson:jackson-mapper-lgpl:1.7.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: junit:junit:4.11" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-launcher:1.0.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:jsp-api:2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-scripts:2.1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-maven-archetype:2.1.1" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library name="Grails User Library (coel-web-grailsPlugins)">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/plugins/joda-time-1.4/lib/joda-time-2.0.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-juli/7.0.30/tomcat-juli-7.0.30.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-api/7.0.30/tomcat-api-7.0.30.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/jline/jline/1.0/jline-1.0.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-annotations-api/7.0.30/tomcat-annotations-api-7.0.30.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/taglibs/standard/1.1.2/standard-1.1.2.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/groovy/groovy-all/1.7.8/groovy-all-1.7.8.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bouncycastle/bcprov-jdk15/1.45/bcprov-jdk15-1.45.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/jul-to-slf4j/1.5.8/jul-to-slf4j-1.5.8.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/xalan/serializer/2.7.1/serializer-2.7.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-servlet-api/7.0.30/tomcat-servlet-api-7.0.30.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/fusesource/jansi/jansi/1.2.1/jansi-1.2.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/aspectj/aspectjweaver/1.6.10/aspectjweaver-1.6.10.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-junit/1.8.2/ant-junit-1.8.2.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/2.4.1/protobuf-java-2.4.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.2/commons-cli-1.2.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-catalina/7.0.30/tomcat-catalina-7.0.30.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-trax/1.7.1/ant-trax-1.7.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant-launcher/1.8.2/ant-launcher-1.8.2.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-coyote/7.0.30/tomcat-coyote-7.0.30.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/gant/gant_groovy1.8/1.9.6/gant_groovy1.8-1.9.6.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-util/7.0.30/tomcat-util-7.0.30.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bouncycastle/bcpg-jdk15/1.45/bcpg-jdk15-1.45.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/apache/ant/ant/1.8.2/ant-1.8.2.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-tx/3.0.5.RELEASE/spring-tx-3.0.5.RELEASE.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/net/java/dev/jna/jna/3.2.3/jna-3.2.3.jar!/" />
+          <root url="file://$MODULE_DIR$/plugins/joda-time-1.4/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/plugins/joda-time-1.4/lib" recursive="false" />
+      </library>
+    </orderEntry>
+  </component>
+</module>
