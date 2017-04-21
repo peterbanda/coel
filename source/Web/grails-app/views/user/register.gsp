@@ -3,6 +3,7 @@
 	<theme:title>Register User</theme:title>
     <nav:set path="app"/>
 	<theme:layout name="dialog"/>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
     <theme:zone name="body">
@@ -24,7 +25,15 @@
 					<g:field type="password" name="password" value=""/>
 				</ui:fieldInput>
 			</ui:field>
-			<g:render template="editablePart"/>
+            <g:render template="editablePart"/>
+
+            <div class="control-group">
+                <label for="" class="control-label"></label>
+                <div class="controls">
+                    <div class="g-recaptcha" data-sitekey="6Lf8Dx4UAAAAAHSzXLgWadVfBriyI_vLnoU5F9CH"></div>
+                </div>
+            </div>
+
 			<ui:actions>
 				<ui:button type="submit" kind="button" mode="primary">Submit</ui:button>
                 <a class="btn btn-cancel" href="${g.createLink(uri:'/')}">${message(code: 'default.button.cancel.label', default: 'Cancel')}</a>

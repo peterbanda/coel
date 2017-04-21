@@ -16,8 +16,8 @@ import org.springframework.security.web.authentication.session.NullAuthenticated
 // Place your Spring DSL code here
 beans = {
 	importBeans('classpath*:server.xml')
-//	importBeans('classpath*:grid.xml')
-    importBeans('file:grid.xml')
+	importBeans('classpath*:grid.xml')
+//    importBeans('file:grid.xml')
 	importBeans('classpath*:service.xml')
 	importBeans('classpath*:persistence.xml')
 

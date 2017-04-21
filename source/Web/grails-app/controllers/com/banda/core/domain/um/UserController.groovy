@@ -1,10 +1,24 @@
 package com.banda.core.domain.um
 
 import edu.banda.coel.web.BaseDomainController
+import grails.converters.JSON
+import org.apache.commons.io.IOUtils
+import org.json.simple.JSONObject
+
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.OutputStream
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
 
 class UserController extends BaseDomainController {
 
-	def showLoggedUser = {
+    private reCaptchaSecret = getGrailsApplication().config.recaptcha.site.secret
+    private reCaptchaVerificationUrl = "https://www.google.com/recaptcha/api/siteverify"
+
+    def showLoggedUser = {
 		def user = getCurrentUser()
 		render(view: "show", model: [instance: user])
 	}
@@ -76,6 +90,11 @@ class UserController extends BaseDomainController {
 	def registerSave() {
 		def userInstance = new User(params)
 		userInstance.createTime = new Date()
+
+        if (!verifyReCaptcha(params["g-recaptcha-response"])) {
+            userInstance.errors.rejectValue("", "reCAPTCHA not filled or incorrect. It seems you're a robot.")
+        }
+
 		if (params.password) {
 			if (params.password.length() < 8) {
 				userInstance.errors.rejectValue(
@@ -84,8 +103,6 @@ class UserController extends BaseDomainController {
 			}
 			userInstance.password = springSecurityService.encodePassword(params.password)
 		}
-		userInstance.accountEnabled = false
-		userInstance.roles = []
 
 		if (params.username && User.countByUsername(params.username) > 0) {
 			userInstance.errors.rejectValue(
@@ -98,7 +115,10 @@ class UserController extends BaseDomainController {
 				"email",
 				message(code: 'default.not.unique.message', args: ['email', 'User', params.email]))
 		}
-				
+
+        userInstance.accountEnabled = false
+        userInstance.roles = []
+
 		if (userInstance.hasErrors() || !userInstance.save(flush: true)) {
 			render(view: "register", model: [instance: userInstance])
 			return
@@ -114,6 +134,22 @@ class UserController extends BaseDomainController {
 		}
 		render(view: "registerSuccess", model: [instance: userInstance])
 	}
+
+    private verifyReCaptcha(reCaptchaResponse) {
+        URL url = new URL(reCaptchaVerificationUrl)
+        def postData = "secret=" + reCaptchaSecret + "&response=" + reCaptchaResponse
+        byte[] postDataBytes = postData.getBytes("UTF-8");
+
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        conn.setDoOutput(true);
+        conn.getOutputStream().write(postDataBytes);
+
+        def response = IOUtils.toString(conn.getInputStream())
+        (boolean) JSON.parse(response).get("success")
+    }
 
 	def activate(Long id) {
 		def userInstance = getSafe(id)

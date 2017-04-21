@@ -112,18 +112,23 @@
 
 		function exportAllAsZip() {
 			var zip = new JSZip();
-			zip.file("info.txt", "Exported By COEL " + currentDateTimeAsString() + "\n------------------------------------\nNetwork : " + $('#networkId').val() + "\nOne-Zero Ratio : " + $('#oneZeroRatio').val() + "\nRun time : " + $('#runTime').val());
+			var latticeSize = $('#latticeSize').val()
+			var symmetryShiftX = $('#symmetryShiftX').val()
+			var symmetryShiftY = $('#symmetryShiftY').val()
+			var runTime = $('#runTime').val()
+
+			zip.file("info.txt", "Exported By COEL " + currentDateTimeAsString() + "\n------------------------------------\nLattice Size : " + latticeSize + "x" + latticeSize + "\nSymmetry Shift : " + symmetryShiftX + "," + symmetryShiftY + "\nRun time : " + runTime);
 			var img = zip.folder("images");
 			$.each(images, function(i, image) {
 				img.file(i + "." + imageFormat, image, {base64: true});
 	      	});
 			var content = zip.generate();
-			var latticeSize = $('#latticeSize').val()
-			saveAs('data:application/zip;base64,' + content, '2dca_run_' + latticeSize + "x" + latticeSize + "_" + $('#runTime').val() + '.zip')
+			saveAs('data:application/zip;base64,' + content, '2dca_run_' + latticeSize + "x" + latticeSize + "_" + runTime + '.zip')
 		}
 
 		function exportCurrent() {
-			var filename = 'network_run_' + $('#networkId').val() + "_" + imageIndex + "-" + $('#runTime').val() + '.' + imageFormat
+			var latticeSize = $('#latticeSize').val()
+			var filename = '2dca_run_' + latticeSize + "x" + latticeSize + "_" + imageIndex + "-" + $('#runTime').val() + '.' + imageFormat
 			if (imageFormat == "svg")
 				saveAs('data:image/svg+xml;base64,' + images[imageIndex], filename);
 			else

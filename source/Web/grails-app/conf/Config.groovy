@@ -233,3 +233,5 @@ grails.plugins.springsecurity.interceptUrlMap = [
 	'/chemPic/**':                            ['ROLE_GUEST', 'ROLE_EXT_USER', 'ROLE_USER'],
 	'/**':                                    ['ROLE_USER'],
 ]
+
+recaptcha.site.secret = System.getenv("COEL_RECAPTCHA_SITE_SECRET")
