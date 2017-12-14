@@ -9,7 +9,7 @@
 	<parent>
 		<artifactId>coel-parent</artifactId>
 		<groupId>edu.banda.coel</groupId>
-		<version>0.8.5</version>
+		<version>0.8.6</version>
 	</parent>
 
 	<dependencies>
