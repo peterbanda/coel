@@ -1,7 +1,7 @@
 modules = {
 	chart {
 		resource url:[dir:'js', file:'chartUtils.js']
-		resource url:'http://www.google.com/jsapi', attrs:[type: 'js']
+		resource url:'https://www.google.com/jsapi', attrs:[type: 'js']
 		resource url:[dir:'js', file:'jquery.multiselect.min.js']
 		resource url:[dir:'css', file:'jquery.multiselect.css']
 	}
