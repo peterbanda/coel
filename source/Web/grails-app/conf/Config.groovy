@@ -117,10 +117,11 @@ grails {
 	  username = System.getenv("COEL_EMAIL_USERNAME")
 	  password = System.getenv("COEL_EMAIL_PASSWORD")
 	  props = ["mail.smtp.auth":"true",
-			   "mail.smtp.socketFactory.port":System.getenv("COEL_EMAIL_PORT"),
-			   "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-			   "mail.smtp.socketFactory.fallback":"false"]
- 
+		   "mail.smtp.socketFactory.port":System.getenv("COEL_EMAIL_PORT"),
+		   "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+		   "mail.smtp.socketFactory.fallback":"false",
+                   "mail.smtp.localhost":"coel-sim.org"
+		] 
 	}
 }
 

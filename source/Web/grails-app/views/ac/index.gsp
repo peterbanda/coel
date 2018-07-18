@@ -23,7 +23,7 @@
     	<theme:zone name="body">
 			<p>Chemistry module is the key part of COEL framework. The functionality includes definition of artificial chemistry,
 			interaction series, and translation series, simulation execution, and performance evaluation. Brief documentation can be found 
-       		<a href="http://arxiv.org/abs/1407.4027">here</a>.</p>
+       		<a href="https://www.frontiersin.org/articles/10.3389/frobt.2016.00013/full">here</a>.</p>
        		<p>A step-by-step tutorial can be found
                 <g:if test="${compartmentsEmpty}">
                     <gui:actionLink onclick="showTutorial();" hint="Start Here" hint-show="true" hint-placement="right">here</gui:actionLink>

@@ -25,7 +25,7 @@
 			<p>
 			COEL framework is built on <a href="https://grails.org">Grails</a>, <a href="https://spring.io">Spring</a>, <a href="http://hibernate.org/">Hibernate</a>, and <a href="http://www.gridgain.com">GridGain</a> technology stack.
 			</p>
-			<p>Brief documentation can be found <a href="http://arxiv.org/abs/1407.4027">here</a>.</p>
+			<p>Brief documentation can be found <a href="https://www.frontiersin.org/articles/10.3389/frobt.2016.00013/full">here</a>.</p>
 			<p>Have fun!</p>
 		</div>
 		<div class="thumbnail span3">
@@ -84,7 +84,7 @@
 	<theme:zone name="panel1">
 		<ui:h3 text="Try It"/>
 		<p>We provide a free account for selected research teams. If you wish to collaborate in the areas of (bio)chemical computing, reservoir computing, or neural networks, please contact us or <a href="/user/register">register</a>.</p>
-		<p>We are also looking for beta testers and web designers to help us preparing the next 0.9.0 release. For bug reporting, request a Jira account <a href="http://saane.ece.pdx.edu:8090">here</a>. Your feedback is valuable for us!</p>
+		<p>We are also looking for beta testers and web designers to help us preparing the next 0.9.0 release. For bug reporting, request a Jira account <a href="https://jira.coel-sim.org">here</a>. Your feedback is valuable for us!</p>
 		<div class="alert alert-info" role="alert">
 			<p>If you want to play with COEL and don't wish to register you can log in using a guest account <code>guest</code> / <code>welcome123</code>.<br/> Note that this account is meant only for evaluation purposes and therefore the provided functionality is quite limited.
 			Also all the data created during a session will be deleted and only a single logged user is allowed.</p>
@@ -97,7 +97,8 @@
 		        <ui:h3 text="Contact"/>
 		        <address>
 			        <strong>Peter Banda</strong><br>
-				    Luxembourg Centre for Systems Biomedicine, University of Luxembourg<br>
+				    Luxembourg Centre for Systems Biomedicine<br>
+				    University of Luxembourg<br>
 				    <i class="icon-envelope"></i> <a href="mailto:peter.banda@uni.lu">peter.banda@uni.lu</a><br>
   			        <i class="icon-chevron-right"></i> <a href="http://peterbanda.net">peterbanda.net</a><br>
 		        </address>

@@ -11,6 +11,7 @@ import java.io.InputStreamReader
 import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
+import sun.security.provider.certpath.SunCertPathBuilderException
 import java.net.URL
 
 class UserController extends BaseDomainController {
@@ -125,13 +126,18 @@ class UserController extends BaseDomainController {
 		}
 
 		log.info message(code: 'user.registered.message', args: [userInstance.id, userInstance.username])
-		
-		sendMail {
-		    from "Coel Admin <coelsim@cecs.pdx.edu>"
-			to "banda@pdx.edu"
-			subject "User registered"
-			body message(code: 'user.registered.message', args: [userInstance.id, userInstance.username])
+
+		try {
+			sendMail {
+				from "Coel Admin <coelsim@cecs.pdx.edu>"
+				to "coelsim@cecs.pdx.edu"
+				subject "User registered"
+				body message(code: 'user.registered.message', args: [userInstance.id, userInstance.username])
+			}
+		} catch (SunCertPathBuilderException e) {
+			log.error("Cannot send an email.", e)
 		}
+
 		render(view: "registerSuccess", model: [instance: userInstance])
 	}
 
